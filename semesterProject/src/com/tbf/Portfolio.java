@@ -116,14 +116,14 @@ public class Portfolio {
 	
 	public String getOwnerName() {
 		String name = null;
-		name = ownerCode.getName().getLastName() + ", " + ownerCode.getName().getLastName();
+		name = ownerCode.getName().getLastName() + ", " + ownerCode.getName().getFirstName();
 
 		return name;
 	}
 	
 	public String getManagerName() {
 		String name = null; 
-		name = managCode.getName().getLastName() + ", " + managCode.getName().getLastName();
+		name = managCode.getName().getLastName() + ", " + managCode.getName().getFirstName();
 //		List<Person> persList = LoadNParse.parsePersonsFile();
 //		String name = null;
 //		for (Person i : persList) {
@@ -138,17 +138,19 @@ public class Portfolio {
 		double risk1 = 0;
 		double risk2 = 0;
 		double risk3 = 0;
+		double weightedRisk = 0;
 		List<Asset> list = this.assetList;
-		for(Asset a : list) {
-			if (a.getAccType() == "P") {
-				risk1 += a.getOmega() + Math.exp(-125500/a.getTotalValue());
-			}else if (a.getAccType() == "S") {
-				risk2 += a.getBeta();
-			}else if (a.getAccType() == "D") {
-				risk3 = 0;
+			for(Asset a : list) {
+				if (a.getAccType().contains("P")) {
+					risk1 += a.getOmega() + Math.exp(-125500/a.getTotalValue());
+				}else if (a.getAccType().contains("S")) {
+					risk2 += a.getBeta();
+				}else if (a.getAccType().contains("D")) {
+					risk3 = 0;
+				}
 			}
-		}
-		double weightedRisk = (risk1 + risk2 + risk3)/3;
+		
+		weightedRisk = (risk1 + risk2 + risk3)/3;
 		return weightedRisk;
 	}
 	

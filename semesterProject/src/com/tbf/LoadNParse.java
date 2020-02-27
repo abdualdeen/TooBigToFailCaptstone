@@ -99,11 +99,32 @@ public class LoadNParse {
 			List<Asset> assList = parseAssetsFile();
 			List<Asset> newList = new ArrayList<Asset>();
 			Asset newAss = null;
+//			if (tokens.length > 4) {
+//				String assTokens[] = tokens[4].split(",");
+//				for (Asset a : assList) {
+//					for (String s : assTokens) {
+//						if(s.contains(a.getCode())) {
+//							String oneAsset[] = s.split(":");
+//							if(a.getAccType() == "D") {
+//								newAss = new DepositAsset(a.getCode(), a.getAccType(), a.getLabel(), a.getApr(), Double.parseDouble(oneAsset[1]));
+//							} else if (a.getAccType() == "S") {
+//								newAss = new Stock(a.getCode(), a.getAccType(), a.getLabel(), a.getQuartDivi(), a.getBaseROR(), a.getBeta(), a.getStockSymb(), 
+//										a.getSharePrice(), Integer.parseInt(oneAsset[1]));
+//							} else if (a.getAccType() == "P"){
+//								newAss = new PrivateInvest(a.getCode(), a.getAccType(), a.getLabel(), a.getQuartDivi(), a.getBaseROR(), a.getOmega(), 
+//										a.getTotalValue(), Double.parseDouble(oneAsset[1]));
+//							}
+//							newList.add(newAss);
+//						}
+//					}
+//				}
+//			}
+			//*****************
 			if (tokens.length > 4) {
 				String assTokens[] = tokens[4].split(",");
-				for (Asset a : assList) {
 					for (String s : assTokens) {
-						if(s.contains(a.getCode())) {
+						for (Asset a : assList) {
+						if(a.getCode().contains(s)) {
 							String oneAsset[] = s.split(":");
 							if(a.getAccType() == "D") {
 								newAss = new DepositAsset(a.getCode(), a.getAccType(), a.getLabel(), a.getApr(), Double.parseDouble(oneAsset[1]));
@@ -119,6 +140,11 @@ public class LoadNParse {
 					}
 				}
 			}
+			
+			
+			
+			//*****************
+			
 //			for (Asset a : assList) {
 //				for (String s : assTokens) {
 //					if(s.contains(a.getCode())) {
