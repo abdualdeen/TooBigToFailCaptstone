@@ -15,23 +15,16 @@ public class Portfolio {
 	
 	
 	public double getCommission() {
+		List<Person> persList = LoadNParse.parsePersonsFile();
 		double commi = 0;
-		if (ownerCode.getBrokerStatus().contains("E")) {
-			commi = (.0375)*getReturn();
-			
-		} else if (ownerCode.getBrokerStatus().contains("J")) {
-			commi = (.0125)*getReturn();
+		for (Person i : persList) {
+			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
+				commi = (.0375)*getReturn();
+				
+			} else if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("J")) {
+				commi = (.0125)*getReturn();
+			}
 		}
-//		List<Person> persList = LoadNParse.parsePersonsFile();
-//		double commi = 0;
-//		for (Person i : persList) {
-//			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
-//				commi = (.0375)*getReturn();
-//				
-//			} else if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("J")) {
-//				commi = (.0125)*getReturn();
-//			}
-//		}
 		return commi;
 	}
 	
@@ -80,13 +73,9 @@ public class Portfolio {
 	
 	
 	public double getFee() {
-		double fee = 0;
-		if (ownerCode.getBrokerStatus().contains("E")) {
-			fee = getCommission();
-
-		} else if (ownerCode.getBrokerStatus().contains("J")) {
-			fee = 75*getBrokerAssNum().get(portCode)+getCommission();
-		}
+		
+//		List<Person> persList = LoadNParse.parsePersonsFile();
+//		double fee = 0;
 //		for (Person i : persList) {
 //			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
 //				fee = getCommission();
@@ -100,14 +89,20 @@ public class Portfolio {
 	
 	public String getOwnerName() {
 		String name = null;
-		name = ownerCode.getName().getLastName() + ", " + ownerCode.getName().getLastName();
-
+		name = ownerCode.getName().getFirstName() + "," + ownerCode.getName().getLastName();
+//		List<Person> persList = LoadNParse.parsePersonsFile();
+//		String name = null;
+//		for (Person i : persList) {
+//			if (i.getPersonCode() == ownerCode) {
+//				name = i.getName().getLastName() + ", " + i.getName().getFirstName();
+//			}
+//		}
 		return name;
 	}
 	
 	public String getManagerName() {
-		String name = null; 
-		name = managCode.getName().getLastName() + ", " + managCode.getName().getLastName();
+		String name = null;
+		name = managCode.getName().getLastName() + "," + managCode.getName().getLastName();
 //		List<Person> persList = LoadNParse.parsePersonsFile();
 //		String name = null;
 //		for (Person i : persList) {
