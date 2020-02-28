@@ -27,16 +27,9 @@ public class PortfolioReport {
 			finalTotal += i.getTotal();
 		}
 		System.out.println(report);
-<<<<<<< HEAD
-		System.out.println("\t\t-------------------------------------------------");
-//		for(Portfolio j : portList) {
-//			System.out.printf("\t\t\t %15.2f %12.2f %12.2f %12.2f", j.getFeeTotal(), j.getCommiTotal(), j.getReturnTotal(),j.getTotalTotal());
-//		}
-=======
 		System.out.println(fee+"   "+commi+"   "+theReturn+"   "+finalTotal);
 		//System.out.println("\t\t\t %15.2f %12.2f %12.2f %12.2f", getFeeTotal(), getCommiTotal(), getReturnTotal(), getTotalTotal());
 		}
->>>>>>> c56d4aacd0c4b63899db9bb8f37530dc384acb78
 	}
 
 
