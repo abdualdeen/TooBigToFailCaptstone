@@ -21,10 +21,16 @@ public class PortfolioReport {
 			
 		}
 		System.out.println(report);
+<<<<<<< HEAD
 		System.out.println("\t\t-------------------------------------------------");
 //		for(Portfolio j : portList) {
 //			System.out.printf("\t\t\t %15.2f %12.2f %12.2f %12.2f", j.getFeeTotal(), j.getCommiTotal(), j.getReturnTotal(),j.getTotalTotal());
 //		}
+=======
+		System.out.println(fee+"   "+commi+"   "+theReturn+"   "+finalTotal);
+		//System.out.println("\t\t\t %15.2f %12.2f %12.2f %12.2f", getFeeTotal(), getCommiTotal(), getReturnTotal(), getTotalTotal());
+		}
+>>>>>>> bd910efea87c2d90e8a511c16e7ac471fbe3b60d
 	}
 }
 
