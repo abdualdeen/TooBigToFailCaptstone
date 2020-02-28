@@ -11,7 +11,7 @@ public class Portfolio {
 	private String portCode;
 	private Person ownerCode;
 	private Person managCode;
-	private Person benefCode;
+	private Person beneficiary;
 	private List<Asset> assetList;
 	
 	
@@ -84,7 +84,7 @@ public class Portfolio {
 					
 					
 				} else if (a.getAccType().contains("S")) {
-					double value =a.getSharePrice();
+					double value =a.getSharePrice()*a.getNumberShares();
 					theReturn += (a.getBaseROR()*value)+(4*(a.getQuartDivi()));//*a.getNumberShares();
 					
 					
@@ -187,22 +187,23 @@ public class Portfolio {
 	
 	
 	
+	
 	//STORE OWNER CODE AND MANGCODE AS A "PERSON"
-	public Portfolio(String portCode, Person ownerCode, Person managCode, Person benefCode, List<Asset> assetList) {
+	public Portfolio(String portCode, Person ownerCode, Person managCode, Person beneficiary, List<Asset> assetList) {
 		super();
 		this.portCode = portCode;
 		this.ownerCode = ownerCode;
 		this.managCode = managCode;
-		this.benefCode = benefCode;
+		this.beneficiary = beneficiary;
 		this.assetList = assetList;
 	}
 	
-	public Portfolio(String portCode, Person ownerCode, Person managCode, Person benefCode) {
+	public Portfolio(String portCode, Person ownerCode, Person managCode, Person beneficiary) {
 		super();
 		this.portCode = portCode;
 		this.ownerCode = ownerCode;
 		this.managCode = managCode;
-		this.benefCode = benefCode;
+		this.beneficiary = beneficiary;
 		this.assetList = new ArrayList<Asset>();
 	}
 	
@@ -234,11 +235,11 @@ public class Portfolio {
 	public void setManagCode(Person managCode) {
 		this.managCode = managCode;
 	}
-	public Person getBenefCode() {
-		return benefCode;
+	public Person getBeneficiary() {
+		return beneficiary;
 	}
-	public void setBenefCode(Person benefCode) {
-		this.benefCode = benefCode;
+	public void setBenefCode(Person beneficiary) {
+		this.beneficiary = beneficiary;
 	}
 	public List<Asset> getAssetList() {
 		return assetList;

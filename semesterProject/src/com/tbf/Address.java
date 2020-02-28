@@ -16,7 +16,6 @@ public class Address {
 		this.zip = zip;
 		this.country = country;
 	}
-	
 	public String getStreet() {
 		return street;
 	}
