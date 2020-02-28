@@ -14,7 +14,7 @@ public abstract class Asset {
 	public abstract double getOmega();
 	public abstract double getTotalValue();
 	public abstract double getAmountVal();
-	public abstract int getNumberShares();
+	public abstract double getNumberShares();
 	public abstract double getPercentStake();
 	
 	public double getReturn(double apy, double totalValue) {

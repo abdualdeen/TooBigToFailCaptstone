@@ -95,7 +95,7 @@ public class PrivateInvest extends Asset {
 	}
 
 	@Override
-	public int getNumberShares() {
+	public double getNumberShares() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

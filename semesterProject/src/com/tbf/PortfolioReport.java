@@ -9,16 +9,19 @@ public class PortfolioReport {
 		System.out.println("Portfolio Summary Report");
 		System.out.println("===============================================================================================================================");
 		StringBuilder report = new StringBuilder();
-		report.append(String.format("%-10s %-10s %-20s %-20s %20s %20s %20s %20s\n", 
+		report.append(String.format("%-10s %-20s %-18s %-15s %20s %10s %10s %10s\n", 
 				"Portfolio", "Owner", "Manager", "Fees", "Commisions", "Weighted Risk", "Return", "Total"));
-		System.out.println(report);
+		
 		
 		
 		for (Portfolio i : portList) {
-			report.append(String.format("%-8s %-20s %-10s %-30s $%8.2d $%8.2d $%8.2d $%8.2d\n", 
+			report.append(String.format("%-8s %-20s %-20s %-20.2f $%12.2f %12.4f $%12.2f $%12.2f\n", 
 					i.getPortCode(), i.getOwnerName(), i.getManagerName(), i.getFee(), i.getCommission(), 
 					i.getWeightedRisk(), i.getReturn(), i.getTotal())); 
+			
 		}
+		System.out.println(report);
+		//System.out.println("\t\t\t %15.2f %12.2f %12.2f %12.2f", getFeeTotal(), getCommiTotal(), getReturnTotal(), getTotalTotal());
 		}
 	}
 

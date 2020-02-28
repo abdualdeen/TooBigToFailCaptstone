@@ -54,6 +54,7 @@ public class DepositAsset extends Asset {
     public DepositAsset(String code, String accType, String label, double apr, double amountVal) {
 		super(code, accType, label);
 		this.apr = apr;
+		this.amountVal = amountVal;
 	}
     
     
@@ -131,7 +132,7 @@ public class DepositAsset extends Asset {
 
 
 	@Override
-	public int getNumberShares() {
+	public double getNumberShares() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

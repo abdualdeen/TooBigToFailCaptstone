@@ -10,14 +10,14 @@ public class Stock extends Asset {
 	private double beta;
 	private String stockSymb;
 	private double sharePrice;
-	private int numberShares; //Added from the portfolio
+	private double numberShares; //Added from the portfolio
 	
 	
 	public double getApr() {
 		return 0;
 	}
 	//Constructor after portfolio add.
-	public Stock(String code, String accType, String label, double quartDivi, double baseROR, double beta, String stockSymb, double sharePrice, int numberShares) {
+	public Stock(String code, String accType, String label, double quartDivi, double baseROR, double beta, String stockSymb, double sharePrice, double numberShares) {
 		super(code, accType, label);
 		this.quartDivi = quartDivi;
 		this.baseROR = baseROR;
@@ -81,11 +81,11 @@ public class Stock extends Asset {
 		return 0;
 	}
 
-	public int getNumberShares() {
+	public double getNumberShares() {
 		return numberShares;
 	}
 
-	public void setNumberShares(int numberShares) {
+	public void setNumberShares(double numberShares) {
 		this.numberShares = numberShares;
 	}
 	@Override

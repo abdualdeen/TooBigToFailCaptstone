@@ -58,7 +58,7 @@ public class LoadNParse {
 			String tokens[] = line.split(";");
 			Asset newAsset = null;
 			if (tokens[1].contains("D")) {
-				newAsset = new DepositAsset(tokens[0], tokens[1], tokens[2], Double.parseDouble(tokens[3]));
+				newAsset = new DepositAsset(tokens[0], tokens[1], tokens[2], Double.parseDouble(tokens[3])/100.0);
 			
 			} else if (tokens[1].contains("S")) {
 				newAsset = new Stock(tokens[0], tokens[1], tokens[2], Double.parseDouble(tokens[3]),
@@ -91,12 +91,12 @@ public class LoadNParse {
 		
 		
 		inputFile.nextLine();
+		List<Asset> assList = parseAssetsFile();
 		while (inputFile.hasNextLine()) {
 			String line = inputFile.nextLine();
-			String tokens[] = line.split(";");
+			String tokens[] = line.split(";",-1);
 			//saving the new information from the portfolio into the classes
 //			String assTokens[] = tokens[4].split(",");
-			List<Asset> assList = parseAssetsFile();
 			List<Asset> newList = new ArrayList<Asset>();
 			Asset newAss = null;
 //			if (tokens.length > 4) {
@@ -120,22 +120,23 @@ public class LoadNParse {
 //				}
 //			}
 			//*****************
-			if (tokens.length > 4) {
+			if (tokens.length > 4) { 
 				String assTokens[] = tokens[4].split(",");
 					for (String s : assTokens) {
+						String oneAsset[] = s.split(":");
 						for (Asset a : assList) {
-						if(a.getCode().contains(s)) {
-							String oneAsset[] = s.split(":");
-							if(a.getAccType() == "D") {
+						if(a.getCode().equals(oneAsset[0])) {
+							if(a.getAccType().contentEquals("D")) {
 								newAss = new DepositAsset(a.getCode(), a.getAccType(), a.getLabel(), a.getApr(), Double.parseDouble(oneAsset[1]));
-							} else if (a.getAccType() == "S") {
-								newAss = new Stock(a.getCode(), a.getAccType(), a.getLabel(), a.getQuartDivi(), a.getBaseROR(), a.getBeta(), a.getStockSymb(), 
-										a.getSharePrice(), Integer.parseInt(oneAsset[1]));
-							} else if (a.getAccType() == "P"){
+							} else if (a.getAccType().equals("S")) {
+								newAss = new Stock(a.getCode(), a.getAccType(), a.getLabel(), a.getQuartDivi(), a.getBaseROR()/100.0, a.getBeta(), a.getStockSymb(), 
+										a.getSharePrice(), Double.parseDouble(oneAsset[1]));
+							} else if (a.getAccType().contentEquals("P")){
 								newAss = new PrivateInvest(a.getCode(), a.getAccType(), a.getLabel(), a.getQuartDivi(), a.getBaseROR(), a.getOmega(), 
-										a.getTotalValue(), Double.parseDouble(oneAsset[1]));
+										a.getTotalValue(), Double.parseDouble(oneAsset[1])/100.0);
 							}
 							newList.add(newAss);
+							break;
 						}
 					}
 				}
@@ -170,15 +171,13 @@ public class LoadNParse {
 			if (tokens.length > 3) {
 				benef = getPerson(tokens[3]);
 			}
-			
-			if (tokens.length == 3) {
-				newPort = new Portfolio(tokens[0], owner, manag);
-
-			} else if (tokens.length == 4) {
-				newPort = new Portfolio(tokens[0], owner, manag, benef);
-			} else {
-				newPort = new Portfolio(tokens[0], owner, manag, benef, newList);
-			}
+//			
+//			if (tokens.length == 3) {
+//				newPort = new Portfolio(tokens[0], owner, manag);
+//
+//			} else if (tokens.length == 4) {
+//				newPort = new Portfolio(tokens[0], owner, manag, benef);
+			newPort = new Portfolio(tokens[0], owner, manag, benef, newList);
 			portList.add(newPort);
 		}
 		
