@@ -15,7 +15,17 @@ public class PrivateInvest extends Asset {
 		return 0;
 	}
 	
-	//Constructor after portfolio add.
+	/**
+	 * This Constructor 
+	 * @param code
+	 * @param accType
+	 * @param label
+	 * @param quartDivi
+	 * @param baseROR
+	 * @param omega
+	 * @param totalValue
+	 * @param percentStake
+	 */
 	public PrivateInvest(String code, String accType, String label, double quartDivi, double baseROR, double omega, double totalValue, double percentStake) {
 		super(code, accType, label);
 		this.quartDivi = quartDivi;

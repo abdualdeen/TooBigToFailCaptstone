@@ -1,5 +1,9 @@
 package com.tbf;
-
+/**
+ * This class deals with storing the address for the Person class.
+ * It stores the street, city, state, zip, and country.
+ *
+ */
 public class Address {
 	
 	private String street;
@@ -8,6 +12,15 @@ public class Address {
 	private String zip;
 	private String country;
 	
+	
+	/**
+	 * Below is constructor used to feed the address the required information.
+	 * @param street
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param country
+	 */
 	public Address(String street, String city, String state, String zip, String country) {
 		super();
 		this.street = street;
@@ -16,6 +29,9 @@ public class Address {
 		this.zip = zip;
 		this.country = country;
 	}
+	
+	
+
 	public String getStreet() {
 		return street;
 	}

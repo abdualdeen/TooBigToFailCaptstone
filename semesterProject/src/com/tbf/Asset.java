@@ -1,6 +1,5 @@
 package com.tbf;
 
-import java.util.List;
 
 public abstract class Asset {
 	private String code;
@@ -18,11 +17,6 @@ public abstract class Asset {
 	public abstract double getAmountVal();
 	public abstract double getNumberShares();
 	public abstract double getPercentStake();
-	
-	public double getReturn(double apy, double totalValue) {
-		double monReturn = apy/totalValue;
-		return monReturn;
-	}
 	
 	
 	public Asset(String code, String accType, String label) {
@@ -47,18 +41,22 @@ public abstract class Asset {
 				}
 		return risk;
 	}
+	
 	public double getReturn() {
 		double theReturn = 0;
 				if (getAccType().contains("D")) {
-					theReturn += (Math.exp(getApr())-1)*getAmountVal();
+					theReturn = (Math.exp(getApr())-1)*getAmountVal();
+					
 				} else if (getAccType().contains("S")) {
 					double value =getSharePrice();
-					theReturn += (getBaseROR()*value)+(4*(getQuartDivi()));
+					theReturn = ((getBaseROR()*value)+(4*(getQuartDivi()))*getNumberShares());
+					
 				} else if (getAccType().contains("P")) {
-					theReturn += (getBaseROR()*getTotalValue()+(4*(getQuartDivi())));
+					theReturn = getBaseROR()*getTotalValue()*getPercentStake()+(4*(getQuartDivi()))*getPercentStake();
 				}
 		return theReturn;
 	}
+	
 	public double getTotal() {
 		double total = 0;
 		if (getAccType().contains("D")) {
@@ -73,9 +71,11 @@ public abstract class Asset {
 	public double getReturnRate() {
 		double returnRate = 0;
 			if(getAccType().contains("P")) {
-				returnRate = getReturn()/getTotalValue();
+				returnRate = (getReturn()/(getTotalValue()*getPercentStake()))*100;
+				
 			}else if(getAccType().contains("S")) {
-				returnRate = getReturn()/getSharePrice();
+				returnRate = (getReturn()/(getSharePrice()*getNumberShares()))*100;
+				
 			}else if(getAccType().contains("D")) {
 				returnRate = 0;
 			}

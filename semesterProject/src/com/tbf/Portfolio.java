@@ -41,16 +41,7 @@ public class Portfolio {
 		} else if (managCode.getBrokerStatus().contains("J")) {
 			commi = (.0125)*getReturn();
 		}
-//		List<Person> persList = LoadNParse.parsePersonsFile();
-//		double commi = 0;
-//		for (Person i : persList) {
-//			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
-//				commi = (.0375)*getReturn();
-//				
-//			} else if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("J")) {
-//				commi = (.0125)*getReturn();
-//			}
-//		}
+
 		return commi;
 	}
 	
@@ -85,11 +76,11 @@ public class Portfolio {
 					
 				} else if (a.getAccType().contains("S")) {
 					double value =a.getSharePrice()*a.getNumberShares();
-					theReturn += (a.getBaseROR()*value)+(4*(a.getQuartDivi()));//*a.getNumberShares();
+					theReturn += (a.getBaseROR()*value)+(4*(a.getQuartDivi())*a.getNumberShares());
 					
 					
 				} else if (a.getAccType().contains("P")) {
-					theReturn += (a.getBaseROR()*a.getTotalValue()+(4*(a.getQuartDivi())));//*a.getPercentStake();
+					theReturn += (a.getBaseROR()*a.getTotalValue()+(4*(a.getQuartDivi())))*a.getPercentStake();
 				}
 		}
 		return theReturn;
@@ -102,14 +93,6 @@ public class Portfolio {
 		} else if (ownerCode.getBrokerStatus().contains("J")) {
 			fee = (75*getBrokerAssNum().get(portCode));
 		}
-//		for (Person i : persList) {
-//			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
-//				fee = getCommission();
-//				
-//			} else if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("J")) {
-//				fee = 75*getBrokerAssNum().get(portCode)+getCommission();
-//			}
-//		}
 		return fee;
 	}
 	
@@ -143,13 +126,6 @@ public class Portfolio {
 	public String getManagerName() {
 		String name = null; 
 		name = managCode.getName().getLastName() + ", " + managCode.getName().getFirstName();
-//		List<Person> persList = LoadNParse.parsePersonsFile();
-//		String name = null;
-//		for (Person i : persList) {
-//			if (i.getPersonCode() == managCode) {
-//				name = i.getName().getLastName() + ", " + i.getName().getFirstName();
-//			}
-//		}
 		return name;
 	}
 	
@@ -166,11 +142,13 @@ public class Portfolio {
 		if(!list.isEmpty()) {
 			for(Asset a : list) {
 				if (a.getAccType().contains("P")) {
-					risk1 += a.getOmega() + Math.exp(-125500/a.getTotalValue());
-					v1 += a.getTotalValue();
+					risk1 = a.getOmega() + Math.exp(-125500/a.getTotalValue()*get);
+					v1 += a.getTotalValue()*a.getPercentStake();
+					
 				}else if (a.getAccType().contains("S")) {
-					risk2 += a.getBeta();
+					risk2 = a.getBeta();
 					v2 += (a.getSharePrice()*a.getNumberShares());
+					
 				}else if (a.getAccType().contains("D")) {
 					risk3 = 0;
 					v3 += a.getAmountVal();
@@ -178,9 +156,6 @@ public class Portfolio {
 			}
 			v = v1 + v2 + v3;
 		weightedRisk = risk1*(v1/v) + risk2*(v2/v) + risk3;
-		}
-		else {
-			weightedRisk = 0;
 		}
 		return weightedRisk;
 	}

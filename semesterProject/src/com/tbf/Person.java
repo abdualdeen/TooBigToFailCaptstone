@@ -58,11 +58,6 @@ public class Person {
 	 * @return
 	 */
 	public String getPersonCode() {
-		if(personCode == null) {
-			personCode = "None";
-		}else {
-			personCode = personCode;
-		}
 		return personCode;
 	}
 
