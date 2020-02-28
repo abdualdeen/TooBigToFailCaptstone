@@ -17,11 +17,6 @@ public abstract class Asset {
 	public abstract double getNumberShares();
 	public abstract double getPercentStake();
 	
-	public double getReturn(double apy, double totalValue) {
-		double monReturn = apy/totalValue;
-		return monReturn;
-	}
-	
 	
 	public Asset(String code, String accType, String label) {
 		super();
