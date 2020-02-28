@@ -25,7 +25,6 @@ public class PortfolioReport {
 //		for(Portfolio j : portList) {
 //			System.out.printf("\t\t\t %15.2f %12.2f %12.2f %12.2f", j.getFeeTotal(), j.getCommiTotal(), j.getReturnTotal(),j.getTotalTotal());
 //		}
-		//hello
 	}
 }
 
