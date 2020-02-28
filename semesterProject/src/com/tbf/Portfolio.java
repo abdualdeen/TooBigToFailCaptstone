@@ -14,17 +14,42 @@ public class Portfolio {
 	private List<Asset> assetList;
 	
 	
-	public double getCommission() {
-		List<Person> persList = LoadNParse.parsePersonsFile();
-		double commi = 0;
-		for (Person i : persList) {
-			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
-				commi = (.0375)*getReturn();
+	public double getTotal() {
+		List<Asset> list = this.assetList;
+		double total = 0;
+		for (Asset a : list) {
+			if (a.getAccType().contains("D")) {
+				total += getReturn();
 				
-			} else if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("J")) {
-				commi = (.0125)*getReturn();
+			} else if (a.getAccType().contains("S")) {
+				total += getReturn();
+
+			} else if (a.getAccType().contains("P")) {
+				total += getReturn();
+
 			}
 		}
+		return total;
+	}
+	
+	public double getCommission() {
+		double commi = 0;
+		if (ownerCode.getBrokerStatus().contains("E")) {
+			commi = (.0375)*getReturn();
+			
+		} else if (ownerCode.getBrokerStatus().contains("J")) {
+			commi = (.0125)*getReturn();
+		}
+//		List<Person> persList = LoadNParse.parsePersonsFile();
+//		double commi = 0;
+//		for (Person i : persList) {
+//			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
+//				commi = (.0375)*getReturn();
+//				
+//			} else if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("J")) {
+//				commi = (.0125)*getReturn();
+//			}
+//		}
 		return commi;
 	}
 	
@@ -53,29 +78,31 @@ public class Portfolio {
 		List<Asset> list = this.assetList;
 		double theReturn = 0;
 		for (Asset a : list) {
-			if (a.getCode() == this.ownerCode) {
-				if (a.getAccType() == "D") {
+				if (a.getAccType().contains("D")) {
 					theReturn = (Math.exp(a.getApr())-1)*a.getAmountVal();
 					
 					
-				} else if (a.getAccType() == "S") {
+				} else if (a.getAccType().contains("S")) {
 					double value = a.getNumberShares()*a.getSharePrice();
 					theReturn = (a.getBaseROR()*value*+(4*(a.getQuartDivi()))*a.getNumberShares());
 					
 					
-				} else if (a.getAccType() == "P") {
+				} else if (a.getAccType().contains("P")) {
 					theReturn = a.getBaseROR()*a.getTotalValue()+(4*(a.getQuartDivi()));
 				}
-			}
 		}
 		return theReturn;
 	}
 	
 	
 	public double getFee() {
-		
-//		List<Person> persList = LoadNParse.parsePersonsFile();
-//		double fee = 0;
+		double fee = 0;
+		if (ownerCode.getBrokerStatus().contains("E")) {
+			fee = getCommission();
+
+		} else if (ownerCode.getBrokerStatus().contains("J")) {
+			fee = 75*getBrokerAssNum().get(portCode)+getCommission();
+		}
 //		for (Person i : persList) {
 //			if (i.getPersonCode() == ownerCode && i.getBrokerStatus().contains("E")) {
 //				fee = getCommission();
@@ -89,20 +116,14 @@ public class Portfolio {
 	
 	public String getOwnerName() {
 		String name = null;
-		name = ownerCode.getName().getFirstName() + "," + ownerCode.getName().getLastName();
-//		List<Person> persList = LoadNParse.parsePersonsFile();
-//		String name = null;
-//		for (Person i : persList) {
-//			if (i.getPersonCode() == ownerCode) {
-//				name = i.getName().getLastName() + ", " + i.getName().getFirstName();
-//			}
-//		}
+		name = ownerCode.getName().getLastName() + ", " + ownerCode.getName().getFirstName();
+
 		return name;
 	}
 	
 	public String getManagerName() {
-		String name = null;
-		name = managCode.getName().getLastName() + "," + managCode.getName().getLastName();
+		String name = null; 
+		name = managCode.getName().getLastName() + ", " + managCode.getName().getFirstName();
 //		List<Person> persList = LoadNParse.parsePersonsFile();
 //		String name = null;
 //		for (Person i : persList) {
@@ -112,6 +133,29 @@ public class Portfolio {
 //		}
 		return name;
 	}
+	
+	public double getWeightedRisk() {
+		double risk1 = 0;
+		double risk2 = 0;
+		double risk3 = 0;
+		double weightedRisk = 0;
+		List<Asset> list = this.assetList;
+			for(Asset a : list) {
+				if (a.getAccType().contains("P")) {
+					risk1 += a.getOmega() + Math.exp(-125500/a.getTotalValue());
+				}else if (a.getAccType().contains("S")) {
+					risk2 += a.getBeta();
+				}else if (a.getAccType().contains("D")) {
+					risk3 = 0;
+				}
+			}
+		
+		weightedRisk = (risk1 + risk2 + risk3)/3;
+		return weightedRisk;
+	}
+	
+	
+	
 	//STORE OWNER CODE AND MANGCODE AS A "PERSON"
 	public Portfolio(String portCode, Person ownerCode, Person managCode, Person benefCode, List<Asset> assetList) {
 		super();
