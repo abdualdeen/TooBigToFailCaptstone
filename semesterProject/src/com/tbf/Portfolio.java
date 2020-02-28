@@ -163,21 +163,25 @@ public class Portfolio {
 		double v3 = 0;
 		double weightedRisk = 0;
 		List<Asset> list = this.assetList;
+		if(!list.isEmpty()) {
 			for(Asset a : list) {
 				if (a.getAccType().contains("P")) {
 					risk1 += a.getOmega() + Math.exp(-125500/a.getTotalValue());
 					v1 += a.getTotalValue();
 				}else if (a.getAccType().contains("S")) {
 					risk2 += a.getBeta();
-					v2 += a.getSharePrice();
+					v2 += (a.getSharePrice()*a.getNumberShares());
 				}else if (a.getAccType().contains("D")) {
 					risk3 = 0;
 					v3 += a.getAmountVal();
 				}
 			}
-
 			v = v1 + v2 + v3;
 		weightedRisk = risk1*(v1/v) + risk2*(v2/v) + risk3;
+		}
+		else {
+			weightedRisk = 0;
+		}
 		return weightedRisk;
 	}
 	
