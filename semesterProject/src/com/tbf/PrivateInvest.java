@@ -99,7 +99,7 @@ public class PrivateInvest extends Asset {
 	}
 
 	@Override
-	public double getAmountVal() {
+	public double getBalance() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

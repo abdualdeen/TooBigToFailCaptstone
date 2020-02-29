@@ -89,7 +89,7 @@ public class Stock extends Asset {
 		this.numberShares = numberShares;
 	}
 	@Override
-	public double getAmountVal() {
+	public double getBalance() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

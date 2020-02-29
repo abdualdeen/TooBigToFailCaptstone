@@ -14,7 +14,7 @@ public abstract class Asset {
 	public abstract double getSharePrice();
 	public abstract double getOmega();
 	public abstract double getTotalValue();
-	public abstract double getAmountVal();
+	public abstract double getBalance();
 	public abstract double getNumberShares();
 	public abstract double getPercentStake();
 	
@@ -27,7 +27,6 @@ public abstract class Asset {
 	}
 	
 	public Asset() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public double getRisk() {
@@ -45,7 +44,7 @@ public abstract class Asset {
 	public double getReturn() {
 		double theReturn = 0;
 				if (getAccType().contains("D")) {
-					theReturn = (Math.exp(getApr())-1)*getAmountVal();
+					theReturn = (Math.exp(getApr())-1)*getBalance();
 					
 				} else if (getAccType().contains("S")) {
 					double value =getSharePrice();
@@ -60,7 +59,7 @@ public abstract class Asset {
 	public double getTotal() {
 		double total = 0;
 		if (getAccType().contains("D")) {
-			total += getAmountVal();
+			total += getBalance();
 		} else if (getAccType().contains("S")) {
 			total += getSharePrice()*getNumberShares();
 		} else if (getAccType().contains("P")) {

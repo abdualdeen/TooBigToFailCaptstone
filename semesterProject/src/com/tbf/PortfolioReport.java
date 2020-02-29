@@ -28,12 +28,10 @@ public class PortfolioReport {
 			finalTotal += i.getTotal();
 		}
 		System.out.println(report);
-		System.out.println("=====================================================================================");
-		System.out.printf("Total: $%50.2f $%30.2f $%25.2f $%10.2f", fee, commi, theReturn, finalTotal);
-		// System.out.println("\t\t\t %15.2f %12.2f %12.2f %12.2f", getFeeTotal(),
-		// getCommiTotal(), getReturnTotal(), getTotalTotal());
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.printf("Total: $%50.2f $%28.2f $%24.2f $%10.2f", fee, commi, theReturn, finalTotal);
+		System.out.println("\n===================================================================================================================================");
 
-		
 		
 		for (Portfolio j : portList) {
 			String benefinfo = "";
@@ -41,23 +39,26 @@ public class PortfolioReport {
 				benefinfo = "None";
 			} else {
 				benefinfo = j.getBeneficiary().getName().getLastName() + ", "
-						+ j.getBeneficiary().getName().getFirstName() +j.getBeneficiary().getEmailAddress()
-						+ j.getBeneficiary().getAddress().getStreet()+", " + j.getBeneficiary().getAddress().getCity()+", "
-						+ j.getBeneficiary().getAddress().getState()+", " + j.getBeneficiary().getAddress().getCountry()+ ", "
+						+ j.getBeneficiary().getName().getFirstName()+"\n" +j.getBeneficiary().getEmailAddress() + "\n"
+						+ j.getBeneficiary().getAddress().getStreet()+"\n" + j.getBeneficiary().getAddress().getCity()+", "
+						+ j.getBeneficiary().getAddress().getState()+" " + j.getBeneficiary().getAddress().getCountry()+ " "
 						+ j.getBeneficiary().getAddress().getZip();
 			}
 			System.out.printf(
-					"\nPortfolio %s \n --------------------------------------\nOwner: \n%s \n%s\n%s\n%s, %s %s %s\nManager:\n%s\nBeneficiary:\n%s\nAssets",
+					"\nPortfolio %s \n --------------------------------------\nOwner: \n%s \n%s\n%s\n%s, %s %s %s\nManager:\n%s\nBeneficiary:\n%s\n\nAssets",
 					j.getPortCode(), j.getOwnerName(), j.getOwnerCode().getEmailAddress(),
 					j.getOwnerCode().getAddress().getStreet(), j.getOwnerCode().getAddress().getCity(),
 					j.getOwnerCode().getAddress().getState(), j.getOwnerCode().getAddress().getCountry(),
 					j.getOwnerCode().getAddress().getZip(), j.getManagerName(), benefinfo);
+//			System.out.println("\n");
 			System.out.printf("\n%-15s %-30s %-14s %12s %30s %10s\n", "Code", "Asset", "Return Rate", "Risk",
 					"Annual Return", "Value");
 			for (Asset a : j.getAssetList()) {
 				System.out.printf("%-15s %-30s %-20.2f %-25.2f %-10.2f %10.2f\n", a.getCode(), a.getLabel(),
 						a.getReturnRate(), a.getRisk(), a.getReturn(), a.getTotal());
 			}
+			System.out.println("\n++++++++++++++++++++++++++++++++++++++");
+
 			System.out.printf("%40s %33.4f $%23.2f $%14.2f\n", "Totals:", j.getWeightedRisk(), j.getReturn(),
 					j.getTotal());
 		}

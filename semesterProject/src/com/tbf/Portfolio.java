@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class Portfolio {
 	private String portCode;
-	private Person ownerCode;
-	private Person managCode;
-	private Person beneficiary;
+	private Person owner;
+	private Person manag;
+	private Person benef;
 	private List<Asset> assetList;
 	
 	
@@ -20,7 +20,7 @@ public class Portfolio {
 		double total = 0;
 		for (Asset a : list) {
 			if (a.getAccType().contains("D")) {
-				total += a.getAmountVal();
+				total += a.getBalance();
 				
 			} else if (a.getAccType().contains("S")) {
 				total += a.getSharePrice()*a.getNumberShares();
@@ -35,10 +35,10 @@ public class Portfolio {
 	
 	public double getCommission() {
 		double commi = 0;
-		if (managCode.getBrokerStatus().contains("E")) {
+		if (manag.getBrokerStatus().contains("E")) {
 			commi = (.0375)*getReturn();
 			
-		} else if (managCode.getBrokerStatus().contains("J")) {
+		} else if (manag.getBrokerStatus().contains("J")) {
 			commi = (.0125)*getReturn();
 		}
 
@@ -71,7 +71,7 @@ public class Portfolio {
 		double theReturn = 0;
 		for (Asset a : list) {
 				if (a.getAccType().contains("D")) {
-					theReturn += (Math.exp(a.getApr())-1)*a.getAmountVal();
+					theReturn += (Math.exp(a.getApr())-1)*a.getBalance();
 					
 					
 				} else if (a.getAccType().contains("S")) {
@@ -87,107 +87,79 @@ public class Portfolio {
 	}
 	public double getFee() {
 		double fee = 0;
-		if (ownerCode.getBrokerStatus().contains("E")) {
+		if (owner.getBrokerStatus().contains("E")) {
 			fee = 0;
 
-		} else if (ownerCode.getBrokerStatus().contains("J")) {
+		} else if (owner.getBrokerStatus().contains("J")) {
 			fee = (75*getBrokerAssNum().get(portCode));
 		}
 		return fee;
 	}
 	
 	public String getOwnerName() {
-		String name = null;
-		name = ownerCode.getName().getLastName() + ", " + ownerCode.getName().getFirstName();
-
+		String name = owner.getName().getLastName() + ", " + owner.getName().getFirstName();
 		return name;
 	}
-	public double getFeeTotal() {
-		double feeTotal = 0;
-		feeTotal += getFee();
-		return feeTotal;
-		
-	}
-	public double getCommiTotal() {
-		double commiTotal = 0;
-		commiTotal += getCommission();
-		return commiTotal;
-	}
-	public double getReturnTotal() {
-		double returnTotal = 0;
-		returnTotal += getReturn();
-		return returnTotal;
-	}
-	public double getTotalTotal() {
-		double totalTotal = 0;
-		totalTotal += getTotal();
-		return totalTotal;
-	}
+
+	
 	public String getManagerName() {
-		String name = null; 
-		name = managCode.getName().getLastName() + ", " + managCode.getName().getFirstName();
+		String name = manag.getName().getLastName() + ", " + manag.getName().getFirstName();
 		return name;
 	}
 	
 	public double getWeightedRisk() {
-		double risk1 = 0;
-		double risk2 = 0;
-		double risk3 = 0;
-		double v = 0;
-		double v1 = 0;
-		double v2 = 0;
-		double v3 = 0;
-		double weightedRisk = 0;
+		double risk = 0;
+		double value = 0;
+		double totalRisk = 0;
 		List<Asset> list = this.assetList;
-		if(!list.isEmpty()) {
-			for(Asset a : list) {
-				if (a.getAccType().contains("P")) {
-					risk1 = a.getOmega() + Math.exp(-125500/a.getTotalValue()*get);
-					v1 += a.getTotalValue()*a.getPercentStake();
-					
-				}else if (a.getAccType().contains("S")) {
-					risk2 = a.getBeta();
-					v2 += (a.getSharePrice()*a.getNumberShares());
-					
-				}else if (a.getAccType().contains("D")) {
-					risk3 = 0;
-					v3 += a.getAmountVal();
-				}
+		for (Asset a : list) {
+			if (a.getAccType().contains("D")) {
+				risk = 0;
+				value += a.getBalance();
+				totalRisk = risk*(a.getBalance()/value);
+				
+			} else if (a.getAccType().contains("S")) {
+				risk = a.getBeta();
+				value += a.getSharePrice()*a.getNumberShares();
+				totalRisk = risk*((a.getNumberShares()*a.getSharePrice())/value);
+				
+			} else if (a.getAccType().contains("P")) {
+				risk = a.getOmega() + Math.exp(-125500/a.getTotalValue());
+				value += a.getPercentStake()*a.getTotalValue();
+				totalRisk += risk*(a.getPercentStake()*a.getTotalValue())/value;
 			}
-			v = v1 + v2 + v3;
-		weightedRisk = risk1*(v1/v) + risk2*(v2/v) + risk3;
 		}
-		return weightedRisk;
+		return totalRisk;
 	}
 	
 	
 	
 	
 	//STORE OWNER CODE AND MANGCODE AS A "PERSON"
-	public Portfolio(String portCode, Person ownerCode, Person managCode, Person beneficiary, List<Asset> assetList) {
+	public Portfolio(String portCode, Person owner, Person manag, Person benef, List<Asset> assetList) {
 		super();
 		this.portCode = portCode;
-		this.ownerCode = ownerCode;
-		this.managCode = managCode;
-		this.beneficiary = beneficiary;
+		this.owner = owner;
+		this.manag = manag;
+		this.benef = benef;
 		this.assetList = assetList;
 	}
 	
-	public Portfolio(String portCode, Person ownerCode, Person managCode, Person beneficiary) {
+	public Portfolio(String portCode, Person owner, Person manag, Person benef) {
 		super();
 		this.portCode = portCode;
-		this.ownerCode = ownerCode;
-		this.managCode = managCode;
-		this.beneficiary = beneficiary;
+		this.owner = owner;
+		this.manag = manag;
+		this.benef = benef;
 		this.assetList = new ArrayList<Asset>();
 	}
 	
 	
-	public Portfolio(String portCode, Person ownerCode, Person managCode) {
+	public Portfolio(String portCode, Person owner, Person manag) {
 		super();
 		this.portCode = portCode;
-		this.ownerCode = ownerCode;
-		this.managCode = managCode;
+		this.owner = owner;
+		this.manag = manag;
 		this.assetList = new ArrayList<Asset>();
 	}
 	
@@ -199,22 +171,22 @@ public class Portfolio {
 		this.portCode = portCode;
 	}
 	public Person getOwnerCode() {
-		return ownerCode;
+		return owner;
 	}
-	public void setOwnerCode(Person ownerCode) {
-		this.ownerCode = ownerCode;
+	public void setOwnerCode(Person owner) {
+		this.owner = owner;
 	}
 	public Person getManagCode() {
-		return managCode;
+		return manag;
 	}
-	public void setManagCode(Person managCode) {
-		this.managCode = managCode;
+	public void setManagCode(Person manag) {
+		this.manag = manag;
 	}
 	public Person getBeneficiary() {
-		return beneficiary;
+		return benef;
 	}
-	public void setBenefCode(Person beneficiary) {
-		this.beneficiary = beneficiary;
+	public void setBenefCode(Person benef) {
+		this.benef = benef;
 	}
 	public List<Asset> getAssetList() {
 		return assetList;

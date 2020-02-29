@@ -1,6 +1,5 @@
 package com.tbf;
 
-import java.util.List;
 
 /**
  * This class deals specifically with all the deposit accounts in the Assets file.
@@ -9,13 +8,13 @@ import java.util.List;
  */
 public class DepositAsset extends Asset {
     private double apr;
-    private double amountVal; //Added from portfolio
+    private double balance; //Added from portfolio
     
 	//Constructor after portfolio add.
-    public DepositAsset(String code, String accType, String label, double apr, double amountVal) {
+    public DepositAsset(String code, String accType, String label, double apr, double balance) {
 		super(code, accType, label);
 		this.apr = apr;
-		this.amountVal = amountVal;
+		this.balance = balance;
 	}
     
     
@@ -32,13 +31,13 @@ public class DepositAsset extends Asset {
 	}
 
 
-	public double getAmountVal() {
-		return amountVal;
+	public double getBalance() {
+		return balance;
 	}
 
 
-	public void setAmountVal(double assetVal) {
-		this.amountVal = assetVal;
+	public void setBalance(double balance) {
+		this.balance = balance;
 	}
 
 
