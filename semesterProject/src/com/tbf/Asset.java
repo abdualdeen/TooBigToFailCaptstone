@@ -1,6 +1,5 @@
 package com.tbf;
-
-
+//TODO: refactor code from portfolio and add it to assets.
 public abstract class Asset {
 	private String code;
 	private String accType;
