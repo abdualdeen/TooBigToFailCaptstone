@@ -3,12 +3,15 @@
   -- create database ahamad;
   
 -- required dropping of tables:****uncomment before submission.*****
--- drop table if exists Portfolio;
--- drop table if exists Asset;
--- drop table if exists Person;
+use ahamad;
+drop table if exists Portfolio;
+drop table if exists Address;
+drop table if exists DepoAcc;
+drop table if exists PrivateInvAcc;
+drop table if exists StockAcc;
+drop table if exists Person;
 
 -- creating 3 Tables; Person, Asset, and Portfolio.
-use ahamad;
 create table if not exists Person (
   personId int primary key not null auto_increment,
   alphaCode varchar(10),
@@ -28,22 +31,14 @@ create table if not exists Address (
   country varchar(25));
   
   
-create table if not exists Asset (
+create table if not exists DepoAcc (
   assId int primary key not null auto_increment,
-  personId int not null, foreign key (personId) references Person(personId),
-  assCode varchar(10),
-  assType varchar(1),
-  label varchar(25));
-  
-create table if not exists DepositAcc (
-  depoId int primary key not null auto_increment,
-  assId int not null, foreign key (assId) references Asset(assId),
   apr double,
   balance double);
 
 create table if not exists StockAcc (
-  stockId int primary key not null auto_increment,
-  assId int not null, foreign key(assId) references Asset(assId),
+  assId int primary key not null auto_increment,
+  label varchar(25),
   quartDivi double,
   baseROR double,
   beta double,
@@ -52,8 +47,8 @@ create table if not exists StockAcc (
   shareNum int);
   
 create table if not exists PrivateInvAcc (
-  pInvId int primary key not null auto_increment,
-  assId int not null, foreign key (assId) references Asset(assId),
+  assId int primary key not null auto_increment,
+  label varchar(25),
   quartDivi double,
   baseROR double,
   omega double,
@@ -63,10 +58,10 @@ create table if not exists PrivateInvAcc (
   
 create table if not exists Portfolio (
   portId int primary key not null auto_increment,
-  assId int not null, foreign key (assId) references Asset(assId),
+  assId int not null, foreign key (assId) references PrivateInvAcc(assId), foreign key (assId) references StockAcc(assId), foreign key (assId) references DepoAcc(assId),
+  label varchar(25),
   portCode varchar(10),
-  persCode varchar(10),
-  managCode varchar(10),
-  benefCode varchar(10),
-  asset varchar(10),
+  persCode varchar(10), foreign key (persCode) references Person(personId),
+  managCode varchar(10), foreign key (managCode) references Person(personId),
+  benefCode varchar(10), foreign key (benefCode) references Person(personId),
   assInfo double);
