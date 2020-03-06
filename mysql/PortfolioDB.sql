@@ -1,82 +1,60 @@
--- clearing out database from lab
-  -- drop database ahamad;
-  -- create database ahamad;
-  
--- required dropping of tables:****uncomment before submission.*****
+-- create database ahamad;
 use ahamad;
+drop table if exists PortfolioAssets;
 drop table if exists Portfolio;
 drop table if exists Address;
-drop table if exists DepositAcc;
-drop table if exists PrivateInvAcc;
-drop table if exists StockAcc;
 drop table if exists EmailAddress;
 drop table if exists Asset;
 drop table if exists Person;
-
 -- creating 3 Tables; Person, Asset, and Portfolio.
-create table if not exists EmailAddress (
-emailAddressId int primary key not null auto_increment,
-emailAddress varchar(255)
-);
 
 create table if not exists Person (
   personId int primary key not null auto_increment,
-  alphaCode varchar(10),
+  alphaCode varchar(10) not null,
   brokerStat varchar(10),
-  lastName varchar(25),
-  firstName varchar(25),
-  -- addressId varchar(255) not null, foreign key (addressId) references Address(addressId),
-  emailAddressId int, foreign key (emailAddressId) references EmailAddress(emailAddressId));
+  lastName varchar(100) not null,
+  firstName varchar(100) not null,
+  addressId int not null, foreign key (addressId) references Address(addressId)
+  );
   
+create table if not exists EmailAddress (
+  emailAddressId int primary key not null auto_increment,
+  personId int not null, foreign key (personId) references Person(personId),
+  emailAddress varchar(255)
+);
   
 create table if not exists Address (
   addressId int primary key not null auto_increment,
-  personId int not null, foreign key (personId) references Person(personId),
+--   personId int not null, foreign key (personId) references Person(personId),
   street varchar(100),
-  city varchar(50),
-  state varchar(50),
+  city varchar(100),
+  state varchar(100),
   zip varchar(50),
-  country varchar(25));
+  country varchar(50)
+  );
   
 create table if not exists Asset (
-assetId int not null primary key auto_increment
-);  
-  
-create table if not exists DepositAcc (
-  depositId int primary key not null auto_increment,
-  assetId int not null, foreign key (assetId) references Asset(assetId),
+  assetId int not null primary key auto_increment,
   apr double not null,
-  balance double not null);
-
-create table if not exists StockAcc (
-  stockId int primary key not null auto_increment,
-  assetId int not null, foreign key (assetId) references Asset(assetId),
-  label varchar(25),
-  quartDivi double not null,
-  baseROR double not null,
-  beta double not null,
-  stockSymb varchar(5),
-  sharePrice double not null,
-  shareNumbers int not null);
-  
-create table if not exists PrivateInvAcc (
-  investmentId int primary key not null auto_increment,
-  assetId int not null, foreign key (assetId) references Asset(assetId),
-  label varchar(25),
+  label varchar(100) not null,
   quartDivi double,
   baseROR double,
+  beta double,
+  stockSymb varchar(5),
+  sharePrice double,
   omega double,
-  investmentValue double,
-  percentStake double);
-
+  investmentValue double
+);  
   
 create table if not exists Portfolio (
   portId int primary key not null auto_increment,
-  assetId int not null, foreign key (assetId) references Asset(assetId),
-  personId int not null, foreign key (personId) references Person(personId),
-  label varchar(25),
-  portCode varchar(10) not null,
-  persCode varchar(10) not null, -- foreign key (persCode) references Person(personId),
-  managCode varchar(10), -- foreign key (managCode) references Person(personId),
-  benefCode varchar(10), -- foreign key (benefCode) references Person(personId),
-  assInfo double);
+  ownerId int not null, foreign key (ownerId) references Person(personId),
+  managerId int not null, foreign key (managerId) references Person(personId),
+  benefId int not null, foreign key (benefId) references Person(personId)
+  );
+
+create table if not exists PortfolioAssets (
+  portfolioAssetId int primary key not null auto_increment,
+  portId int not null, foreign key (portId) references Portfolio(portId),
+  assetId int not null, foreign key (assetId) references Asset(assetId)
+);
