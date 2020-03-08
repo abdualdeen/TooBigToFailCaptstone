@@ -86,18 +86,17 @@ Owner
   "personCode": "1svndr",
   "brokerStatus": "",
   "name": {
-    "firstName": "Sylvester",
-    "lastName": "McCoy"
+    "firstName": "Fogell",
+    "lastName": "McLovin"
   },
   "address": {
-    "street": "126-01 Roosevelt Ave",
-    "city": " Flushing",
-    "state": " NY",
-    "zip": "11368",
+    "street": "892 Momona St",
+    "city": " Honolulu",
+    "state": " HI",
+    "zip": "96820",
     "country": "USA"
   },
   "emailAddress": [
-    "slyguy@hotmail.com,mccoy@whofan.com"
   ]
 ===
 Portfolio:
@@ -108,18 +107,18 @@ Manager
   "personCode": "231",
   "brokerStatus": "E,sec221",
   "name": {
-    "firstName": "Tom",
-    "lastName": "Baker"
+    "firstName": "Officer",
+    "lastName": "Slater"
   },
   "address": {
-    "street": "1 Blue Jays Way",
-    "city": " Toronto",
-    "state": " ON",
-    "zip": " M5V 1J1",
-    "country": " Canada"
+    "street": "12 Pol St",
+    "city": " Los Angeles",
+    "state": " CA",
+    "zip": " 12345",
+    "country": " USA"
   },
   "emailAddress": [
-    "famousdoc@who.com,tbaker@cse.unl.edu,mostfamous@whovian.com,thedoctor@bbc.com"
+    "12.O.Slater@gmail.com, Donut.Slater@hotmail.com"
   ]
 
 no Benef. No Assets.
@@ -131,18 +130,18 @@ Owner
   "personCode": "wrddoc",
   "brokerStatus": "",
   "name": {
-    "firstName": " Matt",
-    "lastName": "Smith"
+    "firstName": " Jimmy",
+    "lastName": " John"
   },
   "address": {
-    "street": "333 W 35th St",
-    "city": " Chicago",
-    "state": " IL",
-    "zip": "60616",
+    "street": "101 N 14th St",
+    "city": " Lincoln",
+    "state": " NE",
+    "zip": "68508",
     "country": "USA"
   },
   "emailAddress": [
-    "msmith@who.com,thedoc@cse.unl.edu"
+    "jimmy_jammy_johns@gmail.com, jimmy.tomy.jammy@outlook.com"
   ]
 ====
 Portfolio:
@@ -151,20 +150,20 @@ PF002;wrddoc;231;1svndr;321CC:25.5
 Manager:
 }{
   "personCode": "1svndr",
-  "brokerStatus": "",
+  "brokerStatus": "J",
   "name": {
-    "firstName": "Sylvester",
-    "lastName": "McCoy"
+    "firstName": "Jenny",
+    "lastName": "Jammy"
   },
   "address": {
-    "street": "126-01 Roosevelt Ave",
-    "city": " Flushing",
-    "state": " NY",
-    "zip": "11368",
+    "street": "123 Alphabet Blvd",
+    "city": " Las Vegas",
+    "state": " NV",
+    "zip": "12345",
     "country": "USA"
   },
   "emailAddress": [
-    "slyguy@hotmail.com,mccoy@whofan.com"
+    "better_sammies@hotmail.com,Jenny_Jammy12@outlook.com"
   ]
 
 no Benef.
