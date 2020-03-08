@@ -5,33 +5,33 @@ Owner
   "personCode": "944c",
   "brokerStatus": "",
   "name": {
-    "firstName": " Starlin",
-    "lastName": "Castro"
+    "firstName": "Carl",
+    "lastName": "Johnson"
   },
   "address": {
-    "street": "1060 West Addison Street",
-    "city": "Chicago",
-    "state": "IL",
-    "zip": "60613",
+    "street": "420 Grove Street",
+    "city": "Los Santos",
+    "state": "CA",
+    "zip": "91111",
     "country": "USA"
   },
   "emailAddress": [
-    "scastro@cubs.com,starlin_castro13@gmail.com"
+    "cj@cluckinbell.com"
   ]
 ====
 Portfolio:
-PT001;944c;aef1;ma12;BX001-23:2403.32,AGTSAV:26534.21,B0oWM:125
+PT001;944c;aef1;ma12;FOOD12:35.0,AGTSAV:26534.21,B0oWM:125
 ====
 Manager:
 {
   "personCode": "aef1",
   "brokerStatus": "E,sec001",
   "name": {
-    "firstName": " Gordon",
-    "lastName": "Gekko"
+    "firstName": "Walter",
+    "lastName": "White"
   },
   "address": {
-    "street": "1 Wall Street",
+    "street": "100 Wall Street",
     "city": "New York",
     "state": "NY",
     "zip": "10005-0012",
@@ -43,40 +43,43 @@ Benef:
   "personCode": "ma12",
   "brokerStatus": "",
   "name": {
-    "firstName": " Dale",
-    "lastName": "Sveum"
-  },
+    "firstName": "Light",
+    "lastName": "Yagami"
+  }
   "address": {
-    "street": "1060 West Addison Street",
-    "city": "Chicago",
-    "state": "IL",
-    "zip": "60613",
-    "country": "USA"
+    "street": "69 Shinjiku Street",
+    "city": "Tokyo",
+    "state": "Shinjiku",
+    "zip": "",
+    "country": "Japan"
   },
   "emailAddress": [
-    "sveum@cubs.com"
+    "yagamiL@tokyopolice.com"
   ]
 
 ----Assets----
-{
-  "apr": 1.05,
-  "code": "BX001-23",
-  "accType": "D",
-  "label": "Money Market Savings"
+}{
+  "quartDivi": 35000.0,
+  "baseROR": 3.0,
+  "omega": 0.32,
+  "totalValue": 1212500.0,
+  "code": "FOOD12",
+  "accType": "P",
+  "label": "Cluckin Bell restaurant chain"
 }{
   "apr": 0.25,
   "code": "AGTSAV",
   "accType": "D",
-  "label": "Savings Account"
+  "label": "G Savings Account"
 }{
   "quartDivi": 10.0,
   "baseROR": 2.25,
   "beta": 0.13,
-  "stockSymb": "COST",
+  "stockSymb": "LDEG",
   "sharePrice": 106.13,
   "code": "B0oWM",
   "accType": "S",
-  "label": "Costco"
+  "label": "Linux Development Group"
 }{
 
 ++++++++++++++++++++++++++++++++++++++++++++++
