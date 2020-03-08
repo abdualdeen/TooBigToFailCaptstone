@@ -1,0 +1,182 @@
+Info
+Person 1
+Owner
+{
+  "personCode": "944c",
+  "brokerStatus": "",
+  "name": {
+    "firstName": " Starlin",
+    "lastName": "Castro"
+  },
+  "address": {
+    "street": "1060 West Addison Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60613",
+    "country": "USA"
+  },
+  "emailAddress": [
+    "scastro@cubs.com,starlin_castro13@gmail.com"
+  ]
+====
+Portfolio:
+PT001;944c;aef1;ma12;BX001-23:2403.32,AGTSAV:26534.21,B0oWM:125
+====
+Manager:
+{
+  "personCode": "aef1",
+  "brokerStatus": "E,sec001",
+  "name": {
+    "firstName": " Gordon",
+    "lastName": "Gekko"
+  },
+  "address": {
+    "street": "1 Wall Street",
+    "city": "New York",
+    "state": "NY",
+    "zip": "10005-0012",
+    "country": "USA"
+  }
+
+Benef:
+{
+  "personCode": "ma12",
+  "brokerStatus": "",
+  "name": {
+    "firstName": " Dale",
+    "lastName": "Sveum"
+  },
+  "address": {
+    "street": "1060 West Addison Street",
+    "city": "Chicago",
+    "state": "IL",
+    "zip": "60613",
+    "country": "USA"
+  },
+  "emailAddress": [
+    "sveum@cubs.com"
+  ]
+
+----Assets----
+{
+  "apr": 1.05,
+  "code": "BX001-23",
+  "accType": "D",
+  "label": "Money Market Savings"
+}{
+  "apr": 0.25,
+  "code": "AGTSAV",
+  "accType": "D",
+  "label": "Savings Account"
+}{
+  "quartDivi": 10.0,
+  "baseROR": 2.25,
+  "beta": 0.13,
+  "stockSymb": "COST",
+  "sharePrice": 106.13,
+  "code": "B0oWM",
+  "accType": "S",
+  "label": "Costco"
+}{
+
+++++++++++++++++++++++++++++++++++++++++++++++
+Person 2
+Owner
+{
+  "personCode": "1svndr",
+  "brokerStatus": "",
+  "name": {
+    "firstName": "Sylvester",
+    "lastName": "McCoy"
+  },
+  "address": {
+    "street": "126-01 Roosevelt Ave",
+    "city": " Flushing",
+    "state": " NY",
+    "zip": "11368",
+    "country": "USA"
+  },
+  "emailAddress": [
+    "slyguy@hotmail.com,mccoy@whofan.com"
+  ]
+===
+Portfolio:
+PF006;1svndr;231;;
+===
+Manager
+{
+  "personCode": "231",
+  "brokerStatus": "E,sec221",
+  "name": {
+    "firstName": "Tom",
+    "lastName": "Baker"
+  },
+  "address": {
+    "street": "1 Blue Jays Way",
+    "city": " Toronto",
+    "state": " ON",
+    "zip": " M5V 1J1",
+    "country": " Canada"
+  },
+  "emailAddress": [
+    "famousdoc@who.com,tbaker@cse.unl.edu,mostfamous@whovian.com,thedoctor@bbc.com"
+  ]
+
+no Benef. No Assets.
+
++++++++++++++++++++++++++++++++++++++++++++++
+Person 3
+Owner 
+}{
+  "personCode": "wrddoc",
+  "brokerStatus": "",
+  "name": {
+    "firstName": " Matt",
+    "lastName": "Smith"
+  },
+  "address": {
+    "street": "333 W 35th St",
+    "city": " Chicago",
+    "state": " IL",
+    "zip": "60616",
+    "country": "USA"
+  },
+  "emailAddress": [
+    "msmith@who.com,thedoc@cse.unl.edu"
+  ]
+====
+Portfolio:
+PF002;wrddoc;231;1svndr;321CC:25.5
+====
+Manager:
+}{
+  "personCode": "1svndr",
+  "brokerStatus": "",
+  "name": {
+    "firstName": "Sylvester",
+    "lastName": "McCoy"
+  },
+  "address": {
+    "street": "126-01 Roosevelt Ave",
+    "city": " Flushing",
+    "state": " NY",
+    "zip": "11368",
+    "country": "USA"
+  },
+  "emailAddress": [
+    "slyguy@hotmail.com,mccoy@whofan.com"
+  ]
+
+no Benef.
+
+----Assets---
+}{
+  "quartDivi": 5.45,
+  "baseROR": 3.1,
+  "beta": 0.075,
+  "stockSymb": "KO",
+  "sharePrice": 41.08,
+  "code": "321CC",
+  "accType": "S",
+  "label": "Coca-Cola"
+}{
