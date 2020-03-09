@@ -11,13 +11,13 @@ insert into Address(street, city, state, zip, country) values ("101 N 14th St", 
 insert into Address(street, city, state, zip, country) values ("123 Alphabet Blvd", "Las Vegas", "NV", "12345", "USA");
 
 -- person
-insert into Person(alphaCode, lastName, firstName) values ("944c", "Johnson", "Carl");
-insert into Person(alphaCode, brokerStat, lastName, firstName) values ("aef1", "E, sec001",  "White", "Walter");
-insert into Person(alphaCode, lastName, firstName) values ("ma12", "Yagami", "Light");
-insert into Person(alphaCode, lastName, firstName) values ("1svndr", "McLovin", "Fogell");
-insert into Person(alphaCode, brokerStat, lastName, firstName) values ("231", "E, sec221", "Slater", "Officer");
-insert into Person(alphaCode, lastName, firstName) values ("wrddoc", "John", "Jimmy");
-insert into Person(alphaCode, lastName, firstName) values ("1svndr", "Jammy", "Jenny");
+insert into Person(alphaCode, lastName, firstName, addressId) values ("944c", "Johnson", "Carl", 1);
+insert into Person(alphaCode, brokerStat, lastName, firstName, addressId) values ("aef1", "E, sec001",  "White", "Walter", 2);
+insert into Person(alphaCode, lastName, firstName, addressId) values ("ma12", "Yagami", "Light", 3);
+insert into Person(alphaCode, lastName, firstName, addressId) values ("1svndr", "McLovin", "Fogell", 4);
+insert into Person(alphaCode, brokerStat, lastName, firstName, addressId) values ("231", "E, sec221", "Slater", "Officer", 5);
+insert into Person(alphaCode, lastName, firstName, addressId) values ("wrddoc", "John", "Jimmy", 6);
+insert into Person(alphaCode, lastName, firstName, addressId) values ("1svndr", "Jammy", "Jenny", 7);
 
 -- email
 insert into EmailAddress (personId, emailAddress) values (1, "cj@cjcluckinbell.com");
