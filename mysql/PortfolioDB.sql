@@ -37,6 +37,7 @@ create table if not exists EmailAddress (
   
 create table if not exists Asset (
   assetId int not null primary key auto_increment,
+  assetType varchar(1) not null,
   apr double,
   label varchar(100) not null,
   quartDivi double,
