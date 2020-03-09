@@ -42,9 +42,9 @@ insert into Asset (quartDivi, BaseROR, beta, stockSymb, sharePrice, label) value
 insert into Asset (quartDivi, BaseROR, beta, stockSymb, sharePrice, label) values (5.45, 0.031, .075, "KO", 41.08, "Coca-cola");
 
 -- Portfolios 
-insert into Portfolio (ownerId, managId, benefId) values (1, 2, 3);
-insert into Portfolio (ownerId, managId) values (4, 5);
-insert into Portfolio (ownerId, managId) values (6, 7);
+insert into Portfolio (ownerId, managerId, benefId) values (1, 2, 3);
+insert into Portfolio (ownerId, managerId) values (4, 5);
+insert into Portfolio (ownerId, managerId) values (6, 7);
 
 -- (Person 1 port) Portfolio Asset association table with asset info. 
 insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 1, 35);

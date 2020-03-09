@@ -1,12 +1,13 @@
 -- create database ahamad;
--- use ahamad;
+use ahamad;
 -- use hbalandran;
 drop table if exists PortfolioAssets;
 drop table if exists Portfolio;
-drop table if exists Address;
 drop table if exists EmailAddress;
 drop table if exists Asset;
 drop table if exists Person;
+drop table if exists Address;
+
 -- creating 3 Tables; Person, Asset, and Portfolio.
 
 create table if not exists Address (
