@@ -36,7 +36,7 @@ create table if not exists EmailAddress (
   
 create table if not exists Asset (
   assetId int not null primary key auto_increment,
-  apr double not null,
+  apr double,
   label varchar(100) not null,
   quartDivi double,
   baseROR double,
@@ -55,7 +55,8 @@ create table if not exists Portfolio (
   );
 
 create table if not exists PortfolioAssets (
-  portfolioAssetId int primary key not null auto_increment,
+  portAssetId int primary key not null auto_increment,
   portId int not null, foreign key (portId) references Portfolio(portId),
-  assetId int not null, foreign key (assetId) references Asset(assetId)
+  assetId int not null, foreign key (assetId) references Asset(assetId),
+  assetInfo double not null
 );
