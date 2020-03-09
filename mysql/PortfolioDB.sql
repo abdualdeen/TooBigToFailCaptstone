@@ -1,7 +1,7 @@
 -- create database ahamad;
 -- use ahamad;
 -- use hbalandran;
-drop table if exists PortfolioAssets;
+drop table if exists PortfolioAsset;
 drop table if exists Portfolio;
 drop table if exists EmailAddress;
 drop table if exists Asset;
@@ -52,10 +52,10 @@ create table if not exists Portfolio (
   portId int primary key not null auto_increment,
   ownerId int not null, foreign key (ownerId) references Person(personId),
   managerId int not null, foreign key (managerId) references Person(personId),
-  benefId int not null, foreign key (benefId) references Person(personId)
+  benefId int, foreign key (benefId) references Person(personId)
   );
 
-create table if not exists PortfolioAssets (
+create table if not exists PortfolioAsset (
   portAssetId int primary key not null auto_increment,
   portId int not null, foreign key (portId) references Portfolio(portId),
   assetId int not null, foreign key (assetId) references Asset(assetId),
