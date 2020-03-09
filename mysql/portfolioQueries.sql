@@ -70,5 +70,9 @@ update EmailAddress set emailAddress = "cj@grovestreet.com" where emailAddressId
 
 -- 5 
 select * from EmailAddress;
+select * from Portfolio;
+select * from Address;
 delete from EmailAddress where personId = 7;
+update Portfolio set managerId = null where portId = 3;
 delete from Person where personId = 7;
+delete from Address where addressId = 7;
