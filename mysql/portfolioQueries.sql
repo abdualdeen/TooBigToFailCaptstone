@@ -54,4 +54,21 @@ insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 3, 125);
 -- (person 2 port) 
 insert into PortfolioAsset (portId, assetId, assetInfo) values (2, 4, 25.5);
 
--- Queries:
+-- ==Queries== --
+-- 1
+select * from Person;
+
+-- 2
+-- select personId from Person where firstName = "Light";
+select emailAddress from EmailAddress where personId = (select personId from Person where firstName = "Light");
+
+-- 3
+insert into EmailAddress (personId, emailAddress) values ((select personId from Person where firstName = "Light"), "kira@deathnote.com");
+
+-- 4
+update EmailAddress set emailAddress = "cj@grovestreet.com" where emailAddressId  = 1;
+
+-- 5 
+select * from EmailAddress;
+delete from EmailAddress where personId = 7;
+delete from Person where personId = 7;
