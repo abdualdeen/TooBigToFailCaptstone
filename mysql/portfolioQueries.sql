@@ -78,11 +78,89 @@ delete from Person where personId = 8;
 delete from Address where addressId = 8;
 
 -- 6
--- select * from Address;
--- select * from Person;
 insert into Address (street, city, state, country) values ("99 Algebra St", "Khwarazm", "Aral Sea", "Persia");
 insert into Person(alphaCode, lastName, firstName, addressId) values ("sqrt", "Al-Kawarzimi", "Muhammad", 9);
-insert into EmailAddress (personId, emailAddress) values (10, "mkawarzimi@algebra.com");
+insert into EmailAddress (personId, emailAddress) values (9, "mkawarzimi@algebra.com");
 
 -- 7 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 9
+-- select * from Asset;
+insert into Asset (quartDivi, BaseROR, omega, investmentValue, label, assetType) values (95000.0, 0.50, 0.15, 999999.0, "Mass Effect Group", "P");
+
+-- 10
+insert into Portfolio (ownerId, managerId) values (9, 1);
+
+-- 11
+insert into PortfolioAsset (portId, assetId, assetInfo) values (4, 5, 9999);
+
+-- 12
+select p.lastName, count(a.assetId) as numberOfAssets from Asset a
+  left join PortfolioAsset pa on a.assetId  = pa.assetId
+  left join Portfolio po on po.portId = pa.portId
+  left join Person p on p.personId = ownerId;
+-- select count(a.assetId) as numberOfAssets from Asset a where a.assetId
