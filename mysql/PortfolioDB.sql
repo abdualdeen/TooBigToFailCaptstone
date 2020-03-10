@@ -1,12 +1,13 @@
 -- create database ahamad;
 -- use ahamad;
 -- use hbalandran;
-drop table if exists PortfolioAssets;
+drop table if exists PortfolioAsset;
 drop table if exists Portfolio;
-drop table if exists Address;
 drop table if exists EmailAddress;
 drop table if exists Asset;
 drop table if exists Person;
+drop table if exists Address;
+
 -- creating 3 Tables; Person, Asset, and Portfolio.
 
 create table if not exists Address (
@@ -36,7 +37,8 @@ create table if not exists EmailAddress (
   
 create table if not exists Asset (
   assetId int not null primary key auto_increment,
-  apr double not null,
+  assetType varchar(1) not null,
+  apr double,
   label varchar(100) not null,
   quartDivi double,
   baseROR double,
@@ -51,11 +53,12 @@ create table if not exists Portfolio (
   portId int primary key not null auto_increment,
   ownerId int not null, foreign key (ownerId) references Person(personId),
   managerId int not null, foreign key (managerId) references Person(personId),
-  benefId int not null, foreign key (benefId) references Person(personId)
+  benefId int, foreign key (benefId) references Person(personId)
   );
 
-create table if not exists PortfolioAssets (
-  portfolioAssetId int primary key not null auto_increment,
+create table if not exists PortfolioAsset (
+  portAssetId int primary key not null auto_increment,
   portId int not null, foreign key (portId) references Portfolio(portId),
-  assetId int not null, foreign key (assetId) references Asset(assetId)
+  assetId int not null, foreign key (assetId) references Asset(assetId),
+  assetInfo double not null
 );
