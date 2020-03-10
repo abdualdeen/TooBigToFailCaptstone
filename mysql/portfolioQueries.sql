@@ -159,8 +159,12 @@ insert into Portfolio (ownerId, managerId) values (9, 1);
 insert into PortfolioAsset (portId, assetId, assetInfo) values (4, 5, 9999);
 
 -- 12
-select p.lastName, count(a.assetId) as numberOfAssets from Asset a
-  left join PortfolioAsset pa on a.assetId  = pa.assetId
-  left join Portfolio po on po.portId = pa.portId
-  left join Person p on p.personId = ownerId;
+-- select * from Portfolio;
+select pe.lastName, count(pa.assetId) as numberOfAssets from PortfolioAsset pa
+  left join Portfolio p on p.portId = pa.portId
+  left join Person pe on pe.personId = p.ownerId;
+-- select p.lastName, count(a.assetId) as numberOfAssets from Asset a
+--   left join PortfolioAsset pa on a.assetId  = pa.assetId
+--   left join Portfolio po on po.portId = pa.portId
+--   left join Person p on p.personId = ownerId;
 -- select count(a.assetId) as numberOfAssets from Asset a where a.assetId
