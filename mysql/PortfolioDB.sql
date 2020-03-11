@@ -9,17 +9,18 @@ drop table if exists Address;
 drop table if exists State;
 drop table if exists Country;
 
+
 -- creating 3 Tables; Person, Asset, and Portfolio.
 create table if not exists State (
   stateId int primary key not null auto_increment,
-  state varchar(100) not null,
-  abbrevia varchar(25) not null
+  name varchar(100) not null,
+  abbreviation varchar(25) not null
 );
 
 create table if not exists Country (
   countryId int primary key not null auto_increment,
-  country varchar(100) not null,
-  abbrevia varchar(25) not null
+  name varchar(100) not null,
+  abbreviation varchar(25) not null
 );
 
 create table if not exists Address (
@@ -45,7 +46,7 @@ create table if not exists EmailAddress (
   emailAddressId int primary key not null auto_increment,
   personId int not null, foreign key (personId) references Person(personId),
   emailAddress varchar(255),
-  constraint uniquePair unique index (emailAddressId, personId)
+  constraint uniquePair unique index (emailAddress, personId)
 );
   
 create table if not exists Asset (
@@ -60,7 +61,7 @@ create table if not exists Asset (
   sharePrice double,
   omega double,
   investmentValue double,
-  assetCode varchar(100) not null
+  assetCode varchar(100) not null, constraint unique (assetCode)
 );  
   
 create table if not exists Portfolio (
@@ -79,8 +80,22 @@ create table if not exists PortfolioAssets (
   constraint uniquePair unique index (portId, assetId)
 );
 
+-- country data
+insert into Country (name, abbreviation) values ("United States", "USA");
+insert into Country (name, abbreviation) values ("Persia", "PRSA");
+insert into Country (name, abbreviation) values ("Japan", "JPN");
 
--- address
+-- state data
+insert into State (name, abbreviation) values ("California", "CA");
+insert into State (name, abbreviation) values ("New York", "NY");
+insert into State (name, abbreviation) values ("Shinjiku", "SHJ");
+insert into State (name, abbreviation) values ("Hawaii", "HI");
+insert into State (name, abbreviation) values ("Nevada", "NV");
+insert into State (name, abbreviation) values ("Nebraska", "NE");
+insert into State (name, abbreviation) values ("Aral Sea", "AS");
+
+
+-- address data
 insert into Address (street, city, state, zip, country) values ("420 Grove St", "Los Santos", "CA", "91111", "USA");
 insert into Address (street, city, state, zip, country) values ("100 Wall St", "New York", "NY", "10005-0012", "USA");
 insert into Address (street, city, state, zip, country) values ("69 Shinjiku St", "Tokyo", "Shinjiku", "", "Japan");
