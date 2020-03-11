@@ -1,4 +1,3 @@
--- create database ahamad;
 -- use ahamad;
 -- use hbalandran;
 drop table if exists PortfolioAssets;

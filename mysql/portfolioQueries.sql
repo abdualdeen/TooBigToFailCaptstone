@@ -3,10 +3,9 @@
 
 -- ==Queries== --
 -- 1
-select * from Person;
+select * from Person; -- join to address and email address
 
 -- 2
--- select personId from Person where firstName = "Light";
 select emailAddress from EmailAddress where personId = (select personId from Person where firstName = "Light");
 
 -- 3
@@ -19,7 +18,6 @@ update EmailAddress set emailAddress = "cj@grovestreet.com" where emailAddressId
 delete from EmailAddress where personId = 8;
 update Portfolio set benefId = null where portId = 3;
 delete from Person where personId = 8;
--- delete from Address where addressId = 8;
 
 -- 6
 insert into Address (street, city, state, country) values ("99 Algebra St", "Khwarazm", "Aral Sea", "Persia");
@@ -33,7 +31,6 @@ select * from Asset a join PortfolioAssets pa on a.assetId = pa.assetId join Por
 select * from Asset a join PortfolioAssets pa on a.assetId = pa.assetId join Portfolio p on p.portId = pa.portId join Person pe on pe.personId = p.ownerId;
 
 -- 9
--- select * from Asset;
 insert into Asset (quartDivi, BaseROR, omega, investmentValue, label, assetType) values (95000.0, 0.50, 0.15, 999999.0, "Mass Effect Group", "P");
 
 -- 10
@@ -43,7 +40,6 @@ insert into Portfolio (ownerId, managerId) values (9, 1);
 insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 5, 9999);
 
 -- 12
--- select * from Portfolio;
 select pe.lastName, count(pa.assetId) as numberOfAssets from PortfolioAssets pa
   join Portfolio p on p.portId = pa.portId
   right join Person pe on pe.personId = p.ownerId group by pe.personId;
@@ -51,7 +47,6 @@ select pe.lastName, count(pa.assetId) as numberOfAssets from PortfolioAssets pa
 --   left join PortfolioAsset pa on a.assetId  = pa.assetId
 --   left join Portfolio po on po.portId = pa.portId
 --   left join Person p on p.personId = ownerId;
--- select count(a.assetId) as numberOfAssets from Asset a where a.assetId
 
 -- 13
 select pe.lastName, count(p.portId) as numberOfAssets from Portfolio p
@@ -65,3 +60,9 @@ select p.portCode, sum(a.sharePrice*pa.assetInfo) as sumOfAssets from PortfolioA
 -- 15
 select a.label, sum(pa.assetInfo) as sumOfStakePercentage from PortfolioAssets pa
   join Asset a on pa.assetId = a.assetId where (a.assetType = "P") group by a.assetId having sumOfStakePercentage>100;
+  
+  -- country and state table. keys in address table. name and abbre.
+  -- constraint on email address, portfolio, and portfolioasset
+  -- test them yourselves
+  -- add couple more test cases for assets and portfolios. 
+  -- put bonus queries
