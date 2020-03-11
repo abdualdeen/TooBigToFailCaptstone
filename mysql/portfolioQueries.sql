@@ -43,10 +43,7 @@ insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 5, 9999);
 select pe.lastName, count(pa.assetId) as numberOfAssets from PortfolioAssets pa
   join Portfolio p on p.portId = pa.portId
   right join Person pe on pe.personId = p.ownerId group by pe.personId;
--- select p.lastName, count(a.assetId) as numberOfAssets from Asset a
---   left join PortfolioAsset pa on a.assetId  = pa.assetId
---   left join Portfolio po on po.portId = pa.portId
---   left join Person p on p.personId = ownerId;
+
 
 -- 13
 select pe.lastName, count(p.portId) as numberOfAssets from Portfolio p

@@ -6,17 +6,30 @@ drop table if exists EmailAddress;
 drop table if exists Asset;
 drop table if exists Person;
 drop table if exists Address;
+drop table if exists State;
+drop table if exists Country;
 
 -- creating 3 Tables; Person, Asset, and Portfolio.
+create table if not exists State (
+  stateId int primary key not null auto_increment,
+  state varchar(100) not null,
+  abbrevia varchar(25) not null
+);
+
+create table if not exists Country (
+  countryId int primary key not null auto_increment,
+  country varchar(100) not null,
+  abbrevia varchar(25) not null
+);
 
 create table if not exists Address (
   addressId int primary key not null auto_increment,
 --   personId int not null, foreign key (personId) references Person(personId),
   street varchar(100),
   city varchar(100),
-  state varchar(100),
+  stateId int, foreign key (stateId) references State(stateId),
   zip varchar(50),
-  country varchar(50)
+  countryId int, foreign key (countryId) references Country(countryId)
   );
   
 create table if not exists Person (
@@ -31,7 +44,8 @@ create table if not exists Person (
 create table if not exists EmailAddress (
   emailAddressId int primary key not null auto_increment,
   personId int not null, foreign key (personId) references Person(personId),
-  emailAddress varchar(255)
+  emailAddress varchar(255),
+  constraint uniquePair unique index (emailAddressId, personId)
 );
   
 create table if not exists Asset (
@@ -61,7 +75,8 @@ create table if not exists PortfolioAssets (
   portAssetId int primary key not null auto_increment,
   portId int not null, foreign key (portId) references Portfolio(portId),
   assetId int not null, foreign key (assetId) references Asset(assetId),
-  assetInfo double not null
+  assetInfo double not null,
+  constraint uniquePair unique index (portId, assetId)
 );
 
 
