@@ -1,6 +1,15 @@
 -- use ahamad;
 -- use hbalandran;
 
+-- ==BONUS QUERIES== --
+-- State
+insert into State (name, abbreviation) values ("Colorado", "CO");
+insert into State (name, abbreviation) values ("Wyoming", "WY");
+
+-- Country
+insert into Country (name, abbreviation) values ("Thailand", "THI");
+insert into Country (name, abbreviation) values ("China", "CHI");
+
 -- ==Queries== --
 -- 1
 
@@ -8,7 +17,7 @@ select p.personId, p.lastName, a.street, a.city, s.name, c.name, a.zip, e.emailA
   left join Address a on a.addressId = p.addressId
   left join EmailAddress e on e.personId = p.personId
   left join State s on s.stateId = a.stateId
-  left join Country c on c.countryId = a.countryId; -- join to address and email address
+  left join Country c on c.countryId = a.countryId;
 
 
 -- 2
@@ -77,17 +86,3 @@ select a.label, sum(pa.assetInfo) as sumOfStakePercentage from PortfolioAssets p
   join Asset a on pa.assetId = a.assetId where (a.assetType = "P") group by a.assetId having sumOfStakePercentage>100; -- group by a.assetId ;
 -- in private investments, if the stake percentage is greater than 100 display the list of investments that exceeds
   
--- BONUS QUERY --
--- State
-insert into State (name, abbreviation) values ("Colorado", "CO");
-insert into State (name, abbreviation) values ("Wyoming", "WY");
-
--- Country
-insert into Country (name, abbreviation) values ("Thailand", "THI");
-insert into Country (name, abbreviation) values ("China", "CHI");
-
-  -- country and state table. keys in address table. name and abbre.
-  -- constraint on email address, portfolio, and portfolioasset
-  -- test them yourselves
-  -- add couple more test cases for assets and portfolios. 
-  -- put bonus queries
