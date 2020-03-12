@@ -1,12 +1,14 @@
 -- use ahamad;
-use hbalandran;
+-- use hbalandran;
 
 -- ==Queries== --
 -- 1
 
-select p.personId, p.lastName, a.address, e.emailAddress from Person p
+select p.personId, p.lastName, a.street, a.city, s.name, c.name, a.zip, e.emailAddress from Person p
   left join Address a on a.addressId = p.addressId
-  left join EmailAddress e on e.personId = p.personId; -- join to address and email address
+  left join EmailAddress e on e.personId = p.personId
+  left join State s on s.stateId = a.stateId
+  left join Country c on c.countryId = a.countryId; -- join to address and email address
 
 
 -- 2
