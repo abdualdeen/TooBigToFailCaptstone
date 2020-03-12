@@ -175,21 +175,13 @@ insert into Portfolio (ownerId, managerId, benefId, portCode) values (6, 7, 8, "
 insert into Portfolio (ownerId, managerId, benefId, portCode) values (6, 4, 1, "Px003");
 
 -- (Person 1 port) Portfolio Asset association table with asset info. 
-<<<<<<< HEAD
-insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 1, 105);
+insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 1, 35);
 insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 2, 26534.21);
 insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 3, 125);
 
 -- (person 3 port) 
 insert into PortfolioAsset (portId, assetId, assetInfo) values (2, 4, 25.5);
-=======
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 1, 35);
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 2, 26534.21);
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 3, 125);
-
--- (person 3 port) 
-insert into PortfolioAssets (portId, assetId, assetInfo) values (2, 4, 25.5);
 
 -- (person 4 port)
 insert into PortfolioAssets (portID, assetId, assetInfo) values (4, 1, 75);
->>>>>>> 1fc6666682b1f112a75bdda880405ea489b49247
+
