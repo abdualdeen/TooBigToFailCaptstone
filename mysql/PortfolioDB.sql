@@ -1,5 +1,5 @@
 -- use ahamad;
--- use hbalandran;
+use hbalandran;
 drop table if exists PortfolioAssets;
 drop table if exists Portfolio;
 drop table if exists EmailAddress;
@@ -96,14 +96,14 @@ insert into State (name, abbreviation) values ("Aral Sea", "AS");
 
 
 -- address data
-insert into Address (street, city, state, zip, country) values ("420 Grove St", "Los Santos", "CA", "91111", "USA");
-insert into Address (street, city, state, zip, country) values ("100 Wall St", "New York", "NY", "10005-0012", "USA");
-insert into Address (street, city, state, zip, country) values ("69 Shinjiku St", "Tokyo", "Shinjiku", "", "Japan");
-insert into Address (street, city, state, zip, country) values ("892 Momona St", "Honolulu", "HI", "96820", "USA");
-insert into Address (street, city, state, zip, country) values ("12 Pol St", "Los Angeles", "CA", "12345", "USA");
-insert into Address (street, city, state, zip, country) values ("101 N 14th St", "Lincoln", "NE", "68508", "USA");
-insert into Address (street, city, state, zip, country) values ("123 Alphabet Blvd", "Las Vegas", "NV", "12345", "USA");
-insert into Address (street, city, state, country) values ("99 Algebra St", "Khwarazm", "Aral Sea", "Persia");
+insert into Address (street, city, stateId, zip, countryId) values ("420 Grove St", "Los Santos", 1, "91111", 1);
+insert into Address (street, city, stateId, zip, countryId) values ("100 Wall St", "New York", 2, "10005-0012", 1);
+insert into Address (street, city, stateId, countryId) values ("69 Shinjiku St", "Tokyo", 3, 3);
+insert into Address (street, city, stateId, zip, countryId) values ("892 Momona St", "Honolulu", 4, "96820", 1);
+insert into Address (street, city, stateId, zip, countryId) values ("12 Pol St", "Los Angeles", 1, "12345", 1);
+insert into Address (street, city, stateId, zip, countryId) values ("101 N 14th St", "Lincoln", 6, "68508", 1);
+insert into Address (street, city, stateId, zip, countryId) values ("123 Alphabet Blvd", "Las Vegas", 5, "12345", 1);
+insert into Address (street, city, stateId, countryId) values ("99 Algebra St", "Khwarazm", 7, 2);
 
 -- person
 insert into Person (alphaCode, lastName, firstName, addressId) values ("944c", "Johnson", "Carl", 1);
@@ -138,15 +138,22 @@ insert into Asset (quartDivi, BaseROR, beta, stockSymb, sharePrice, label, asset
 -- Person 3 Assets
 insert into Asset (quartDivi, BaseROR, beta, stockSymb, sharePrice, label, assetType, assetCode) values (5.45, 0.031, .075, "KO", 41.08, "Coca-cola", "S", "321CC");
 
+-- Person 4 Assets
+-- Asset is cluckin bell
+
 -- Portfolios 
 insert into Portfolio (ownerId, managerId, benefId, portCode) values (1, 2, 3,"PT001");
 insert into Portfolio (ownerId, managerId, portCode) values (4, 5, "PF006");
 insert into Portfolio (ownerId, managerId, benefId, portCode) values (6, 7, 8, "PF002");
+insert into Portfolio (ownerId, managerId, benefId, portCode) values (6, 4, 1, "Px003");
 
 -- (Person 1 port) Portfolio Asset association table with asset info. 
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 1, 105);
+insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 1, 35);
 insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 2, 26534.21);
 insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 3, 125);
 
 -- (person 3 port) 
 insert into PortfolioAssets (portId, assetId, assetInfo) values (2, 4, 25.5);
+
+-- (person 4 port)
+insert into PortfolioAssets (portID, assetId, assetInfo) values (4, 1, 75);
