@@ -1,6 +1,6 @@
 -- use ahamad;
 -- use hbalandran;
-drop table if exists PortfolioAssets;
+drop table if exists PortfolioAsset;
 drop table if exists Portfolio;
 drop table if exists EmailAddress;
 drop table if exists Asset;
@@ -9,20 +9,29 @@ drop table if exists Address;
 drop table if exists State;
 drop table if exists Country;
 
+-- For bonus points:
+-- Added a country and state tables that are linked to the address table. 
+-- Added constraint keys on assetCode in Asset, portId and assetId in PortfolioAsset, and the emailAddress and emailAddressId in EmailAddress.
 
--- creating 3 Tables; Person, Asset, and Portfolio.
+
+-- The database consists of a State, Country, Address, Person, Portofolio, and PortolfioAssets.
+-- The state table holds a stateId(primary key), the name of the state and an abbreviation. The abbreviation is set so that a person can reference 
+-- what it is in case they are not sure.alter
 create table if not exists State (
   stateId int primary key not null auto_increment,
   name varchar(100) not null,
   abbreviation varchar(25) not null
 );
 
+-- The country table has a country Id, the name of the country and the abbreviation. 
 create table if not exists Country (
   countryId int primary key not null auto_increment,
   name varchar(100) not null,
   abbreviation varchar(25) not null
 );
 
+
+-- The address table stores the street, city, and zip. The stateId and countryId are foreign keys referencing the State and Country table respectively. 
 create table if not exists Address (
   addressId int primary key not null auto_increment,
 --   personId int not null, foreign key (personId) references Person(personId),
@@ -33,6 +42,9 @@ create table if not exists Address (
   countryId int, foreign key (countryId) references Country(countryId)
   );
   
+  
+  -- The person table contains the identifiing alphaCode from the old system, the broker status, name, and an AddressId pointing to their Address in the 
+  -- address table.
 create table if not exists Person (
   personId int primary key not null auto_increment,
   alphaCode varchar(10) not null,
@@ -42,13 +54,18 @@ create table if not exists Person (
   addressId int not null, foreign key (addressId) references Address(addressId)
   );
   
+  
+-- The EmailAddress table stores a personId as a foreign key and stores the email address(s) of that person. A constraint is set on emailAddress and personId to
+-- prevent duplicats. 
 create table if not exists EmailAddress (
   emailAddressId int primary key not null auto_increment,
   personId int not null, foreign key (personId) references Person(personId),
   emailAddress varchar(255),
   constraint uniquePair unique index (emailAddress, personId)
 );
-  
+
+
+-- The asset table lists each asset type along with their respective values. The asset code is constrained as the same asset should not be repeated.
 create table if not exists Asset (
   assetId int not null primary key auto_increment,
   assetType varchar(1) not null,
@@ -63,7 +80,11 @@ create table if not exists Asset (
   investmentValue double,
   assetCode varchar(100) not null, constraint unique (assetCode)
 );  
-  
+
+
+-- The portfolio table stores the owner, manager and beneficiary as foreign keys that point to the Person table with person Id.
+-- The owner and manager cannot be null as there must be an owner and a manager for a particular portfolio, but there does not 
+-- need to always be a beneficiary.
 create table if not exists Portfolio (
   portId int primary key not null auto_increment,
   ownerId int not null, foreign key (ownerId) references Person(personId),
@@ -72,7 +93,11 @@ create table if not exists Portfolio (
   portCode varchar(100) not null
   );
 
-create table if not exists PortfolioAssets (
+
+-- The portfolio asset table is a association table that associates the relevant portfolio with its relevant assets.
+-- It also stores the asset information asscoiated with the portfolio such as deposit balance, private investment value, and number of shares in stocks.
+-- A constraint is present to make sure that a portfolio should not have a repeated asset. 
+create table if not exists PortfolioAsset (
   portAssetId int primary key not null auto_increment,
   portId int not null, foreign key (portId) references Portfolio(portId),
   assetId int not null, foreign key (assetId) references Asset(assetId),
@@ -80,6 +105,8 @@ create table if not exists PortfolioAssets (
   constraint uniquePair unique index (portId, assetId)
 );
 
+
+-- Inserting the test cases into the database. 
 -- country data
 insert into Country (name, abbreviation) values ("United States", "USA");
 insert into Country (name, abbreviation) values ("Persia", "PRSA");
@@ -144,9 +171,9 @@ insert into Portfolio (ownerId, managerId, portCode) values (4, 5, "PF006");
 insert into Portfolio (ownerId, managerId, benefId, portCode) values (6, 7, 8, "PF002");
 
 -- (Person 1 port) Portfolio Asset association table with asset info. 
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 1, 105);
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 2, 26534.21);
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 3, 125);
+insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 1, 105);
+insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 2, 26534.21);
+insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 3, 125);
 
 -- (person 3 port) 
-insert into PortfolioAssets (portId, assetId, assetInfo) values (2, 4, 25.5);
+insert into PortfolioAsset (portId, assetId, assetInfo) values (2, 4, 25.5);

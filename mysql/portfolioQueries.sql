@@ -3,7 +3,9 @@
 
 -- ==Queries== --
 -- 1
-select * from Person; -- join to address and email address
+select p.personId, p.lastName, a.address, e.emailAddress from Person p
+  left join Address a on a.addressId = p.addressId
+  left join EmailAddress e on e.personId = p.personId; -- join to address and email address
 
 -- 2
 select emailAddress from EmailAddress where personId = (select personId from Person where firstName = "Light");
