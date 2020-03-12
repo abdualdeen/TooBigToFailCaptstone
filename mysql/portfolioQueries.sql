@@ -2,6 +2,7 @@
 -- use hbalandran;
 
 -- ==BONUS QUERIES== --
+-- Run these after running the rest of the queries first.
 -- State
 insert into State (name, abbreviation) values ("Colorado", "CO");
 insert into State (name, abbreviation) values ("Wyoming", "WY");
@@ -9,6 +10,14 @@ insert into State (name, abbreviation) values ("Wyoming", "WY");
 -- Country
 insert into Country (name, abbreviation) values ("Thailand", "THI");
 insert into Country (name, abbreviation) values ("China", "CHI");
+
+-- Testing key constraints
+insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 5, 9999); -- tests for duplicate portfolios with assets
+insert into EmailAddress (personId, emailAddress) values (9, "mkawarzimi@algebra.com"); -- tests for duplicate email address
+insert into Asset (quartDivi, BaseROR, omega, investmentValue, label, assetType, assetCode) 
+  values (95000.0, 0.50, 0.15, 999999.0, "Mass Effect Group", "P", "MEEG"); -- tests for duplicate assets. 
+-- If running these returns errors then the constraint works.
+
 
 -- ==Queries== --
 -- 1
@@ -39,21 +48,21 @@ delete from Person where personId = 8;
 -- removing a specific person
 
 -- 6
-insert into Address (street, city, state, country) values ("99 Algebra St", "Khwarazm", 7, 3);
+insert into Address (street, city, stateId, countryId) values ("99 Algebra St", "Khwarazm", 7, 3);
 insert into Person(alphaCode, lastName, firstName, addressId) values ("sqrt", "Al-Kawarzimi", "Muhammad", 9);
 insert into EmailAddress (personId, emailAddress) values (9, "mkawarzimi@algebra.com");
 -- adding a new person
 
 -- 7 
-select * from Asset a join PortfolioAssets pa on a.assetId = pa.assetId join Portfolio p on p.portId = pa.portId;
+select * from Asset a join PortfolioAsset pa on a.assetId = pa.assetId join Portfolio p on p.portId = pa.portId;
 -- retrieving the assets from a specific portfolio
 
 -- 8 
-select * from Asset a join PortfolioAssets pa on a.assetId = pa.assetId join Portfolio p on p.portId = pa.portId join Person pe on pe.personId = p.ownerId;
+select * from Asset a join PortfolioAsset pa on a.assetId = pa.assetId join Portfolio p on p.portId = pa.portId join Person pe on pe.personId = p.ownerId;
 -- retrieving the assets for a specific person
 
 -- 9
-insert into Asset (quartDivi, BaseROR, omega, investmentValue, label, assetType) values (95000.0, 0.50, 0.15, 999999.0, "Mass Effect Group", "P");
+insert into Asset (quartDivi, BaseROR, omega, investmentValue, label, assetType, assetCode) values (95000.0, 0.50, 0.15, 999999.0, "Mass Effect Group", "P", "MEEG");
 -- adding a new asset
 
 -- 10
@@ -61,11 +70,11 @@ insert into Portfolio (ownerId, managerId) values (9, 1);
 -- adding a new portfolio
 
 -- 11
-insert into PortfolioAssets (portId, assetId, assetInfo) values (1, 5, 9999);
+insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 5, 9999);
 -- connect an asset with portfolio
 
 -- 12
-select pe.lastName, count(pa.assetId) as numberOfAssets from PortfolioAssets pa
+select pe.lastName, count(pa.assetId) as numberOfAssets from PortfolioAsset pa
   join Portfolio p on p.portId = pa.portId
   right join Person pe on pe.personId = p.ownerId group by pe.personId;
 -- total amount of portfolios each person owns
@@ -76,13 +85,13 @@ select pe.lastName, count(p.portId) as numberOfAssets from Portfolio p
 -- total amount of portfolios each person manages 
   
 -- 14
-select p.portCode, sum(a.sharePrice*pa.assetInfo) as sumOfAssets from PortfolioAssets pa
+select p.portCode, sum(a.sharePrice*pa.assetInfo) as sumOfAssets from PortfolioAsset pa
   join Portfolio p on p.portId = pa.portId
   join Asset a on a.assetId = pa.assetId where a.assetType = "S" group by p.portId;
 -- for the stocks in each portfolio find the total value
   
 -- 15
-select a.label, sum(pa.assetInfo) as sumOfStakePercentage from PortfolioAssets pa
+select a.label, sum(pa.assetInfo) as sumOfStakePercentage from PortfolioAsset pa
   join Asset a on pa.assetId = a.assetId where (a.assetType = "P") group by a.assetId having sumOfStakePercentage>100; -- group by a.assetId ;
 -- in private investments, if the stake percentage is greater than 100 display the list of investments that exceeds
   
