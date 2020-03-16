@@ -1,12 +1,38 @@
 package com.tbf;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * This is a collection of utility methods that define a general API for
  * interacting with the database supporting this application.
  *
  */
 public class PortfolioData {
-
+	
+	public static Connection connectToDB() {
+		String DRIVER = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://cse.unl.edu/ahamad";
+		String username = "ahamad";
+		String password = "83J:Pg";
+		try {
+			Class.forName(DRIVER).getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} 
+		
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(url, username, password);
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		return conn;
+	}
+	
 	/**
 	 * Method that removes every person record from the database
 	 */
@@ -17,8 +43,28 @@ public class PortfolioData {
 	 * provided <code>personCode</code>
 	 * @param personCode
 	 */
-	public static void removePerson(String personCode) {}
-	
+	public static void removePerson(String personCode) {
+		String q1 = "delete from EmailAddress where personId = " + personCode + ";";
+		String q2 = "update Portfolio set benefId = null where portId = " + personCode + ";";
+		String q3 = "delete from Person where personId = " + personCode + ";";
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = connectToDB();
+		
+		try {
+			ps = conn.prepareStatement(q1);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q2);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q2);
+			rs = ps.executeQuery();
+			
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		
+	}
 	/**
 	 * Method to add a person record to the database with the provided data. The
 	 * <code>brokerType</code> will either be "E" or "J" (Expert or Junior) or 
