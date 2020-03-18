@@ -13,40 +13,7 @@ import java.sql.SQLException;
  */
 public class PortfolioData {
 	
-	public static Connection connectToDB() {
-		String DRIVER = "com.mysql.jdbc.Driver";
-		String url = "jdbc:mysql://cse.unl.edu/ahamad";
-		String username = "ahamad";
-		String password = "83J:Pg";
-		try {
-			Class.forName(DRIVER).getDeclaredConstructor().newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} 
-		
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, username, password);
-		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
-		}
-		return conn;
-	}
-	public static void disconnectFromDB(Connection conn, PreparedStatement ps, ResultSet rs) {
-		try {
-			if (rs != null && !rs.isClosed()) {
-				rs.close();
-			}
-			if (ps != null && !ps.isClosed()) {
-				ps.close();
-			}
-			if (conn != null && !conn.isClosed()) {
-				conn.close();
-			}
-		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
-		}
-	}
+	
 	
 	/**
 	 * Method that removes every person record from the database
@@ -65,7 +32,7 @@ public class PortfolioData {
 		
 		PreparedStatement ps;
 		ResultSet rs;
-		Connection conn = connectToDB();
+		Connection conn = DBTool.connectToDB();
 		
 		try {
 			ps = conn.prepareStatement(q1);
@@ -78,7 +45,7 @@ public class PortfolioData {
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
-		disconnectFromDB(conn, ps, rs);
+		DBTool.disconnectFromDB(conn, ps, rs);
 	}
 	/**
 	 * Method to add a person record to the database with the provided data. The
@@ -109,14 +76,14 @@ public class PortfolioData {
 		String query = "insert into EmailAddress (personId, emailAddress) values("+personCode+", "+email+");";
 		PreparedStatement ps;
 		ResultSet rs;
-		Connection conn = connectToDB();
+		Connection conn = DBTool.connectToDB();
 		try {
 			ps  = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
-		disconnectFromDB(conn, ps, rs);
+		DBTool.disconnectFromDB(conn, ps, rs);
 	}
 
 	/**
