@@ -32,6 +32,21 @@ public class PortfolioData {
 		}
 		return conn;
 	}
+	public static void disconnectFromDB(Connection conn, PreparedStatement ps, ResultSet rs) {
+		try {
+			if (rs != null && !rs.isClosed()) {
+				rs.close();
+			}
+			if (ps != null && !ps.isClosed()) {
+				ps.close();
+			}
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+	}
 	
 	/**
 	 * Method that removes every person record from the database
@@ -48,8 +63,8 @@ public class PortfolioData {
 		String q2 = "update Portfolio set benefId = null where portId = " + personCode + ";";
 		String q3 = "delete from Person where personId = " + personCode + ";";
 		
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		PreparedStatement ps;
+		ResultSet rs;
 		Connection conn = connectToDB();
 		
 		try {
@@ -57,13 +72,13 @@ public class PortfolioData {
 			rs = ps.executeQuery();
 			ps = conn.prepareStatement(q2);
 			rs = ps.executeQuery();
-			ps = conn.prepareStatement(q2);
+			ps = conn.prepareStatement(q3);
 			rs = ps.executeQuery();
 			
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
-		
+		disconnectFromDB(conn, ps, rs);
 	}
 	/**
 	 * Method to add a person record to the database with the provided data. The
@@ -79,7 +94,10 @@ public class PortfolioData {
 	 * @param country
 	 * @param brokerType
 	 */
-	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, String country, String brokerType, String secBrokerId) {}
+	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, 
+			String country, String brokerType, String secBrokerId) {
+		
+	}
 	
 	/**
 	 * Adds an email record corresponding person record corresponding to the
@@ -87,7 +105,19 @@ public class PortfolioData {
 	 * @param personCode
 	 * @param email
 	 */
-	public static void addEmail(String personCode, String email) {}
+	public static void addEmail(String personCode, String email) {
+		String query = "insert into EmailAddress (personId, emailAddress) values("+personCode+", "+email+");";
+		PreparedStatement ps;
+		ResultSet rs;
+		Connection conn = connectToDB();
+		try {
+			ps  = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		disconnectFromDB(conn, ps, rs);
+	}
 
 	/**
 	 * Removes all asset records from the database
