@@ -40,7 +40,7 @@ public class DBTool {
 		
 		List<Person> persons = new ArrayList<>();
 		
-			ps = (PreparedStatement) conn.prepareStatement(query);
+			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				int personId = rs.getInt("personId");
@@ -57,6 +57,7 @@ public class DBTool {
 				Address a = new Address(street, city, abbreviation, zip, name);
 				Person p = new Person(personId, alphaCode, brokerStat, n, a);
 				persons.add(p);
+			}
 				return persons;
 	}
 
