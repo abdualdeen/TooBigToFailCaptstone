@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import unl.cse.albums.Album;
+import unl.cse.albums.Band;
+
 public class DBTool {
 	
 	public static Connection connectToDB() {
@@ -27,6 +30,34 @@ public class DBTool {
 		}
 		return conn;
 	}
+	String query = "Select p.personId, p.alphaCode, p.brokerStat, p.lastName, p.firstName, a.street, a.city, a.zip, s.abbreviation, c.name from Person p"
+			+ " join Address a on p.addressId = a.addressId join State s on a.stateId = s.stateId join Country c on a.countryId = c.countryId;";
+
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	List<Person> persons = new ArrayList<>();
+	
+	try {
+		ps = (PreparedStatement) conn.prepareStatement(query);
+		rs = ps.executeQuery();
+		while (rs.next()) {
+			int personId = rs.getInt("personId");
+			int alphaCode = rs.getInt("alphaCode");
+			String brokerStat = rs.getString("brokerStat");
+			String lastName = rs.getString("lastName");
+			String firstName = rs.getString("firstName");
+			String street = rs.getString("street");
+			String city = rs.getString("city");
+			String zip = rs.getString("zip");
+			String abbreviation = rs.getString("abbreviation");
+			String name = rs.getString("name");
+			Name n = new Name(firstName, lastName);
+			Address a = new Address(street, city, abbreviation, zip, name);
+			Person p = new Person(personId, alphaCode, brokerStat, n, a);
+			persons.add(p);
+		}
+
 	
 	public static void disconnectFromDB(Connection conn, PreparedStatement ps, ResultSet rs) {
 		try {

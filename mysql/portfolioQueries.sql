@@ -1,5 +1,3 @@
--- use ahamad;
--- use hbalandran;
 
 -- ==BONUS QUERIES== --
 -- Run these after running the rest of the queries first.
