@@ -9,6 +9,23 @@ import java.util.List;
 
 public class DBReader {
 	
+	public static Address retrieveAddress(int addressId) {
+		Address address = new Address();
+		Connection conn = DBTool.connectToDB();
+		String query = "select * from Address where addressId = " +addressId+";";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			address = new Address(rs.getString("street"), rs.getString("city"), rs.getString("abbreviation"), rs.getString("zip"), rs.getString("name"));
+			
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		return address;
+	}
+	
 	public static ArrayList<String> retrieveEmailAddress(int personId){
 		ArrayList<String> emails = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
@@ -34,9 +51,10 @@ public class DBReader {
 	
 	public static List<Person> retrieveAllPerson() {
 		Connection conn = DBTool.connectToDB();
-		String query = "Select p.personId, p.alphaCode, p.brokerStat, p.lastName, p.firstName, a.street, a.city, a.zip, s.abbreviation, c.name, e.emailAddress from Person p"
-				+ " join Address a on p.addressId = a.addressId join State s on a.stateId = s.stateId join Country c on a.countryId = c.countryId join EmailAddress e"
-				+ " on p.personId = e.personId;";
+//		String query = "Select p.personId, p.alphaCode, p.brokerStat, p.lastName, p.firstName, a.street, a.city, a.zip, s.abbreviation, c.name, e.emailAddress from Person p"
+//				+ " join Address a on p.addressId = a.addressId join State s on a.stateId = s.stateId join Country c on a.countryId = c.countryId join EmailAddress e"
+//				+ " on p.personId = e.personId;";
+		String query = "select * from Person;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
@@ -66,8 +84,9 @@ public class DBReader {
 //					ArrayList<String> email = retrieveEmailAddress(rs.getInt("personId"));
 //					email.add(emailAddress);
 					Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
-					Address a = new Address(rs.getString("street"), rs.getString("city"), rs.getString("abbreviation"), rs.getString("zip"), rs.getString("name"));
-					Person p = new Person(rs.getString("alphaCode"), rs.getString("brokerStat"), n, a, retrieveEmailAddress(rs.getInt("personId")));
+//					Address a = new Address(rs.getString("street"), rs.getString("city"), rs.getString("abbreviation"), rs.getString("zip"), rs.getString("name"));
+					Person p = new Person(rs.getString("alphaCode"), rs.getString("brokerStat"), n, retrieveAddress(rs.getInt("addressId")), 
+							retrieveEmailAddress(rs.getInt("personId")));
 					persons.add(p);
 				}
 			} catch (SQLException sqle) {
