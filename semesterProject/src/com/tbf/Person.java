@@ -20,9 +20,9 @@ public class Person {
 	
 	public static List<Person> retrieveAllPerson() {
 		Connection conn = DBTool.connectToDB();
-		String query = "Select p.personId, p.alphaCode, p.brokerStat, p.lastName, p.firstName, a.street, a.city, a.zip, s.abbreviation, c.name from Person p"
-				+ " join Address a on p.addressId = a.addressId join State s on a.stateId = s.stateId join Country c on a.countryId = c.countryId;";
-
+		String query = "Select p.personId, p.alphaCode, p.brokerStat, p.lastName, p.firstName, a.street, a.city, a.zip, s.abbreviation, c.name, e.emailAddress from Person p"
+				+ " join Address a on p.addressId = a.addressId join State s on a.stateId = s.stateId join Country c on a.countryId = c.countryId join EmailAddress e"
+				+ " on p.personId = e.personId;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
@@ -41,9 +41,10 @@ public class Person {
 				String zip = rs.getString("zip");
 				String abbreviation = rs.getString("abbreviation");
 				String name = rs.getString("name");
+				String emailAddress = rs.getString("emailAddress");
 				Name n = new Name(firstName, lastName);
 				Address a = new Address(street, city, abbreviation, zip, name);
-				Person p = new Person(personId, alphaCode, brokerStat, n, a);
+				Person p = new Person(personId, alphaCode, brokerStat, n, a, emailAddress);
 				persons.add(p);
 			}
 			DBTool.disconnectFromDB(conn, ps, rs);
