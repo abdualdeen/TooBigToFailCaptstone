@@ -16,30 +16,8 @@ public class Portfolio {
 	private Person manag;
 	private Person benef;
 	private List<Asset> assetList;
-	
-	public static List<Portfolio> retrieveAllPortfolios() {
-		Connection conn = DBTool.connectToDB();
-		String ownerQuery  = "Select p.alphaCode, po.portCode from Person p"
-				+ " join Portfolio po on p.personId = po.ownerId group by p.alphaCode;";
-		String managerQuery  = "Select p.alphaCode, po.portCode from Person p"
-				+ " join Portfolio po on p.personId = po.managerId group by p.alphaCode;";
-		String beneficiaryQuery  = "Select p.alphaCode, po.portCode from Person p"
-				+ " join Portfolio po on p.personId = po.benefId group by p.alphaCode;";
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		List<Portfolio> portfolios = new ArrayList<>();
-		
-			ps = conn.prepareStatement(ownerQuery, managerQuery, beneficiaryQuery);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				String alphaCode = rs.getString("alphaCode");
-				int portCode = rs.getString("portCode");
-				ArrayList<String> = 
-				
-			}
-				
-	
+
+
 	public double getTotal() {
 		List<Asset> list = this.assetList;
 		double total = 0;

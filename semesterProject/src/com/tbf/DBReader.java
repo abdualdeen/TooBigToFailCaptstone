@@ -47,7 +47,61 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return emails;
 	}
-	
+	public static Person retrievePerson(int int1){
+		Person person = new Person();
+		Connection conn = DBTool.connectToDB();
+		String query = "select * from Person where personId = " + int1 + ";";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
+			person = new Person(rs.getString("alphaCode"), rs.getString("brokerStat"), n, retrieveAddress(rs.getInt("addressId")), 
+					retrieveEmailAddress(rs.getInt("personId")));
+		}catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
+		return person;
+	}
+	public static List<Asset> retrieveAssets(int portId) {
+		List<Asset> assets = new ArrayList<>();
+		Connection conn = DBTool.connectToDB();
+		String query = "select * from Asset where assetId = " + portId + ";";
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			while (rs.next()) {
+				if (rs.getString("assetType").equals("D")) {
+					Asset newDepo  = new DepositAsset(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("apr"));
+					assets.add(newDepo);
+
+				} else if (rs.getString("assetType").equals("S")) {
+					Asset newStock = new Stock(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("quartDivi"), rs.getDouble("baseROR"),
+							rs.getDouble("beta"), rs.getString("stockSymb"), rs.getDouble("SharePrice"));
+					assets.add(newStock);
+
+					
+				} else if (rs.getString("assetType").equals("P")) {
+					Asset newPI = new PrivateInvest(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("quartDivi"), 
+							rs.getDouble("baseROR"), rs.getDouble("omega"), rs.getDouble("investmentValue"));
+					assets.add(newPI);
+
+				}
+ 			}
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		
+		DBTool.disconnectFromDB(conn, ps, rs);
+		return assets;
+	}
 	
 	public static List<Person> retrieveAllPerson() {
 		Connection conn = DBTool.connectToDB();
@@ -135,4 +189,28 @@ public class DBReader {
 		return assets;
 	}
 
+	public static List<Portfolio> retrieveAllPortfolios() {
+		Connection conn = DBTool.connectToDB();
+		String query  = "Select * from Portfolio;";
+				
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		List<Portfolio> portfolios = new ArrayList<>();
+		
+		try {
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Portfolio p = new Portfolio(rs.getString("portCode"), retrievePerson(rs.getInt("ownerId")), retrievePerson(rs.getInt("managerId")), retrievePerson(rs.getInt("beneficiaryId")), retrieveAssets(rs.getInt("portId"))); 
+			}
+		}
+			catch (SQLException sqle) {
+				throw new RuntimeException(sqle);
+			}
+			
+			DBTool.disconnectFromDB(conn, ps, rs);
+			return portfolios;
+				
+		}
 }
