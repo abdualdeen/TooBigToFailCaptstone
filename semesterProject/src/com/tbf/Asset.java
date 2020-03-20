@@ -1,12 +1,5 @@
 package com.tbf;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 //TODO: refactor code from portfolio and add it to assets.
 public abstract class Asset {
 	private String code;
@@ -25,43 +18,6 @@ public abstract class Asset {
 	public abstract double getNumberShares();
 	public abstract double getPercentStake();
 	
-	public static List<Asset> retrieveAllAssets() {
-		List<Asset> assets = new ArrayList<>();
-		Connection conn = DBTool.connectToDB();
-		String query = "select * from Asset;";
-		
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		try {
-			ps = conn.prepareStatement(query);
-			rs = ps.executeQuery();
-			
-			while (rs.next()) {
-				if (rs.getString("assetType").equals("D")) {
-					Asset newDepo  = new DepositAsset(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("apr"));
-					assets.add(newDepo);
-
-				} else if (rs.getString("assetType").equals("S")) {
-					Asset newStock = new Stock(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("quartDivi"), rs.getDouble("baseROR"),
-							rs.getDouble("beta"), rs.getString("stockSymb"), rs.getDouble("SharePrice"));
-					assets.add(newStock);
-
-					
-				} else if (rs.getString("assetType").equals("P")) {
-					Asset newPI = new PrivateInvest(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("quartDivi"), 
-							rs.getDouble("baseROR"), rs.getDouble("omega"), rs.getDouble("investmentValue"));
-					assets.add(newPI);
-
-				}
- 			}
-		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
-		}
-		
-		DBTool.disconnectFromDB(conn, ps, rs);
-		return assets;
-	}
 	
 	public Asset(String code, String accType, String label) {
 		super();
