@@ -1,4 +1,8 @@
 package com.tbf;
+
+import java.util.ArrayList;
+import java.util.List;
+
 //TODO: refactor code from portfolio and add it to assets.
 public abstract class Asset {
 	private String code;
@@ -17,6 +21,10 @@ public abstract class Asset {
 	public abstract double getNumberShares();
 	public abstract double getPercentStake();
 	
+	public static List<Asset> retrieveAllAssets() {
+		List<Asset> assets = new ArrayList<>();
+		return assets;
+	}
 	
 	public Asset(String code, String accType, String label) {
 		super();

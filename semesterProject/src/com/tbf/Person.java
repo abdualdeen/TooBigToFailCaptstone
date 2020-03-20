@@ -3,6 +3,7 @@ package com.tbf;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -28,25 +29,31 @@ public class Person {
 		
 		List<Person> persons = new ArrayList<>();
 		
-			ps = conn.prepareStatement(query);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				int personId = rs.getInt("personId");
-				int alphaCode = rs.getInt("alphaCode");
-				String brokerStat = rs.getString("brokerStat");
-				String lastName = rs.getString("lastName");
-				String firstName = rs.getString("firstName");
-				String street = rs.getString("street");
-				String city = rs.getString("city");
-				String zip = rs.getString("zip");
-				String abbreviation = rs.getString("abbreviation");
-				String name = rs.getString("name");
-				String emailAddress = rs.getString("emailAddress");
-				Name n = new Name(firstName, lastName);
-				Address a = new Address(street, city, abbreviation, zip, name);
-				Person p = new Person(personId, alphaCode, brokerStat, n, a, emailAddress);
-				persons.add(p);
+			try {
+				ps = conn.prepareStatement(query);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					String alphaCode = rs.getString("alphaCode");
+					String brokerStat = rs.getString("brokerStat");
+					String lastName = rs.getString("lastName");
+					String firstName = rs.getString("firstName");
+					String street = rs.getString("street");
+					String city = rs.getString("city");
+					String zip = rs.getString("zip");
+					String abbreviation = rs.getString("abbreviation");
+					String name = rs.getString("name");
+					String emailAddress = rs.getString("emailAddress");
+					ArrayList<String> email = new ArrayList<>();
+					email.add(emailAddress);
+					Name n = new Name(firstName, lastName);
+					Address a = new Address(street, city, abbreviation, zip, name);
+					Person p = new Person(alphaCode, brokerStat, n, a, email);
+					persons.add(p);
+				}
+			} catch (SQLException sqle) {
+				throw new RuntimeException(sqle);
 			}
+			
 			DBTool.disconnectFromDB(conn, ps, rs);
 			return persons;
 	}
