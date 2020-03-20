@@ -12,6 +12,11 @@ import java.util.List;
  *
  */
 public class Person {
+	// FOR TESTING, REMOVE THE MAIN ARGS LATER
+//	public static void main(String args[]) {
+//		List<Person> persons = retrieveAllPerson();
+//	}
+	
 	private String personCode;
 	private String brokerStatus;
 	private Name name;
@@ -43,6 +48,10 @@ public class Person {
 					String abbreviation = rs.getString("abbreviation");
 					String name = rs.getString("name");
 					String emailAddress = rs.getString("emailAddress");
+					// For testing
+//					DBTool.disconnectFromDB(conn, ps, rs);
+//					break;
+					//
 					ArrayList<String> email = new ArrayList<>();
 					email.add(emailAddress);
 					Name n = new Name(firstName, lastName);
