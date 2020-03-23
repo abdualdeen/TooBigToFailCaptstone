@@ -17,3 +17,6 @@ insert into EmailAddress (personId, emailAddress) values (9, "mkawarzimi@algebra
 
 -- for all assets.
 select * from Asset;
+
+-- for assets in portoflio
+select * from Asset a join PortfolioAsset pa on a.assetId = pa.assetId where pa.portId = 1;

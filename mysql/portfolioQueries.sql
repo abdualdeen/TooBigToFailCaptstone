@@ -1,4 +1,3 @@
-
 -- ==BONUS QUERIES== --
 -- Run these after running the rest of the queries first.
 -- State

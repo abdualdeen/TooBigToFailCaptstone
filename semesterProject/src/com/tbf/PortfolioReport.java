@@ -4,7 +4,8 @@ import java.util.List;
 
 public class PortfolioReport {
 	public static void main(String args[]) {
-		List<Portfolio> portList = LoadNParse.parsePortfoliosFile();
+//		List<Portfolio> portList = LoadNParse.parsePortfoliosFile();
+		List<Portfolio> portList = DBReader.retrieveAllPortfolios();
 
 		System.out.println("Portfolio Summary Report");
 		System.out.println(

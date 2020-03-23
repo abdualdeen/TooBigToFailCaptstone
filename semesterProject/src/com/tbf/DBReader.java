@@ -57,6 +57,7 @@ public class DBReader {
 		try {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
+//			String fName = rs.getString("firstName"); //commented out for debugging (remove once done.)
 			Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
 			person = new Person(rs.getString("alphaCode"), rs.getString("brokerStat"), n, retrieveAddress(rs.getInt("addressId")), 
 					retrieveEmailAddress(rs.getInt("personId")));
@@ -172,7 +173,7 @@ public class DBReader {
 	
 	public static List<Portfolio> retrieveAllPortfolios() {
 		Connection conn = DBTool.connectToDB();
-		String query  = "Select * from Portfolio;";
+		String query  = "select * from Portfolio;";
 				
 		PreparedStatement ps = null;
 		ResultSet rs = null;
