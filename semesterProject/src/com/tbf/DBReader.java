@@ -27,6 +27,38 @@ public class DBReader {
 		return address;
 	}
 	
+	public static States retrieveState(int stateId) {
+		States state = new States();
+		Connection conn = DBTool.connectToDB();
+		String query = "select * from State where stateId = " + stateId + ";";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			rs.next();
+			state = new States(rs.getString("abbreviation"));
+		} catch(SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		return state;
+	}
+	public static Country retrieveCountry(int countryId) {
+		Country country = new Country();
+		Connection conn = DBTool.connectToDB();
+		String query = "select * from Country where countryId = " + countryId + ";";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			rs.next();
+			country = new Country(rs.getString("abbreviation"));
+		} catch(SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		return country;
+	}
 	public static ArrayList<String> retrieveEmailAddress(int personId){
 		ArrayList<String> emails = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
