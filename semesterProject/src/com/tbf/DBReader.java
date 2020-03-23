@@ -18,6 +18,7 @@ public class DBReader {
 		try {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
+			rs.next();
 			address = new Address(rs.getString("street"), rs.getString("city"), rs.getString("abbreviation"), rs.getString("zip"), rs.getString("name"));
 			
 		} catch (SQLException sqle) {
@@ -58,6 +59,7 @@ public class DBReader {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 //			String fName = rs.getString("firstName"); //commented out for debugging (remove once done.)
+			rs.next();
 			Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
 			person = new Person(rs.getString("alphaCode"), rs.getString("brokerStat"), n, retrieveAddress(rs.getInt("addressId")), 
 					retrieveEmailAddress(rs.getInt("personId")));
