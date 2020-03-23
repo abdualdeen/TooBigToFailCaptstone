@@ -19,7 +19,7 @@ public class DBReader {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			rs.next();
-			address = new Address(rs.getString("street"), rs.getString("city"), rs.getString("abbreviation"), rs.getString("zip"), rs.getString("name"));
+			address = new Address(rs.getString("street"), rs.getString("city"), retrieveState(rs.getInt("stateId")), rs.getString("zip"), retrieveCountry(rs.getInt("countryId")));
 			
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -27,8 +27,8 @@ public class DBReader {
 		return address;
 	}
 	
-	public static States retrieveState(int stateId) {
-		States state = new States();
+	public static String retrieveState(int stateId) {
+		String state = "";
 		Connection conn = DBTool.connectToDB();
 		String query = "select * from State where stateId = " + stateId + ";";
 		PreparedStatement ps = null;
@@ -37,14 +37,15 @@ public class DBReader {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			rs.next();
-			state = new States(rs.getString("abbreviation"));
+			state = rs.getString("abbreviation");
 		} catch(SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
 		return state;
 	}
-	public static Country retrieveCountry(int countryId) {
-		Country country = new Country();
+	
+	public static String retrieveCountry(int countryId) {
+		String country = "";
 		Connection conn = DBTool.connectToDB();
 		String query = "select * from Country where countryId = " + countryId + ";";
 		PreparedStatement ps = null;
@@ -53,7 +54,7 @@ public class DBReader {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			rs.next();
-			country = new Country(rs.getString("abbreviation"));
+			country = rs.getString("abbreviation");
 		} catch(SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
