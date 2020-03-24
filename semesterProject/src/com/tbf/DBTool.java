@@ -10,15 +10,15 @@ import java.sql.SQLException;
 public class DBTool {
 
 	public static Connection connectToDB() {
-		String DRIVER = "com.mysql.jdbc.Driver";
+//		String DRIVER = "com.mysql.jdbc.Driver";
 		String url = "jdbc:mysql://cse.unl.edu/ahamad?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 		String username = "ahamad";
 		String password = "83J:Pg";
-		try {
-			Class.forName(DRIVER).getDeclaredConstructor().newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+//		try {
+//			Class.forName(DRIVER).getDeclaredConstructor().newInstance();
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
 
 		Connection conn = null;
 		try {

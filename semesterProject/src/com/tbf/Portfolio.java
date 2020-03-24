@@ -160,9 +160,18 @@ public class Portfolio {
 		this.portCode = portCode;
 		this.owner = owner;
 		this.manag = manag;
-		this.assetList = new ArrayList<Asset>();
 	}
 	
+
+	public Portfolio(String portCode, Person owner, Person manag, List<Asset> assetList) {
+		super();
+		this.portCode = portCode;
+		this.owner = owner;
+		this.manag = manag;
+		this.assetList = new ArrayList<Asset>();	}
+
+	public Portfolio() {
+	}
 
 	public String getPortCode() {
 		return portCode;

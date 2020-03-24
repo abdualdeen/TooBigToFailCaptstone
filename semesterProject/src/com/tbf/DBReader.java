@@ -83,6 +83,9 @@ public class DBReader {
 	}
 	
 	public static Person retrievePerson(int personId){
+		if (personId == 0) {
+			return null;
+		}
 		Person person = new Person();
 		Connection conn = DBTool.connectToDB();
 		String query = "select * from Person where personId = " + personId + ";";
@@ -218,9 +221,17 @@ public class DBReader {
 		try {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
+			Portfolio p = new Portfolio();
 			while (rs.next()) {
-				Portfolio p = new Portfolio(rs.getString("portCode"), retrievePerson(rs.getInt("ownerId")), retrievePerson(rs.getInt("managerId")), 
-						retrievePerson(rs.getInt("beneficiaryId")), retrieveAssets(rs.getInt("portId"))); 
+				if (rs.getInt("benefId") >= 1) {
+					p = new Portfolio(rs.getString("portCode"), 
+							retrievePerson(rs.getInt("ownerId")), retrievePerson(rs.getInt("managerId")), retrievePerson(rs.getInt("benefId")), 
+							retrieveAssets(rs.getInt("portId"))); 
+				} else {
+					p = new Portfolio(rs.getString("portCode"), 
+							retrievePerson(rs.getInt("ownerId")), retrievePerson(rs.getInt("managerId")), retrieveAssets(rs.getInt("portId"))); 
+				}
+				
 				portfolios.add(p);
 			}
 		}
