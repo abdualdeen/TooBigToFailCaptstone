@@ -97,8 +97,15 @@ public class DBReader {
 //			String fName = rs.getString("firstName"); //commented out for debugging (remove once done.)
 			rs.next();
 			Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
-			person = new Person(rs.getString("alphaCode"), rs.getString("brokerStat"), n, retrieveAddress(rs.getInt("addressId")), 
-					retrieveEmailAddress(rs.getInt("personId")));
+			String brokerStat = rs.getString("brokerStat");
+			if (brokerStat != null) {
+				person = new Person(rs.getString("alphaCode"), brokerStat, n, retrieveAddress(rs.getInt("addressId")), 
+						retrieveEmailAddress(rs.getInt("personId")));
+			} else {
+				person = new Person(rs.getString("alphaCode"), "", n, retrieveAddress(rs.getInt("addressId")), 
+						retrieveEmailAddress(rs.getInt("personId")));
+			
+			}
 		}catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
