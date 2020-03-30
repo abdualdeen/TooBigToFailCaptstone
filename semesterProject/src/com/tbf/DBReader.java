@@ -94,7 +94,6 @@ public class DBReader {
 		try {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
-//			String fName = rs.getString("firstName"); //commented out for debugging (remove once done.)
 			rs.next();
 			Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
 			String brokerStat = rs.getString("brokerStat");

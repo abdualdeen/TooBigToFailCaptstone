@@ -4,7 +4,6 @@ import java.util.List;
 
 public class PortfolioReport {
 	public static void main(String args[]) {
-//		List<Portfolio> portList = LoadNParse.parsePortfoliosFile();
 		List<Portfolio> portList = DBReader.retrieveAllPortfolios();
 
 		System.out.println("Portfolio Summary Report");
@@ -51,7 +50,6 @@ public class PortfolioReport {
 					j.getOwnerCode().getAddress().getStreet(), j.getOwnerCode().getAddress().getCity(),
 					j.getOwnerCode().getAddress().getState(), j.getOwnerCode().getAddress().getCountry(),
 					j.getOwnerCode().getAddress().getZip(), j.getManagerName(), benefinfo);
-//			System.out.println("\n");
 			System.out.printf("\n%-15s %-30s %-14s %12s %30s %10s\n", "Code", "Asset", "Return Rate", "Risk",
 					"Annual Return", "Value");
 			for (Asset a : j.getAssetList()) {
