@@ -24,6 +24,7 @@ public class DBReader {
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 		return address;
 	}
 	
@@ -41,6 +42,7 @@ public class DBReader {
 		} catch(SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 		return state;
 	}
 	
@@ -58,6 +60,7 @@ public class DBReader {
 		} catch(SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 		return country;
 	}
 	public static ArrayList<String> retrieveEmailAddress(int personId){

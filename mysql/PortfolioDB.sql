@@ -179,7 +179,7 @@ insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 2, 26534.21);
 insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 3, 125);
 
 -- (person 3 port) 
-insert into PortfolioAsset (portId, assetId, assetInfo) values (2, 4, 25.5);
+insert into PortfolioAsset (portId, assetId, assetInfo) values (3, 4, 25.5);
 
 -- (person 4 port)
 insert into PortfolioAsset (portID, assetId, assetInfo) values (4, 1, 75);
