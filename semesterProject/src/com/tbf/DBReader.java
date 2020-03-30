@@ -12,11 +12,12 @@ public class DBReader {
 	public static Address retrieveAddress(int addressId) {
 		Address address = new Address();
 		Connection conn = DBTool.connectToDB();
-		String query = "select * from Address where addressId = " +addressId+";";
+		String query = "select * from Address where addressId = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(query);
+			ps.setInt(1, addressId);
 			rs = ps.executeQuery();
 			rs.next();
 			address = new Address(rs.getString("street"), rs.getString("city"), retrieveState(rs.getInt("stateId")), rs.getString("zip"), retrieveCountry(rs.getInt("countryId")));
@@ -31,11 +32,12 @@ public class DBReader {
 	public static String retrieveState(int stateId) {
 		String state = "";
 		Connection conn = DBTool.connectToDB();
-		String query = "select * from State where stateId = " + stateId + ";";
+		String query = "select * from State where stateId = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(query);
+			ps.setInt(1, stateId);
 			rs = ps.executeQuery();
 			rs.next();
 			state = rs.getString("abbreviation");
@@ -49,11 +51,12 @@ public class DBReader {
 	public static String retrieveCountry(int countryId) {
 		String country = "";
 		Connection conn = DBTool.connectToDB();
-		String query = "select * from Country where countryId = " + countryId + ";";
+		String query = "select * from Country where countryId = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(query);
+			ps.setInt(1, countryId);
 			rs = ps.executeQuery();
 			rs.next();
 			country = rs.getString("abbreviation");
@@ -66,12 +69,13 @@ public class DBReader {
 	public static ArrayList<String> retrieveEmailAddress(int personId){
 		ArrayList<String> emails = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
-		String query = "select emailAddress from EmailAddress where personId = " +personId+ ";";
+		String query = "select emailAddress from EmailAddress where personId = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
 		try {
 			ps = conn.prepareStatement(query);
+			ps.setInt(1, personId);
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -91,13 +95,13 @@ public class DBReader {
 		}
 		Person person = new Person();
 		Connection conn = DBTool.connectToDB();
-		String query = "select * from Person where personId = " + personId + ";";
+		String query = "select * from Person where personId = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(query);
+			ps.setInt(1, personId);
 			rs = ps.executeQuery();
-//			String fName = rs.getString("firstName"); //commented out for debugging (remove once done.)
 			rs.next();
 			Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
 			String brokerStat = rs.getString("brokerStat");
@@ -183,13 +187,14 @@ public class DBReader {
 	public static List<Asset> retrieveAssets(int portId) {
 		List<Asset> assets = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
-		String query = "select * from Asset a join PortfolioAsset pa on a.assetId = pa.assetId where pa.portId = " + portId + ";";
+		String query = "select * from Asset a join PortfolioAsset pa on a.assetId = pa.assetId where pa.portId = ?;";
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
 		try {
 			ps = conn.prepareStatement(query);
+			ps.setInt(1, portId);
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
