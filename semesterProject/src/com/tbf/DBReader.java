@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBReader {
-	
+	/**
+	 * @retrieveAddress
+	 * finds the Address for a person based on the address Id.
+	 * 
+	 */
 	public static Address retrieveAddress(int addressId) {
 		Address address = new Address();
 		Connection conn = DBTool.connectToDB();
@@ -16,8 +20,12 @@ public class DBReader {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
+			/**
+			 * The address finds the needed country and state for the address by using the 
+			 * @retrieveCountry and @retrieveState methods which are passed the country Id and state Id respectively. 
+			 */
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, addressId);
+			ps.setInt(1, addressId);  //Setting the '?' variables in the query to the target variable.
 			rs = ps.executeQuery();
 			rs.next();
 			address = new Address(rs.getString("street"), rs.getString("city"), retrieveState(rs.getInt("stateId")), rs.getString("zip"), retrieveCountry(rs.getInt("countryId")));
@@ -28,15 +36,20 @@ public class DBReader {
 		return address;
 	}
 	
+	/**
+	 * @retrieveState
+	 * returns the State of the address as a string.
+	 * Finds the state using the state Id.
+	 */
 	public static String retrieveState(int stateId) {
-		String state = "";
+		String state = null;
 		Connection conn = DBTool.connectToDB();
-		String query = "select * from State where stateId = ?;";
+		String query = "select abbreviation from State where stateId = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, stateId);
+			ps.setInt(1, stateId);  //Setting the '?' variables in the query to the target variable.
 			rs = ps.executeQuery();
 			rs.next();
 			state = rs.getString("abbreviation");
@@ -45,16 +58,20 @@ public class DBReader {
 		}
 		return state;
 	}
-	
+	/**
+	 * @retrieveCountry
+	 * Finds the country for an address based on the country Id. 
+	 * Returns the country as a string. 
+	 */
 	public static String retrieveCountry(int countryId) {
-		String country = "";
+		String country = null;
 		Connection conn = DBTool.connectToDB();
-		String query = "select * from Country where countryId = ?;";
+		String query = "select abbreviation from Country where countryId = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, countryId);
+			ps.setInt(1, countryId);  //Setting the '?' variables in the query to the target variable.
 			rs = ps.executeQuery();
 			rs.next();
 			country = rs.getString("abbreviation");
@@ -63,6 +80,11 @@ public class DBReader {
 		}
 		return country;
 	}
+	/**
+	 * @retrieveEmailAddress
+	 * finds the email address(s) of a person based on their Person Id. 
+	 * returns a list that contains the email address(s).
+	 */
 	public static ArrayList<String> retrieveEmailAddress(int personId){
 		ArrayList<String> emails = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
@@ -72,7 +94,7 @@ public class DBReader {
 		
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, personId);
+			ps.setInt(1, personId);  //Setting the '?' variables in the query to the target variable.
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
@@ -85,7 +107,11 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return emails;
 	}
-	
+	/**
+	 * @retrievePerson 
+	 * Finds a person in the database based on their person Id. 
+	 * Returns a Person object. 
+	 */
 	public static Person retrievePerson(int personId){
 		if (personId == 0) {
 			return null;
@@ -97,7 +123,7 @@ public class DBReader {
 		ResultSet rs = null;
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, personId);
+			ps.setInt(1, personId);  //Setting the '?' variables in the query to the target variable.
 			rs = ps.executeQuery();
 			rs.next();
 			Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
@@ -117,7 +143,11 @@ public class DBReader {
 		return person;
 	}
 	
-	
+	/*
+	 * @retrieveAllPerson 
+	 * The method returns a list of Persons. 
+	 * brings all Person records from the DB. 
+	 */
 	public static List<Person> retrieveAllPerson() {
 		Connection conn = DBTool.connectToDB();
 		String query = "select * from Person;";
@@ -130,6 +160,12 @@ public class DBReader {
 				ps = conn.prepareStatement(query);
 				rs = ps.executeQuery();
 				while (rs.next()) {
+					/**
+					 * While iterating through the loop, @retrieveAddress and @retrieveEmailAddress methods are used to bring in the 
+					 * appropriate data and pass them into the Person object.
+					 * @retrieveAddress is passed the address Id and returns an Address object.
+					 * @retrieveEmailAddress is passed the person Id and returns the email address(s). 
+					 */
 					Name n = new Name(rs.getString("firstName"), rs.getString("lastName"));
 					Person p = new Person(rs.getString("alphaCode"), rs.getString("brokerStat"), n, retrieveAddress(rs.getInt("addressId")), 
 							retrieveEmailAddress(rs.getInt("personId")));
@@ -142,7 +178,11 @@ public class DBReader {
 			DBTool.disconnectFromDB(conn, ps, rs);
 			return persons;
 	}
-	
+	/**
+	 * @retireveAllAssets
+	 * The method brings in all the assets found in the DB and passes the correct asset accordingly to each object based on the asset type.
+	 * The method returns a list of Assets.
+	 */
 	public static List<Asset> retrieveAllAssets() {
 		List<Asset> assets = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
@@ -156,6 +196,9 @@ public class DBReader {
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
+				/**
+				 * The asset type is checked and then the appropriate information is passed into a Deposit, Stock or Private Investment obejct. 
+				 */
 				if (rs.getString("assetType").equals("D")) {
 					Asset newDepo  = new DepositAsset(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("apr"));
 					assets.add(newDepo);
@@ -180,7 +223,11 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return assets;
 	}
-
+	/**
+	 * @retrieveAssets 
+	 * A method that is passed a portoflio Id and returns a List of assets for that portfolio. 
+	 * The query used joins the PortfolioAsset and Asset table in the database to display the relevant information. 
+	 */
 	public static List<Asset> retrieveAssets(int portId) {
 		List<Asset> assets = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
@@ -191,10 +238,13 @@ public class DBReader {
 		
 		try {
 			ps = conn.prepareStatement(query);
-			ps.setInt(1, portId);
+			ps.setInt(1, portId); //Setting the '?' variables in the query to the target variable. 
 			rs = ps.executeQuery();
 			
 			while (rs.next()) {
+				/**
+				 * Before passing the variables needed into each constructor, we check the asset type to pass in the correct variables to the correct object.
+				 */
 				if (rs.getString("assetType").equals("D")) {
 					Asset newDepo  = new DepositAsset(rs.getString("assetCode"), rs.getString("assetType"), rs.getString("label"), rs.getDouble("apr"), 
 							rs.getDouble("assetInfo"));
@@ -220,8 +270,14 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return assets;
 	}
-	
+	/**
+	 * @retrieveAllPortfolios
+	 * The method retrieves all portfolios from the DB.
+	 * This is done by connection to the DB, setting an sql query that retrieves all portfolios, then passing the result set 
+	 * information into each constructor.
+	 */
 	public static List<Portfolio> retrieveAllPortfolios() {
+		//Connecting to the DB.
 		Connection conn = DBTool.connectToDB();
 		String query  = "select * from Portfolio;";
 				
@@ -234,6 +290,12 @@ public class DBReader {
 			ps = conn.prepareStatement(query);
 			rs = ps.executeQuery();
 			Portfolio p = new Portfolio();
+			/**
+			 * The while loop functions to iterate through all portfolios. 
+			 * Through each iteration, @retrievePerson and @retrieveAsset method is called and is passed accordingly 
+			 * the person Id or the portfolio Id. The methods return the appropriate data needed to be fed into the constructor. 
+			 * @retrievePerson returns a Person object and @retrieveAsset returns a list of assets. 
+			 */
 			while (rs.next()) {
 				if (rs.getInt("benefId") >= 1) {
 					p = new Portfolio(rs.getString("portCode"), 
@@ -250,8 +312,7 @@ public class DBReader {
 			catch (SQLException sqle) {
 				throw new RuntimeException(sqle);
 			}
-			
-			DBTool.disconnectFromDB(conn, ps, rs);
+			DBTool.disconnectFromDB(conn, ps, rs); 
 			return portfolios;
 				
 		}
