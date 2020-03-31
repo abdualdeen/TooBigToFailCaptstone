@@ -4,8 +4,10 @@ import java.util.List;
 
 public class PortfolioReport {
 	public static void main(String args[]) {
+		// Setting a list variable equal to the method in DBReader that retrieves all portfolios
 		List<Portfolio> portList = DBReader.retrieveAllPortfolios();
-
+		//Printing out the general summary report with the variables that are obtained from the list of portfolios
+		//The variables are gathered by the methods in the portfolio class
 		System.out.println("Portfolio Summary Report");
 		System.out.println(
 				"===============================================================================================================================");
@@ -32,7 +34,8 @@ public class PortfolioReport {
 		System.out.printf("Total: $%50.2f $%28.2f $%24.2f $%10.2f", fee, commi, theReturn, finalTotal);
 		System.out.println("\n===================================================================================================================================");
 
-		
+		//For every specific portfolio, we are listing their assets, and the specificities of them
+		//For every asset in a specific portfolio we are then calling methods in the asset class to obtain those values and print them out
 		for (Portfolio j : portList) {
 			String benefinfo = "";
 			if (j.getBeneficiary() == null) {
