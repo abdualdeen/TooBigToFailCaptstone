@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBReader {
+	
 	/**
 	 * @retrieveAddress
 	 * finds the Address for a person based on the address Id.
-	 * 
+	 * This is used so we can later retrieve the address for a specific person from our address database based on their corresponding addressId
+	 * We are obtaining the street, city, state, zip, and country
 	 */
 	public static Address retrieveAddress(int addressId) {
 		Address address = new Address();
@@ -33,6 +35,7 @@ public class DBReader {
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 		return address;
 	}
 	
@@ -56,8 +59,10 @@ public class DBReader {
 		} catch(SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 		return state;
 	}
+
 	/**
 	 * @retrieveCountry
 	 * Finds the country for an address based on the country Id. 
@@ -78,12 +83,15 @@ public class DBReader {
 		} catch(SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 		return country;
 	}
+
 	/**
 	 * @retrieveEmailAddress
 	 * finds the email address(s) of a person based on their Person Id. 
 	 * returns a list that contains the email address(s).
+	 * We are obtaining ALL email addresses listed for a person
 	 */
 	public static ArrayList<String> retrieveEmailAddress(int personId){
 		ArrayList<String> emails = new ArrayList<>();
@@ -107,6 +115,7 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return emails;
 	}
+
 	/**
 	 * @retrievePerson 
 	 * Finds a person in the database based on their person Id. 
