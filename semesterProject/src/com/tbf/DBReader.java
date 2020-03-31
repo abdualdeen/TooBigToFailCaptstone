@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBReader {
-	
+	// This is used so we can later retrieve the address for a specific person from our address database based on their corresponding addressId
+	// We are obtaining the street, city, state, zip, and country
+	// State and country are also retrieved from different methods since they have their own database
 	public static Address retrieveAddress(int addressId) {
 		Address address = new Address();
 		Connection conn = DBTool.connectToDB();
@@ -28,7 +30,8 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return address;
 	}
-	
+	// This is used so we can later retrieve the state for a specific person from our state database based on their corresponding stateId
+	// We are obtaining the state abbreviation
 	public static String retrieveState(int stateId) {
 		String state = "";
 		Connection conn = DBTool.connectToDB();
@@ -47,7 +50,8 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return state;
 	}
-	
+	// This is used so we can later retrieve the country for a specific person from our country database based on their corresponding countryId
+	// We are obtaining the country abbreviation
 	public static String retrieveCountry(int countryId) {
 		String country = "";
 		Connection conn = DBTool.connectToDB();
@@ -66,6 +70,9 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return country;
 	}
+	// This is used so we can later retrieve the email(s) for a specific person from our email database based on their corresponding personId
+	// This allows for us to account for multiple email addresses 
+	// We are obtaining ALL email addresses listed for a person
 	public static ArrayList<String> retrieveEmailAddress(int personId){
 		ArrayList<String> emails = new ArrayList<>();
 		Connection conn = DBTool.connectToDB();
@@ -88,7 +95,9 @@ public class DBReader {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return emails;
 	}
-	
+	// In this method we are retrieving a certain person based on the personId
+	// Then we are assigning the corresponding variables from previous methods above, or calling our variables straight from our result statement
+	// For broker status we accounted for if there was no broker status for a person
 	public static Person retrievePerson(int personId){
 		if (personId == 0) {
 			return null;
@@ -120,7 +129,9 @@ public class DBReader {
 		return person;
 	}
 	
-	
+	// We are obtaining all persons and adding them to a list
+	// We are calling the retrievePerson() and retrieving the information to create a whole list of all persons that includes
+	// first and last name, alphaCode, brokerStat(if applicable), address(from retrieveAddress), and email(from retrieveEmail)
 	public static List<Person> retrieveAllPerson() {
 		Connection conn = DBTool.connectToDB();
 		String query = "select * from Person;";
