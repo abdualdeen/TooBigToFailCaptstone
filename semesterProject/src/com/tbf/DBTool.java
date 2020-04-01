@@ -8,13 +8,12 @@ import java.sql.SQLException;
 /**
  * DBTool has two methods that take care of connection and disconnection from the Database.
  * This is done because the code below is is repeated many times.
- * @author Abdullah Hamad, Hannah Balandran
- *
  */
 
 public class DBTool {
 	/**
 	 * @connectToDB
+	 * @param conn
 	 * When called, establishes a connection to the database and returns a Connection variable that holds the connection to the database.
 	 */
 	public static Connection connectToDB() {
@@ -29,6 +28,7 @@ public class DBTool {
 		}
 		return conn;
 	}
+	
 	/**
 	 * @disconnectFromDB
 	 * @param conn
@@ -37,7 +37,6 @@ public class DBTool {
 	 * A method that is fed a Connection, PreparedStatement, and ResultSet variables that are closed. 
 	 * Before closing any, We check the variables for if they are closed or null to avoid errors.
 	 */
-
 	public static void disconnectFromDB(Connection conn, PreparedStatement ps, ResultSet rs) {
 		try {
 			if (rs != null && !rs.isClosed()) {
