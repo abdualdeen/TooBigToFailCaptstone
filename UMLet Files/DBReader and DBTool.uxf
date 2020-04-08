@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>10</y>
+      <w>410</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>com.tbf::DBReader
+--
+--
++retrieveAddress(int addressId): Address
++retrieveState(int stateId): String
++retrieveCountry(int countryId): String
++retrieveEmailAddress(int personId): ArrayList&lt;String&gt;
++retrievePerson(int personId): Person
++retrieveAsset(int portId): List&lt;Asset&gt;
++retrieveAllPortfolios(): List&lt;Portfolio&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>10</y>
+      <w>590</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>com.tbf::DBTool
+--
+--
++connectToDB(): Connection
++disconnectFromDB(Connection conn, PreparedStatement ps, ResultSet rs): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
