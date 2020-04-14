@@ -18,7 +18,9 @@ public class PortfolioData {
 	/**
 	 * Method that removes every person record from the database
 	 */
-	public static void removeAllPersons() {}
+	public static void removeAllPersons() {
+		String q1 = "truncate table EmailAddress;";
+	}
 	
 	/**
 	 * Removes the person record from the database corresponding to the
@@ -26,9 +28,9 @@ public class PortfolioData {
 	 * @param personCode
 	 */
 	public static void removePerson(String personCode) {
-		String q1 = "delete from EmailAddress where personId = " + personCode + ";";
-		String q2 = "update Portfolio set benefId = null where portId = " + personCode + ";";
-		String q3 = "delete from Person where personId = " + personCode + ";";
+		String q1 = "delete from EmailAddress where personId = ?;";
+		String q2 = "update Portfolio set benefId = null where portId = ?;";
+		String q3 = "delete from Person where personId = ?;";
 		
 		PreparedStatement ps;
 		ResultSet rs;
@@ -36,10 +38,13 @@ public class PortfolioData {
 		
 		try {
 			ps = conn.prepareStatement(q1);
+			ps.setString(1, personCode);
 			rs = ps.executeQuery();
 			ps = conn.prepareStatement(q2);
+			ps.setString(1, personCode);
 			rs = ps.executeQuery();
 			ps = conn.prepareStatement(q3);
+			ps.setString(1, personCode);
 			rs = ps.executeQuery();
 			
 		} catch (SQLException sqle) {
@@ -73,12 +78,14 @@ public class PortfolioData {
 	 * @param email
 	 */
 	public static void addEmail(String personCode, String email) {
-		String query = "insert into EmailAddress (personId, emailAddress) values("+personCode+", "+email+");";
+		String query = "insert into EmailAddress (personId, emailAddress) values(?, ?);";
 		PreparedStatement ps;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
 		try {
 			ps  = conn.prepareStatement(query);
+			ps.setString(1, personCode);
+			ps.setString(2, email);
 			rs = ps.executeQuery();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
