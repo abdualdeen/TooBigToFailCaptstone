@@ -20,8 +20,27 @@ public class PortfolioData {
 	 */
 	public static void removeAllPersons() {
 		String q1 = "delete from EmailAddress;";
-		String q2 = "delete from Portfolio;";
-		String q3 = ""
+		String q2 = "delete from PortfolioAsset;";
+		String q3 = "delete from Portfolio;";
+		String q4 = "delete from Person;";
+		
+		PreparedStatement ps;
+		ResultSet rs;
+		Connection conn = DBTool.connectToDB();
+		
+		try {
+			ps = conn.prepareStatement(q1);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q2);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q3);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q4);
+			
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 	}
 	
 	/**
@@ -54,6 +73,82 @@ public class PortfolioData {
 		}
 		DBTool.disconnectFromDB(conn, ps, rs);
 	}
+	public static int addCountry(String country) {
+		String q1 = "insert into Country (name) values (?);";
+		String q2 = "select countryId from Country where name = (\"?\");";
+		PreparedStatement ps = null;
+		ResultSet rs;
+		Connection conn = DBTool.connectToDB();
+		int countryId;
+		
+		try {
+			ps = conn.prepareStatement(q1);
+			ps.setString(1, country);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q2);
+			ps.setString(1, country);
+			rs = ps.executeQuery();
+			rs.next();
+			countryId = rs.getInt("name");
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
+		return countryId;
+	}
+	
+	public static int addState(String state) {
+		String q1 = "insert into State (name) values (\"?\");";
+		String q2 = "select stateId from State where name = (\"?\");";
+		PreparedStatement ps = null;
+		ResultSet rs;
+		Connection conn = DBTool.connectToDB();
+		int stateId;
+		
+		try {
+			ps = conn.prepareStatement(q1);
+			ps.setString(1, state);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q2);
+			ps.setString(1, state);
+			rs = ps.executeQuery();
+			rs.next();
+			stateId = rs.getInt("name");
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
+		return stateId;
+	}
+	public static int addAddress( String street, String city, String state, String zip, int stateId, int countryId) {
+		String q1 = "insert into Address (street, city, zip, stateId, countryId) values (\"?\", \"?\", \"?\", ?, ?);";
+		String q2 = "select AddressId from Address where street = \"?\" and city = \"?\" and zip = \"?\";";
+		PreparedStatement ps = null;
+		ResultSet rs;
+		Connection conn = DBTool.connectToDB();
+		int addressId;
+		
+		try {
+			ps = conn.prepareStatement(q1);
+			ps.setString(1, street);
+			ps.setString(2, city);
+			ps.setString(3, zip);
+			ps.setInt(4, stateId);
+			ps.setInt(5, countryId);
+			rs = ps.executeQuery();
+			ps = conn.prepareStatement(q2);
+			ps.setString(1, street);
+			ps.setString(2, city);
+			ps.setString(3, zip);
+			rs.next();
+			addressId = rs.getInt("addressId");
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
+		return addressId;
+	}
+	
 	/**
 	 * Method to add a person record to the database with the provided data. The
 	 * <code>brokerType</code> will either be "E" or "J" (Expert or Junior) or 
@@ -70,7 +165,37 @@ public class PortfolioData {
 	 */
 	public static void addPerson(String personCode, String firstName, String lastName, String street, String city, String state, String zip, 
 			String country, String brokerType, String secBrokerId) {
+		int countryId = addCountry(country);
+		int stateId = addState(state);
+//		String q1 = "insert into State (name, abbreviation) values (?, ?);";
+//		String q2 = "insert into Country (name, abbreviation) values (?, ?);";
+		String q1 = "insert into Address (street, city, zip, stateId, countryId) values (\"?\", \"?\", \"?\", ?, ?);";
+		String q3;
+		String brokerStat;
+		if (brokerType != null || !brokerType.isEmpty()) {
+			q3 = "insert into Person(alphaCode, lastName, firstName, addressId) values (?, ?, ?, ?);";
+		} else {
+			brokerStat = brokerType+", "+secBrokerId;
+			q3 = "insert into Person(alphaCode, brokerStat, lastName, firstName, addressId) values (?, ?, ?, ?);";
+		}
 		
+		PreparedStatement ps;
+		ResultSet rs;
+		Connection conn = DBTool.connectToDB();
+		
+		try {
+			ps  = conn.prepareStatement(q1);
+			ps.setString(1, street);
+			ps.setString(2, city);
+			ps.setString(3, zip);
+			ps.setInt(4, stateId);
+			ps.setInt(5, countryId);
+//			ps.setString(2, email);
+			rs = ps.executeQuery();
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
 	}
 	
 	/**
