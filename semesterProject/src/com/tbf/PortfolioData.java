@@ -144,15 +144,37 @@ public class PortfolioData {
 	/**
 	 * Removes all portfolio records from the database
 	 */
-	public static void removeAllPortfolios() {}
-	
+	public static void removeAllPortfolios() {
+	String q1 = "truncate table Portfolio;";
+	PreparedStatement ps;
+	ResultSet rs;
+	Connection conn = DBTool.connectToDB();
+	try {
+		ps = conn.prepareStatement(q1);
+		rs = ps.executeQuery();
+	} catch (SQLException sqle) {
+		throw new RuntimeException(sqle);
+	}
+	}
 	/**
 	 * Removes the portfolio record from the database corresponding to the
 	 * provided <code>portfolioCode</code>
 	 * @param portfolioCode
 	 */
-	public static void removePortfolio(String portfolioCode) {}
-	
+	public static void removePortfolio(String portCode) {
+	String q1 = "delete from Portfolio where portCode = ?;";
+	PreparedStatement ps;
+	ResultSet rs;
+	Connection conn = DBTool.connectToDB();
+	try {
+		ps = conn.prepareStatement(q1);
+		ps.setString(1, portCode);
+		rs = ps.executeQuery();
+	} catch (SQLException sqle) {
+		throw new RuntimeException(sqle);
+	}
+	DBTool.disconnectFromDB(conn, ps, rs);
+	}
 	/**
 	 * Adds a portfolio records to the database with the given data.  If the portfolio has no
 	 * beneficiary, the <code>beneficiaryCode</code> will be <code>null</code>
@@ -161,9 +183,25 @@ public class PortfolioData {
 	 * @param managerCode
 	 * @param beneficiaryCode
 	 */
-	public static void addPortfolio(String portfolioCode, String ownerCode, String managerCode, String beneficiaryCode) {}
+	public static void addPortfolio(String portCode, String ownerId, String managerId, String benefId) {
+		String q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?,?,?,?);";
+		PreparedStatement ps;
+		ResultSet rs;
+		Connection conn = DBTool.connectToDB();
+		try {
+			ps = conn.prepareStatement(q1);
+			ps.setString(1, ownerId);
+			ps.setString(2, managerId);
+			ps.setString(3, benefId);
+			ps.setString(4, portCode);
+			rs = ps.executeQuery();
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
+	}
 	
-	/**
+		/**
 	 * Associates the asset record corresponding to <code>assetCode</code> with the 
 	 * portfolio corresponding to the provided <code>portfolioCode</code>.  The third 
 	 * parameter, <code>value</code> is interpreted as a <i>balance</i>, <i>number of shares</i>
