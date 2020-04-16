@@ -74,7 +74,7 @@ public class PortfolioData {
 		DBTool.disconnectFromDB(conn, ps, rs);
 	}
 	public static int addCountry(String country) {
-		String q1 = "insert into Country (name) values (?);";
+		String q1 = "insert into Country (name) values ('?');";
 		String q2 = "select countryId from Country where name = (\"?\");";
 		PreparedStatement ps = null;
 		ResultSet rs;
@@ -120,7 +120,7 @@ public class PortfolioData {
 		DBTool.disconnectFromDB(conn, ps, rs);
 		return stateId;
 	}
-	public static int addAddress( String street, String city, String state, String zip, int stateId, int countryId) {
+	public static int addAddress(String street, String city, String state, String zip, int stateId, int countryId) {
 		String q1 = "insert into Address (street, city, zip, stateId, countryId) values (\"?\", \"?\", \"?\", ?, ?);";
 		String q2 = "select AddressId from Address where street = \"?\" and city = \"?\" and zip = \"?\";";
 		PreparedStatement ps = null;
@@ -136,6 +136,7 @@ public class PortfolioData {
 			ps.setInt(4, stateId);
 			ps.setInt(5, countryId);
 			rs = ps.executeQuery();
+			
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, street);
 			ps.setString(2, city);
@@ -167,16 +168,17 @@ public class PortfolioData {
 			String country, String brokerType, String secBrokerId) {
 		int countryId = addCountry(country);
 		int stateId = addState(state);
+		int addressId = addAddress(street, city, state, zip, stateId, countryId);
 //		String q1 = "insert into State (name, abbreviation) values (?, ?);";
 //		String q2 = "insert into Country (name, abbreviation) values (?, ?);";
-		String q1 = "insert into Address (street, city, zip, stateId, countryId) values (\"?\", \"?\", \"?\", ?, ?);";
-		String q3;
-		String brokerStat;
+//		String q1 = "insert into Address (street, city, zip, stateId, countryId) values (\"?\", \"?\", \"?\", ?, ?);";
+		String q1;
+		String brokerStat = null;
 		if (brokerType != null || !brokerType.isEmpty()) {
-			q3 = "insert into Person(alphaCode, lastName, firstName, addressId) values (?, ?, ?, ?);";
+			q1 = "insert into Person(alphaCode, lastName, firstName, addressId) values (\"?\", \"?\", \"?\", ?);";
 		} else {
 			brokerStat = brokerType+", "+secBrokerId;
-			q3 = "insert into Person(alphaCode, brokerStat, lastName, firstName, addressId) values (?, ?, ?, ?);";
+			q1 = "insert into Person(alphaCode, brokerStat, lastName, firstName, addressId) values ('?', '?', '?', '?', ?);";
 		}
 		
 		PreparedStatement ps;
@@ -185,11 +187,23 @@ public class PortfolioData {
 		
 		try {
 			ps  = conn.prepareStatement(q1);
-			ps.setString(1, street);
-			ps.setString(2, city);
-			ps.setString(3, zip);
-			ps.setInt(4, stateId);
-			ps.setInt(5, countryId);
+			ps.setString(1, personCode);
+			if (brokerType == null || brokerType.isEmpty()) {
+				ps.setString(2, lastName);
+				ps.setString(3, firstName);
+				ps.setInt(4, addressId);
+				
+			} else {
+				ps.setString(2, brokerStat);
+				ps.setString(3, lastName);
+				ps.setString(4, firstName);
+				ps.setInt(5, addressId);
+			}
+			
+//			ps.setString(2, city);
+//			ps.setString(3, zip);
+//			ps.setInt(4, stateId);
+//			ps.setInt(5, countryId);
 //			ps.setString(2, email);
 			rs = ps.executeQuery();
 		} catch (SQLException sqle) {
@@ -205,7 +219,7 @@ public class PortfolioData {
 	 * @param email
 	 */
 	public static void addEmail(String personCode, String email) {
-		String query = "insert into EmailAddress (personId, emailAddress) values(?, ?);";
+		String query = "insert into EmailAddress (personId, emailAddress) values(?, '?');";
 		PreparedStatement ps;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
@@ -311,7 +325,7 @@ public class PortfolioData {
 	 * @param beneficiaryCode
 	 */
 	public static void addPortfolio(String portCode, String ownerId, String managerId, String benefId) {
-		String q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?,?,?,?);";
+		String q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, ?);";
 		PreparedStatement ps;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
