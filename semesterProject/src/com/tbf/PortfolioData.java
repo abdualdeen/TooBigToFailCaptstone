@@ -19,7 +19,9 @@ public class PortfolioData {
 	 * Method that removes every person record from the database
 	 */
 	public static void removeAllPersons() {
-		String q1 = "truncate table EmailAddress;";
+		String q1 = "delete from EmailAddress;";
+		String q2 = "delete from Portfolio;";
+		String q3 = ""
 	}
 	
 	/**
