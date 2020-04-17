@@ -423,7 +423,7 @@ public class PortfolioData {
 	String q2 = "delete from Portfolio;";
 	
 	PreparedStatement ps;
-	ResultSet rs;
+	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
 	
 	try {
