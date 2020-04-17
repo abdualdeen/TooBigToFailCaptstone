@@ -366,8 +366,7 @@ public class PortfolioData {
 	 */
 	public static void addPrivateInvestment(String assetCode, String label, Double quartDivi, 
 			Double baseROR, Double omega, Double investmentValue) {
-	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, omega, investmentValue) "
-			+ "values ('P', '?', '?', ?, ?, ?, ?);";
+	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, omega, investmentValue) values ('P', '?', '?', ?, ?, ?, ?);";
 	PreparedStatement ps;
 	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
