@@ -2,18 +2,18 @@
 -- ==BONUS QUERIES== --
 -- Run these after running the rest of the queries first.
 -- State
-insert into State (name, abbreviation) values ("Colorado", "CO");
-insert into State (name, abbreviation) values ("Wyoming", "WY");
+-- insert into State (name, abbreviation) values ("Colorado", "CO");
+-- insert into State (name, abbreviation) values ("Wyoming", "WY");
 
--- Country
-insert into Country (name, abbreviation) values ("Thailand", "THI");
-insert into Country (name, abbreviation) values ("China", "CHI");
+-- -- Country
+-- insert into Country (name, abbreviation) values ("Thailand", "THI");
+-- insert into Country (name, abbreviation) values ("China", "CHI");
 
--- Testing key constraints
-insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 5, 9999); -- tests for duplicate portfolios with assets
-insert into EmailAddress (personId, emailAddress) values (9, "mkawarzimi@algebra.com"); -- tests for duplicate email address
-insert into Asset (quartDivi, BaseROR, omega, investmentValue, label, assetType, assetCode) 
-  values (95000.0, 0.50, 0.15, 999999.0, "Mass Effect Group", "P", "MEEG"); -- tests for duplicate assets. 
+-- -- Testing key constraints
+-- insert into PortfolioAsset (portId, assetId, assetInfo) values (1, 5, 9999); -- tests for duplicate portfolios with assets
+-- insert into EmailAddress (personId, emailAddress) values (9, "mkawarzimi@algebra.com"); -- tests for duplicate email address
+-- insert into Asset (quartDivi, BaseROR, omega, investmentValue, label, assetType, assetCode) 
+--   values (95000.0, 0.50, 0.15, 999999.0, "Mass Effect Group", "P", "MEEG"); -- tests for duplicate assets. 
 -- If running these returns errors then the constraint works.
 
 
@@ -90,6 +90,6 @@ select p.portCode, sum(a.sharePrice*pa.assetInfo) as sumOfAssets from PortfolioA
   
 -- 15
 select a.label, sum(pa.assetInfo) as sumOfStakePercentage from PortfolioAsset pa
-  join Asset a on pa.assetId = a.assetId where (a.assetType = "P") group by a.assetId having sumOfStakePercentage>100; -- group by a.assetId ;
+  join Asset a on pa.assetId = a.assetId where (a.assetType = "P") group by a.assetId having sumOfStakePercentage>100; 
 -- in private investments, if the stake percentage is greater than 100 display the list of investments that exceeds
   

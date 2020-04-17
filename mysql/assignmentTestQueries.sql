@@ -1,30 +1,17 @@
--- ==Queries for the assignment== --
--- Removing a person by personCode
--- delete from EmailAddress where personId = + personCode +;
--- update Portfolio set benefId = null where portId = + personCode +;
--- delete from Person where personId = + personCode +;
-
--- Removing all persons.
-
--- adding email to existing person
-
-
--- Adding a new person
-
-insert into Address (street, city, stateId, countryId) values ("99 Algebra St", "Khwarazm", 7, 3);
-insert into Person(alphaCode, lastName, firstName, addressId) values ("sqrt", "Al-Kawarzimi", "Muhammad", 9);
-insert into EmailAddress (personId, emailAddress) values (9, "mkawarzimi@algebra.com");
--- selecting person 
-select * from Person where personId = 4;
-select * from Person;
--- all portfolios 
 use ahamad;
-select * from Portfolio;
--- selecting all address.
-select * from Address;
+SET SQL_SAFE_UPDATES = 0; 
 
--- for all assets.
+
 select * from Asset;
+select * from PortfolioAsset;
+select * from Portfolio;
 
--- for assets in portoflio
-select * from Asset a join PortfolioAsset pa on a.assetId = pa.assetId where pa.portId = 2;
+delete from PortfolioAsset where assetId = (select assetId from Asset where assetCode = 'AGTSAV'); -- (select portAssetId from PortfolioAsset where assetId = 1);
+delete from Asset where assetId = (select assetId from Asset where assetCode = 'AGTSAV');
+
+delete from PortfolioAsset;
+
+select portId from Portfolio where portCode = 'PF002';
+delete from PortfolioAsset where portId = 3;
+delete from Portfolio where portId = 3;
+delete from Asset;
