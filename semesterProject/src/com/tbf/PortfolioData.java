@@ -333,7 +333,22 @@ public class PortfolioData {
 	 * @param label
 	 * @param apr
 	 */
-	public static void addDepositAccount(String assetCode, String label, double apr) {}
+	public static void addDepositAccount(String assetCode, String label, double apr) {
+	String q1 = "insert into Asset(assetType, assetId, label, apr) values ('D', ?, ?, ?);";
+	PreparedStatement ps;
+	ResultSet rs;
+	Connection conn = DBTool.connectToDB();
+	try {
+		ps = conn.prepareStatement(q1);
+		ps.setString(1, assetCode);
+		ps.setString(2, label);
+		ps.setDouble(3, apr);
+		rs = ps.executeQuery();
+	} catch (SQLException sqle) {
+		throw new RuntimeException(sqle);
+	}
+	DBTool.disconnectFromDB(conn, ps, rs);
+}
 	
 	
 	/**
@@ -346,10 +361,27 @@ public class PortfolioData {
 	 * @param baseOmega
 	 * @param totalValue
 	 */
-	public static void addPrivateInvestment(String assetCode, String label, Double quarterlyDividend, 
-			Double baseRateOfReturn, Double baseOmega, Double totalValue) {}
-	
-	
+	public static void addPrivateInvestment(String assetId, String label, Double quartDivi, 
+			Double baseROR, Double omega, Double investmentValue) {
+	String q1 = "insert into Asset(assetType, assetId, label, quartDivi, baseROR, omega, investmentValue) "
+			+ "values ('P', ?, ?, ?, ?, ?, ?)";
+	PreparedStatement ps;
+	ResultSet rs;
+	Connection conn = DBTool.connectToDB();
+	try {
+		ps = conn.prepareStatement(q1);
+		ps.setString(1, assetId);
+		ps.setString(2, label);
+		ps.setDouble(3, quartDivi);
+		ps.setDouble(4, baseROR);
+		ps.setDouble(5, omega);
+		ps.setDouble(6, investmentValue);
+		rs = ps.executeQuery();
+	} catch(SQLException sqle) {
+		throw new RuntimeException(sqle);
+	}
+	DBTool.disconnectFromDB(conn, ps, rs);
+}
 	/**
 	 * Adds a stock asset record to the database with the
 	 * provided data. 
@@ -361,9 +393,28 @@ public class PortfolioData {
 	 * @param stockSymbol
 	 * @param sharePrice
 	 */
-	public static void addStock(String assetCode, String label, Double quarterlyDividend, 
-			Double baseRateOfReturn, Double beta, String stockSymbol, Double sharePrice) {}
-
+	public static void addStock(String assetId, String label, Double quartDivi, 
+			Double baseROR, Double beta, String stockSymb, Double sharePrice) {
+	String q1 = "insert into Asset(assetType, assetId, label, quartDivi, baseROR, beta, stockSymb, sharePrice) "
+			+ "values ('S', ?, ?, ?, ?, ?, ?, ?);";
+	PreparedStatement ps;
+	ResultSet rs;
+	Connection conn = DBTool.connectToDB();
+	try {
+		ps = conn.prepareStatement(q1);
+		ps.setString(1, assetId);
+		ps.setString(2, label);
+		ps.setDouble(3, quartDivi);
+		ps.setDouble(4, baseROR);
+		ps.setDouble(5, beta);
+		ps.setString(6, stockSymb);
+		ps.setDouble(7, sharePrice);
+		rs = ps.executeQuery();	
+	} catch (SQLException sqle) {
+		throw new RuntimeException(sqle);
+	}
+	DBTool.disconnectFromDB(conn, ps, rs);
+}
 	
 	/**
 	 * Removes all portfolio records from the database
