@@ -516,7 +516,14 @@ public class PortfolioData {
 		String q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, '?');";
 		int ownId = findPersonId(ownerId);
 		int managId = findPersonId(managerId);
-		int benId = findPersonId(benefId);
+		int benId = 0;
+		if (benefId == null || benefId.isEmpty()) {
+			q1 = "insert into Portfolio (ownerId, managerId, portCode) values (?, ?, '?');";
+		} else {
+			benId = findPersonId(benefId);
+			q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, '?');";
+		}
+		
 		PreparedStatement ps;
 		ResultSet rs = null;
 		Connection conn = DBTool.connectToDB();
@@ -525,8 +532,16 @@ public class PortfolioData {
 			ps = conn.prepareStatement(q1);
 			ps.setInt(1, ownId);
 			ps.setInt(2, managId);
-			ps.setInt(3, benId);
-			ps.setString(4, portCode);
+			if (benefId != null || !benefId.isEmpty()) {
+				ps.setInt(1, ownId);
+				ps.setInt(2, managId);
+				ps.setInt(3, benId);
+				ps.setString(4, portCode);
+			} else {
+				ps.setInt(1, ownId);
+				ps.setInt(2, managId);
+				ps.setString(3, portCode);
+			}
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
