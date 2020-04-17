@@ -90,7 +90,7 @@ public class PortfolioData {
 	 */
 	public static int addCountry(String country) {
 		String q1 = "insert into Country (name) values ('?');";
-		String q2 = "select countryId from Country where name = (\"?\");";
+		String q2 = "select countryId from Country where abbreviation = '?' or name = '?';";
 		PreparedStatement ps = null;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
@@ -103,10 +103,11 @@ public class PortfolioData {
 			
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, country);
+			ps.setString(2, country);
 			rs = ps.executeQuery();
 			
 			rs.next();
-			countryId = rs.getInt("name");
+			countryId = rs.getInt("countryId");
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
@@ -123,7 +124,7 @@ public class PortfolioData {
 	 */
 	public static int addState(String state) {
 		String q1 = "insert into State (name) values ('?');";
-		String q2 = "select stateId from State where name = ('?');";
+		String q2 = "select stateId from State where abbreviation = '?' or name = '?';";
 		PreparedStatement ps = null;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
@@ -136,10 +137,11 @@ public class PortfolioData {
 			
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, state);
+			ps.setString(2, state);
 			rs = ps.executeQuery();
 			
 			rs.next();
-			stateId = rs.getInt("name");
+			stateId = rs.getInt("stateId");
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
