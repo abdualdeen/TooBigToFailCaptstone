@@ -1,7 +1,6 @@
 package com.tbf;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -429,10 +428,12 @@ public class PortfolioData {
 	
 	try {
 		ps = conn.prepareStatement(q1);
-		rs = ps.executeQuery();
+//		rs = ps.executeQuery();
+		ps.executeUpdate();
 		
 		ps = conn.prepareStatement(q2);
-		rs = ps.executeQuery();
+//		rs = ps.executeQuery();
+		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
 	}
