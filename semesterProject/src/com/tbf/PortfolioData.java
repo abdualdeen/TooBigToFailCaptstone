@@ -99,7 +99,8 @@ public class PortfolioData {
 		try {
 			ps = conn.prepareStatement(q1);
 			ps.setString(1, country);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, country);
@@ -133,7 +134,8 @@ public class PortfolioData {
 		try {
 			ps = conn.prepareStatement(q1);
 			ps.setString(1, state);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, state);
@@ -177,12 +179,14 @@ public class PortfolioData {
 			ps.setString(3, zip);
 			ps.setInt(4, stateId);
 			ps.setInt(5, countryId);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, street);
 			ps.setString(2, city);
 			ps.setString(3, zip);
+			rs = ps.executeQuery();
 			
 			rs.next();
 			addressId = rs.getInt("addressId");
