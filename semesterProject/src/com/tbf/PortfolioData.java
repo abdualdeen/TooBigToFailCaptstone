@@ -29,14 +29,11 @@ public class PortfolioData {
 		
 		try {
 			ps = conn.prepareStatement(q1);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			ps = conn.prepareStatement(q2);
 			ps.executeUpdate();
-//			rs = ps.executeQuery();
 			ps = conn.prepareStatement(q3);
 			ps.executeUpdate();
-//			rs = ps.executeQuery();
 			ps = conn.prepareStatement(q4);
 			ps.executeUpdate();
 			
@@ -64,15 +61,12 @@ public class PortfolioData {
 		try {
 			ps = conn.prepareStatement(q1);
 			ps.setString(1, personCode);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, personCode);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			ps = conn.prepareStatement(q3);
 			ps.setString(1, personCode);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			
 		} catch (SQLException sqle) {
@@ -99,7 +93,6 @@ public class PortfolioData {
 		try {
 			ps = conn.prepareStatement(q1);
 			ps.setString(1, country);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			
 			ps = conn.prepareStatement(q2);
@@ -134,7 +127,6 @@ public class PortfolioData {
 		try {
 			ps = conn.prepareStatement(q1);
 			ps.setString(1, state);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			
 			ps = conn.prepareStatement(q2);
@@ -179,7 +171,6 @@ public class PortfolioData {
 			ps.setString(3, zip);
 			ps.setInt(4, stateId);
 			ps.setInt(5, countryId);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			
 			ps = conn.prepareStatement(q2);
@@ -244,7 +235,6 @@ public class PortfolioData {
 				ps.setString(4, firstName);
 				ps.setInt(5, addressId);
 			}
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -271,7 +261,6 @@ public class PortfolioData {
 			ps  = conn.prepareStatement(query);
 			ps.setInt(1, personId);
 			ps.setString(2, email);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -293,11 +282,9 @@ public class PortfolioData {
 		
 		try {
 			ps  = conn.prepareStatement(q1);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			
 			ps  = conn.prepareStatement(q2);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -330,12 +317,10 @@ public class PortfolioData {
 			
 			ps  = conn.prepareStatement(q2);
 			ps.setInt(1, assetId);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 			
 			ps  = conn.prepareStatement(q3);
 			ps.setInt(1, assetId);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -361,7 +346,6 @@ public class PortfolioData {
 		ps.setString(1, assetCode);
 		ps.setString(2, label);
 		ps.setDouble(3, apr);
-//		rs = ps.executeQuery();
 		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
@@ -395,7 +379,6 @@ public class PortfolioData {
 		ps.setDouble(4, baseROR);
 		ps.setDouble(5, omega);
 		ps.setDouble(6, investmentValue);
-//		rs = ps.executeQuery();
 		ps.executeUpdate();
 	} catch(SQLException sqle) {
 		throw new RuntimeException(sqle);
@@ -429,7 +412,6 @@ public class PortfolioData {
 		ps.setDouble(5, beta);
 		ps.setString(6, stockSymb);
 		ps.setDouble(7, sharePrice);
-//		rs = ps.executeQuery();	
 		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
@@ -450,11 +432,9 @@ public class PortfolioData {
 	
 	try {
 		ps = conn.prepareStatement(q1);
-//		rs = ps.executeQuery();
 		ps.executeUpdate();
 		
 		ps = conn.prepareStatement(q2);
-//		rs = ps.executeQuery();
 		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
@@ -486,12 +466,10 @@ public class PortfolioData {
 		
 		ps = conn.prepareStatement(q2);
 		ps.setInt(1, portId);
-//		rs = ps.executeQuery();
 		ps.executeUpdate();
 		
 		ps = conn.prepareStatement(q3);
 		ps.setInt(1, portId);
-//		rs = ps.executeQuery();
 		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
@@ -550,7 +528,6 @@ public class PortfolioData {
 			ps.setInt(2, managId);
 			ps.setInt(3, benId);
 			ps.setString(4, portCode);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -595,7 +572,6 @@ public class PortfolioData {
 			ps.setInt(1, portId);
 			ps.setInt(2, assetId);
 			ps.setDouble(3, value);
-//			rs = ps.executeQuery();
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
