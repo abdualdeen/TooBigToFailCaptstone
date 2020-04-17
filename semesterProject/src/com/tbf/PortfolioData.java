@@ -24,17 +24,21 @@ public class PortfolioData {
 		String q4 = "delete from Person;";
 		
 		PreparedStatement ps;
-		ResultSet rs;
+		ResultSet rs = null;
 		Connection conn = DBTool.connectToDB();
 		
 		try {
 			ps = conn.prepareStatement(q1);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			ps = conn.prepareStatement(q2);
-			rs = ps.executeQuery();
+			ps.executeUpdate();
+//			rs = ps.executeQuery();
 			ps = conn.prepareStatement(q3);
-			rs = ps.executeQuery();
+			ps.executeUpdate();
+//			rs = ps.executeQuery();
 			ps = conn.prepareStatement(q4);
+			ps.executeUpdate();
 			
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -54,19 +58,22 @@ public class PortfolioData {
 		String q3 = "delete from Person where personId = ?;";
 		
 		PreparedStatement ps;
-		ResultSet rs;
+		ResultSet rs = null;
 		Connection conn = DBTool.connectToDB();
 		
 		try {
 			ps = conn.prepareStatement(q1);
 			ps.setString(1, personCode);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, personCode);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			ps = conn.prepareStatement(q3);
 			ps.setString(1, personCode);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
@@ -214,7 +221,7 @@ public class PortfolioData {
 		}
 		
 		PreparedStatement ps;
-		ResultSet rs;
+		ResultSet rs = null;
 		Connection conn = DBTool.connectToDB();
 		
 		try {
@@ -231,7 +238,8 @@ public class PortfolioData {
 				ps.setString(4, firstName);
 				ps.setInt(5, addressId);
 			}
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
@@ -250,14 +258,15 @@ public class PortfolioData {
 		int personId = findPersonId(personCode);
 		
 		PreparedStatement ps;
-		ResultSet rs;
+		ResultSet rs = null;
 		Connection conn = DBTool.connectToDB();
 		
 		try {
 			ps  = conn.prepareStatement(query);
 			ps.setInt(1, personId);
 			ps.setString(2, email);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
@@ -273,15 +282,17 @@ public class PortfolioData {
 		String q2 = "delete from Asset;";
 		
 		PreparedStatement ps;
-		ResultSet rs;
+		ResultSet rs = null;
 		Connection conn = DBTool.connectToDB();
 		
 		try {
 			ps  = conn.prepareStatement(q1);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			
 			ps  = conn.prepareStatement(q2);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
@@ -313,11 +324,13 @@ public class PortfolioData {
 			
 			ps  = conn.prepareStatement(q2);
 			ps.setInt(1, assetId);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 			
 			ps  = conn.prepareStatement(q3);
 			ps.setInt(1, assetId);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
@@ -335,14 +348,15 @@ public class PortfolioData {
 	public static void addDepositAccount(String assetCode, String label, double apr) {
 	String q1 = "insert into Asset(assetType, assetId, label, apr) values ('D', '?', '?', ?);";
 	PreparedStatement ps;
-	ResultSet rs;
+	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
 	try {
 		ps = conn.prepareStatement(q1);
 		ps.setString(1, assetCode);
 		ps.setString(2, label);
 		ps.setDouble(3, apr);
-		rs = ps.executeQuery();
+//		rs = ps.executeQuery();
+		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
 	}
@@ -365,7 +379,7 @@ public class PortfolioData {
 	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, omega, investmentValue) "
 			+ "values ('P', '?', '?', ?, ?, ?, ?)";
 	PreparedStatement ps;
-	ResultSet rs;
+	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
 	try {
 		ps = conn.prepareStatement(q1);
@@ -375,7 +389,8 @@ public class PortfolioData {
 		ps.setDouble(4, baseROR);
 		ps.setDouble(5, omega);
 		ps.setDouble(6, investmentValue);
-		rs = ps.executeQuery();
+//		rs = ps.executeQuery();
+		ps.executeUpdate();
 	} catch(SQLException sqle) {
 		throw new RuntimeException(sqle);
 	}
@@ -397,7 +412,7 @@ public class PortfolioData {
 	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, beta, stockSymb, sharePrice) "
 			+ "values ('S', '?', '?', ?, ?, ?, '?', ?);";
 	PreparedStatement ps;
-	ResultSet rs;
+	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
 	try {
 		ps = conn.prepareStatement(q1);
@@ -408,7 +423,8 @@ public class PortfolioData {
 		ps.setDouble(5, beta);
 		ps.setString(6, stockSymb);
 		ps.setDouble(7, sharePrice);
-		rs = ps.executeQuery();	
+//		rs = ps.executeQuery();	
+		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
 	}
@@ -464,11 +480,13 @@ public class PortfolioData {
 		
 		ps = conn.prepareStatement(q2);
 		ps.setInt(1, portId);
-		rs = ps.executeQuery();
+//		rs = ps.executeQuery();
+		ps.executeUpdate();
 		
 		ps = conn.prepareStatement(q3);
 		ps.setInt(1, portId);
-		rs = ps.executeQuery();
+//		rs = ps.executeQuery();
+		ps.executeUpdate();
 	} catch (SQLException sqle) {
 		throw new RuntimeException(sqle);
 	}
@@ -517,7 +535,7 @@ public class PortfolioData {
 		int managId = findPersonId(managerId);
 		int benId = findPersonId(benefId);
 		PreparedStatement ps;
-		ResultSet rs;
+		ResultSet rs = null;
 		Connection conn = DBTool.connectToDB();
 		
 		try {
@@ -526,7 +544,8 @@ public class PortfolioData {
 			ps.setInt(2, managId);
 			ps.setInt(3, benId);
 			ps.setString(4, portCode);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
@@ -570,7 +589,8 @@ public class PortfolioData {
 			ps.setInt(1, portId);
 			ps.setInt(2, assetId);
 			ps.setDouble(3, value);
-			rs = ps.executeQuery();
+//			rs = ps.executeQuery();
+			ps.executeUpdate();
 		} catch (SQLException sqle) {
 			throw new RuntimeException(sqle);
 		}
