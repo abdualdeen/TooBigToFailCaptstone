@@ -337,7 +337,7 @@ public class PortfolioData {
 	 * @param apr
 	 */
 	public static void addDepositAccount(String assetCode, String label, double apr) {
-	String q1 = "insert into Asset(assetType, assetId, label, apr) values ('D', '?', '?', ?);";
+	String q1 = "insert into Asset(assetType, assetCode, label, apr) values ('D', '?', '?', ?);";
 	PreparedStatement ps;
 	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
@@ -367,7 +367,7 @@ public class PortfolioData {
 	public static void addPrivateInvestment(String assetCode, String label, Double quartDivi, 
 			Double baseROR, Double omega, Double investmentValue) {
 	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, omega, investmentValue) "
-			+ "values ('P', '?', '?', ?, ?, ?, ?)";
+			+ "values ('P', '?', '?', ?, ?, ?, ?);";
 	PreparedStatement ps;
 	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
@@ -484,7 +484,7 @@ public class PortfolioData {
 	 * Given the old alpha numeric code, the method runs a query to find the SQL table personId and returns it as an integer.
 	 */
 	public static int findPersonId(String alphaCode) {
-		String query = "select personId from Person where alphaCode = '?'";
+		String query = "select personId from Person where alphaCode = '?';";
 		
 		PreparedStatement ps;
 		ResultSet rs;

@@ -15,3 +15,11 @@ select portId from Portfolio where portCode = 'PF002';
 delete from PortfolioAsset where portId = 3;
 delete from Portfolio where portId = 3;
 delete from Asset;
+
+delete from PortfolioAsset;
+delete from Portfolio;
+
+select * from Country;
+select countryId from Country where abbreviation = 'sooeoe' or name = 'newcount';
+
+insert into Country (name) values ('newcount');
