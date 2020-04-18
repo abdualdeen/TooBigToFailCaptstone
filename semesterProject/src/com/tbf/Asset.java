@@ -70,10 +70,10 @@ public abstract class Asset {
 	public double getReturnRate() {
 		double returnRate = 0;
 			if(getAccType().contains("P")) {
-				returnRate = (getReturn()/(getTotalValue()*getPercentStake()))*100;
+				returnRate = (getReturn()/(getTotalValue()*getPercentStake()));
 				
 			}else if(getAccType().contains("S")) {
-				returnRate = (getReturn()/(getSharePrice()*getNumberShares()))*100;
+				returnRate = (getReturn()/(getSharePrice()*getNumberShares()));
 				
 			}else if(getAccType().contains("D")) {
 				returnRate = 0;
