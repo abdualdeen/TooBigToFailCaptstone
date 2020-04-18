@@ -19,14 +19,14 @@ drop table if exists Country;
 create table if not exists State (
   stateId int primary key not null auto_increment,
   name varchar(100) not null,
-  abbreviation varchar(25) not null
+  abbreviation varchar(25)
 );
 
 -- The country table has a country Id, the name of the country and the abbreviation. 
 create table if not exists Country (
   countryId int primary key not null auto_increment,
   name varchar(100) not null,
-  abbreviation varchar(25) not null
+  abbreviation varchar(25)
 );
 
 

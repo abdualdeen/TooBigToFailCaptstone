@@ -209,7 +209,7 @@ public class PortfolioData {
 		int addressId = addAddress(street, city, state, zip, stateId, countryId);
 		String q1;
 		String brokerStat = null;
-		if (brokerType != null || !brokerType.isEmpty()) {
+		if (brokerType == null || brokerType.isEmpty()) {
 			q1 = "insert into Person(alphaCode, lastName, firstName, addressId) values (?, ?, ?, ?);";
 		} else {
 			brokerStat = brokerType+", "+secBrokerId;
