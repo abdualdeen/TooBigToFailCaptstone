@@ -83,8 +83,8 @@ public class PortfolioData {
 	 * A second query is then run to find the countryId of the country just entered. 
 	 */
 	public static int addCountry(String country) {
-		String q1 = "insert into Country (name) values ('?');";
-		String q2 = "select countryId from Country where abbreviation = '?' or name = '?';";
+		String q1 = "insert into Country (name) values (?);";
+		String q2 = "select countryId from Country where name = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
@@ -97,7 +97,6 @@ public class PortfolioData {
 			
 			ps = conn.prepareStatement(q2);
 			ps.setString(1, country);
-			ps.setString(2, country);
 			rs = ps.executeQuery();
 			
 			rs.next();
@@ -117,8 +116,8 @@ public class PortfolioData {
 	 * A second query then is used to find the stateId and returns it.
 	 */
 	public static int addState(String state) {
-		String q1 = "insert into State (name) values ('?');";
-		String q2 = "select stateId from State where abbreviation = '?' or name = '?';";
+		String q1 = "insert into State (name) values (?);";
+		String q2 = "select stateId from State where abbreviation = ? or name = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
@@ -157,8 +156,8 @@ public class PortfolioData {
 	 * and returns it. 
 	 */
 	public static int addAddress(String street, String city, String state, String zip, int stateId, int countryId) {
-		String q1 = "insert into Address (street, city, zip, stateId, countryId) values ('?', '?', '?', ?, ?);";
-		String q2 = "select AddressId from Address where street = '?' and city = '?' and zip = '?';";
+		String q1 = "insert into Address (street, city, zip, stateId, countryId) values (?, ?, ?, ?, ?);";
+		String q2 = "select AddressId from Address where street = ? and city = ? and zip = ?;";
 		PreparedStatement ps = null;
 		ResultSet rs;
 		Connection conn = DBTool.connectToDB();
@@ -211,10 +210,10 @@ public class PortfolioData {
 		String q1;
 		String brokerStat = null;
 		if (brokerType != null || !brokerType.isEmpty()) {
-			q1 = "insert into Person(alphaCode, lastName, firstName, addressId) values (\"?\", \"?\", \"?\", ?);";
+			q1 = "insert into Person(alphaCode, lastName, firstName, addressId) values (?, ?, ?, ?);";
 		} else {
 			brokerStat = brokerType+", "+secBrokerId;
-			q1 = "insert into Person(alphaCode, brokerStat, lastName, firstName, addressId) values ('?', '?', '?', '?', ?);";
+			q1 = "insert into Person(alphaCode, brokerStat, lastName, firstName, addressId) values (?, ?, ?, ?, ?);";
 		}
 		
 		PreparedStatement ps;
@@ -250,7 +249,7 @@ public class PortfolioData {
 	 * @param email
 	 */
 	public static void addEmail(String personCode, String email) {
-		String query = "insert into EmailAddress (personId, emailAddress) values(?, '?');";
+		String query = "insert into EmailAddress (personId, emailAddress) values(?, ?);";
 		int personId = findPersonId(personCode);
 		
 		PreparedStatement ps;
@@ -300,7 +299,7 @@ public class PortfolioData {
 	 * @param assetCode
 	 */
 	public static void removeAsset(String assetCode) {
-		String q1 = "select assetId from Asset where assetCode = '?';";
+		String q1 = "select assetId from Asset where assetCode = ?;";
 		String q2 = "delete from PortfolioAsset where assetId = ?;";
 		String q3 = "delete from Asset where assetId = ?;";
 		
@@ -337,7 +336,7 @@ public class PortfolioData {
 	 * @param apr
 	 */
 	public static void addDepositAccount(String assetCode, String label, double apr) {
-	String q1 = "insert into Asset(assetType, assetCode, label, apr) values ('D', '?', '?', ?);";
+	String q1 = "insert into Asset(assetType, assetCode, label, apr) values ('D', ?, ?, ?);";
 	PreparedStatement ps;
 	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
@@ -366,7 +365,7 @@ public class PortfolioData {
 	 */
 	public static void addPrivateInvestment(String assetCode, String label, Double quartDivi, 
 			Double baseROR, Double omega, Double investmentValue) {
-	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, omega, investmentValue) values ('P', '?', '?', ?, ?, ?, ?);";
+	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, omega, investmentValue) values ('P', ?, ?, ?, ?, ?, ?);";
 	PreparedStatement ps;
 	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
@@ -398,7 +397,7 @@ public class PortfolioData {
 	public static void addStock(String assetCode, String label, Double quartDivi, 
 			Double baseROR, Double beta, String stockSymb, Double sharePrice) {
 	String q1 = "insert into Asset(assetType, assetCode, label, quartDivi, baseROR, beta, stockSymb, sharePrice) "
-			+ "values ('S', '?', '?', ?, ?, ?, '?', ?);";
+			+ "values ('S', ?, ?, ?, ?, ?, ?, ?);";
 	PreparedStatement ps;
 	ResultSet rs = null;
 	Connection conn = DBTool.connectToDB();
@@ -448,9 +447,9 @@ public class PortfolioData {
 	 * @param portfolioCode
 	 */
 	public static void removePortfolio(String portCode) {
-	String q1 = "select portId from Portfolio where portCode = '?';";
+	String q1 = "select portId from Portfolio where portCode = ?;";
 	String q2 = "delete from PortfolioAsset where portId = ?;";
-	String q3 = "delete from Portfolio where portId = '?';";
+	String q3 = "delete from Portfolio where portId = ?;";
 	
 	PreparedStatement ps;
 	ResultSet rs;
@@ -483,7 +482,7 @@ public class PortfolioData {
 	 * Given the old alpha numeric code, the method runs a query to find the SQL table personId and returns it as an integer.
 	 */
 	public static int findPersonId(String alphaCode) {
-		String query = "select personId from Person where alphaCode = '?';";
+		String query = "select personId from Person where alphaCode = ?;";
 		
 		PreparedStatement ps;
 		ResultSet rs;
@@ -513,15 +512,15 @@ public class PortfolioData {
 	 * @param beneficiaryCode
 	 */
 	public static void addPortfolio(String portCode, String ownerId, String managerId, String benefId) {
-		String q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, '?');";
+		String q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, ?);";
 		int ownId = findPersonId(ownerId);
 		int managId = findPersonId(managerId);
 		int benId = 0;
 		if (benefId == null || benefId.isEmpty()) {
-			q1 = "insert into Portfolio (ownerId, managerId, portCode) values (?, ?, '?');";
+			q1 = "insert into Portfolio (ownerId, managerId, portCode) values (?, ?, ?);";
 		} else {
 			benId = findPersonId(benefId);
-			q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, '?');";
+			q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, ?);";
 		}
 		
 		PreparedStatement ps;
@@ -561,8 +560,8 @@ public class PortfolioData {
 	 * @param value
 	 */
 	public static void addAsset(String portfolioCode, String assetCode, double value) {
-		String q1 = "select assetId from Asset where assetCode = '?';";
-		String q2 = "select portId from Portfolio where portCode = '?';";
+		String q1 = "select assetId from Asset where assetCode = ?;";
+		String q2 = "select portId from Portfolio where portCode = ?;";
 		String q3 = "insert into PortfolioAsset (portId, assetId, assetInfo) values (?, ?, ?);";
 		
 		PreparedStatement ps = null;
