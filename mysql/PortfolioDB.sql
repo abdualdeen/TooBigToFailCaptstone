@@ -46,7 +46,7 @@ create table if not exists Address (
   -- address table.
 create table if not exists Person (
   personId int primary key not null auto_increment,
-  alphaCode varchar(10) not null,
+  alphaCode varchar(100) not null,
   brokerStat varchar(10),
   lastName varchar(100) not null,
   firstName varchar(100) not null,

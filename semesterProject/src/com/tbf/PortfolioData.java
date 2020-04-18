@@ -529,17 +529,18 @@ public class PortfolioData {
 		
 		try {
 			ps = conn.prepareStatement(q1);
-			ps.setInt(1, ownId);
-			ps.setInt(2, managId);
-			if (benefId != null || !benefId.isEmpty()) {
+//			ps.setInt(1, ownId);
+//			ps.setInt(2, managId);
+			if (benefId == null || benefId.isEmpty()) {
+				ps.setInt(1, ownId);
+				ps.setInt(2, managId);
+				ps.setString(3, portCode);
+				
+			} else {
 				ps.setInt(1, ownId);
 				ps.setInt(2, managId);
 				ps.setInt(3, benId);
 				ps.setString(4, portCode);
-			} else {
-				ps.setInt(1, ownId);
-				ps.setInt(2, managId);
-				ps.setString(3, portCode);
 			}
 			ps.executeUpdate();
 		} catch (SQLException sqle) {
