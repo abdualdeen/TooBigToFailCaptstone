@@ -250,4 +250,31 @@ public class DBReader {
 			return portfolios;
 				
 		}
+	
+	
+	/**
+	 * @findPersonId
+	 * @param alphaCode
+	 * Given the old alpha numeric code, the method runs a query to find the SQL table personId and returns it as an integer.
+	 */
+	public static int findPersonId(String alphaCode) {
+		String query = "select personId from Person where alphaCode = ?;";
+		
+		PreparedStatement ps;
+		ResultSet rs;
+		Connection conn = DBTool.connectToDB();
+		int personId; 
+		
+		try {
+			ps = conn.prepareStatement(query);
+			ps.setString(1, alphaCode);
+			rs = ps.executeQuery();
+			rs.next();
+			personId = rs.getInt("personId");
+		} catch (SQLException sqle) {
+			throw new RuntimeException(sqle);
+		}
+		DBTool.disconnectFromDB(conn, ps, rs);
+		return personId;
+	}
 }

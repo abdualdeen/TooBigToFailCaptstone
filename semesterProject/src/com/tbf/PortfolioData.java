@@ -250,7 +250,7 @@ public class PortfolioData {
 	 */
 	public static void addEmail(String personCode, String email) {
 		String query = "insert into EmailAddress (personId, emailAddress) values(?, ?);";
-		int personId = findPersonId(personCode);
+		int personId = DBReader.findPersonId(personCode);
 		
 		PreparedStatement ps;
 		ResultSet rs = null;
@@ -477,33 +477,6 @@ public class PortfolioData {
 	
 	
 	/**
-	 * @findPersonId
-	 * @param alphaCode
-	 * Given the old alpha numeric code, the method runs a query to find the SQL table personId and returns it as an integer.
-	 */
-	public static int findPersonId(String alphaCode) {
-		String query = "select personId from Person where alphaCode = ?;";
-		
-		PreparedStatement ps;
-		ResultSet rs;
-		Connection conn = DBTool.connectToDB();
-		int personId; 
-		
-		try {
-			ps = conn.prepareStatement(query);
-			ps.setString(1, alphaCode);
-			rs = ps.executeQuery();
-			rs.next();
-			personId = rs.getInt("personId");
-		} catch (SQLException sqle) {
-			throw new RuntimeException(sqle);
-		}
-		DBTool.disconnectFromDB(conn, ps, rs);
-		return personId;
-	}
-	
-	
-	/**
 	 * Adds a portfolio records to the database with the given data.  If the portfolio has no
 	 * beneficiary, the <code>beneficiaryCode</code> will be <code>null</code>
 	 * @param portfolioCode
@@ -513,13 +486,13 @@ public class PortfolioData {
 	 */
 	public static void addPortfolio(String portCode, String ownerId, String managerId, String benefId) {
 		String q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, ?);";
-		int ownId = findPersonId(ownerId);
-		int managId = findPersonId(managerId);
+		int ownId = DBReader.findPersonId(ownerId);
+		int managId = DBReader.findPersonId(managerId);
 		int benId = 0;
 		if (benefId == null || benefId.isEmpty()) {
 			q1 = "insert into Portfolio (ownerId, managerId, portCode) values (?, ?, ?);";
 		} else {
-			benId = findPersonId(benefId);
+			benId = DBReader.findPersonId(benefId);
 			q1 = "insert into Portfolio (ownerId, managerId, benefId, portCode) values (?, ?, ?, ?);";
 		}
 		
