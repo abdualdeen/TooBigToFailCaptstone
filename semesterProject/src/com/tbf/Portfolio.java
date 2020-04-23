@@ -151,7 +151,7 @@ public class Portfolio {
 		this.owner = owner;
 		this.manag = manag;
 		this.benef = benef;
-		this.assetList = new ArrayList<Asset>();
+		this.assetList = assetList;
 	}
 	
 	
@@ -168,7 +168,9 @@ public class Portfolio {
 		this.portCode = portCode;
 		this.owner = owner;
 		this.manag = manag;
-		this.assetList = new ArrayList<Asset>();	}
+		this.assetList = assetList;
+		
+		}
 
 	public Portfolio() {
 	}
