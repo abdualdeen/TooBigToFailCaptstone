@@ -168,8 +168,7 @@ public class Portfolio {
 		this.portCode = portCode;
 		this.owner = owner;
 		this.manag = manag;
-		this.assetList = assetList;
-		
+		this.assetList = assetList;	
 		}
 
 	public Portfolio() {
