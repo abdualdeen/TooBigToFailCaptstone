@@ -1,10 +1,10 @@
 package com.tbf;
 
-public class ValueSortList {
+public class ValueSortList<T> implements SortList{
 	private static Node<Portfolio> head;
 	private static int size;
 
-	public static void add(Portfolio port) {
+	public void add(Portfolio port) {
 		Node<Portfolio> newNode = new Node(port);
 		boolean isInserted = false;
 		if (isEmpty()) {

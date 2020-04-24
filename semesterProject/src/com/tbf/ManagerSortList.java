@@ -1,10 +1,12 @@
 package com.tbf;
 
-public class ManagerSortList {
+import java.util.Iterator;
+
+public class ManagerSortList<T> implements SortList{
 	private static Node<Portfolio> head;
 	private static int size;
 	
-	public static void add(Portfolio port) {
+	public void add(Portfolio port) {
 		boolean isInserted = false;
 		if (isEmpty()) {
 			Node<Portfolio> newHead = new Node(port);
@@ -96,4 +98,5 @@ public class ManagerSortList {
 	public static boolean isEmpty() {
 		return (size == 0);
 	}
+
 }

@@ -1,11 +1,13 @@
 package com.tbf;
 
-public class NameSortList<T> {
+import java.util.Iterator;
+
+public class NameSortList<T> implements SortList{
 	
 	private static Node<Portfolio> head;
 	private static int size;
 	
-	public static void add(Portfolio port) {
+	public void add(Portfolio port) {
 		boolean isInserted = false;
 		if (isEmpty()) {
 			Node<Portfolio> newHead = new Node(port);
@@ -83,5 +85,11 @@ public class NameSortList<T> {
 
 	public static boolean isEmpty() {
 		return (size == 0);
+	}
+
+	@Override
+	public Iterator<Portfolio> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

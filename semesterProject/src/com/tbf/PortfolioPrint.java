@@ -3,7 +3,8 @@ package com.tbf;
 import java.util.List;
 
 public class PortfolioPrint {
-	public static void printSummary(List<Portfolio> portList) {
+	
+	public static void printSummary(SortList portList) {
 		// Printing out the general summary report with the variables that are obtained
 		// from the list of portfolios
 		// The variables are gathered by the methods in the portfolio class
@@ -37,7 +38,7 @@ public class PortfolioPrint {
 
 	}
 
-	public static void printDetail(List<Portfolio> portList) {
+	public static void printDetail(SortList portList) {
 		// For every specific portfolio, we are listing their assets, and the
 		// specificities of them
 		// For every asset in a specific portfolio we are then calling methods in the
