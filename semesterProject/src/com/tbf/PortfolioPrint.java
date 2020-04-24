@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PortfolioPrint {
 	
-	public static void printSummary(SortList portList) {
+	public static void printSummary(SortList<Portfolio> portList) {
 		// Printing out the general summary report with the variables that are obtained
 		// from the list of portfolios
 		// The variables are gathered by the methods in the portfolio class
@@ -38,12 +38,12 @@ public class PortfolioPrint {
 
 	}
 
-	public static void printDetail(SortList portList) {
+	public static void printDetail(SortList<Portfolio> portList) {
 		// For every specific portfolio, we are listing their assets, and the
 		// specificities of them
 		// For every asset in a specific portfolio we are then calling methods in the
 		// asset class to obtain those values and print them out
-		for (Portfolio j : portList) {
+		for (Portfolio j: portList) {
 			String benefinfo = "";
 			if (j.getBeneficiary() == null) {
 				benefinfo = "None";

@@ -1,6 +1,8 @@
 package com.tbf;
 
-public class ValueSortList<T> implements SortList{
+import java.util.Iterator;
+
+public class ValueSortList<T> implements SortList<Portfolio>{
 	private static Node<Portfolio> head;
 	private static int size;
 
@@ -67,5 +69,27 @@ public class ValueSortList<T> implements SortList{
 
 	public static boolean isEmpty() {
 		return (size == 0);
+	}
+
+
+	@Override
+	public Iterator<Portfolio> iterator() {
+		return (Iterator<Portfolio>) new Iterator<Portfolio>() {
+			Node<Portfolio> curr = head;
+			@Override
+			public boolean hasNext() {
+				if(curr == null)
+					return false;
+				else
+					return true;
+			}
+			@Override
+			public Portfolio next() {
+				Portfolio item = curr.getElement();
+				curr = curr.getNext();
+				return item;
+			}
+
+			};
 	}
 }

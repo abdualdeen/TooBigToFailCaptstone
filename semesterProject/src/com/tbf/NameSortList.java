@@ -2,7 +2,8 @@ package com.tbf;
 
 import java.util.Iterator;
 
-public class NameSortList<T> implements SortList{
+
+public class NameSortList<T> implements SortList<Portfolio>{
 	
 	private static Node<Portfolio> head;
 	private static int size;
@@ -26,7 +27,8 @@ public class NameSortList<T> implements SortList{
 					curr = curr.getNext();
 					
 				} else if (lName.compareToIgnoreCase(newName) > 0) {
-					prev.setNext(newNode);
+					prev = newNode;
+//					prev.setNext(newNode);
 					newNode.setNext(curr);
 					size++;
 					isInserted = true;
@@ -40,7 +42,8 @@ public class NameSortList<T> implements SortList{
 						curr = curr.getNext();
 						
 					} else if (fName1.compareToIgnoreCase(fName2) > 0) {
-						prev.setNext(newNode);
+						prev = newNode;
+//						prev.setNext(newNode);
 						newNode.setNext(curr);
 						size++;
 						isInserted = true;
@@ -80,7 +83,7 @@ public class NameSortList<T> implements SortList{
 	}
 	
 	public int getSize() {
-		return this.size;
+		return size;
 	}
 
 	public static boolean isEmpty() {
@@ -89,7 +92,25 @@ public class NameSortList<T> implements SortList{
 
 	@Override
 	public Iterator<Portfolio> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Iterator<Portfolio>) new Iterator<Portfolio>() {
+			Node<Portfolio> curr = head;
+			@Override
+			public boolean hasNext() {
+				if(curr == null)
+					return false;
+				else
+					return true;
+			}
+			@Override
+			public Portfolio next() {
+				Portfolio item = curr.getElement();
+				curr = curr.getNext();
+				return item;
+			}
+
+			};
 	}
+
+	
 }
+
