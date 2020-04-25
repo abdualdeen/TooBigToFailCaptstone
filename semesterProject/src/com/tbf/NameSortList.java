@@ -3,40 +3,39 @@ package com.tbf;
 import java.util.Iterator;
 
 
-public class NameSortList<T> implements SortList<Portfolio>{
+public class NameSortList<T> implements SortList<T>{
 	
-	private static Node<Portfolio> head;
+	private Node<T> head;
 	private static int size;
 	
-	public void add(Portfolio port) {
+	public void add(T port) {
 		boolean isInserted = false;
 		if (isEmpty()) {
-			Node<Portfolio> newHead = new Node<Portfolio>(port);
+			Node<T> newHead = new Node<T>(port);
 			head = newHead;
 			size++;
 			
 		} else {
-			Node<Portfolio> newNode = new Node<Portfolio>(port);
-			Node<Portfolio> curr = head;
-			Node<Portfolio> prev = null;
+			Node<T> newNode = new Node<T>(port);
+			Node<T> curr = head;
+			Node<T> prev = null;
 			while(curr.getNext() != null) {
-				String lName = curr.getElement().getOwnerCode().getName().getLastName();
-				String newName = newNode.getElement().getOwnerCode().getName().getLastName();
+				String lName = ((Portfolio) curr.getElement()).getOwnerCode().getName().getLastName();
+				String newName = ((Portfolio) newNode.getElement()).getOwnerCode().getName().getLastName();
 				if (lName.compareToIgnoreCase(newName) < 0) {
 					prev = curr;
 					curr = curr.getNext();
 					
 				} else if (lName.compareToIgnoreCase(newName) > 0) {
 					prev = newNode;
-//					prev.setNext(newNode);
 					newNode.setNext(curr);
 					size++;
 					isInserted = true;
 					break;
 					
 				} else {
-					String fName1 = curr.getElement().getOwnerCode().getName().getFirstName();
-					String fName2 = newNode.getElement().getOwnerCode().getName().getFirstName();
+					String fName1 = ((Portfolio) curr.getElement()).getOwnerCode().getName().getFirstName();
+					String fName2 = ((Portfolio) newNode.getElement()).getOwnerCode().getName().getFirstName();
 					if (fName1.compareToIgnoreCase(fName2) < 0) {
 						prev = curr;
 						curr = curr.getNext();
@@ -66,23 +65,23 @@ public class NameSortList<T> implements SortList<Portfolio>{
 		}
 	}
 	
-	public static void insertAtHead(Portfolio element) {
-		Node<Portfolio> newHead = new Node<Portfolio>(element);
+	public void insertAtHead(T element) {
+		Node<T> newHead = new Node<T>(element);
 		newHead.setNext(head);
 		head = newHead;
 		size++;
 	}
 	
-	public static void insertAtTail(Portfolio element) {
+	public void insertAtTail(T element) {
 		if(isEmpty()) {
 			insertAtHead(element);
 			return;
 		}
-		Node<Portfolio> curr = head;
+		Node<T> curr = head;
 		while(curr.getNext() != null) {
 			curr = curr.getNext();
 		}
-		Node<Portfolio> newTail = new Node<Portfolio>(element);
+		Node<T> newTail = new Node<T>(element);
 		curr.setNext(newTail);
 		size++;
 	}
@@ -96,9 +95,9 @@ public class NameSortList<T> implements SortList<Portfolio>{
 	}
 
 	@Override
-	public Iterator<Portfolio> iterator() {
-		return (Iterator<Portfolio>) new Iterator<Portfolio>() {
-			Node<Portfolio> curr = head;
+	public Iterator<T> iterator() {
+		return (Iterator<T>) new Iterator<T>() {
+			Node<T> curr = head;
 			@Override
 			public boolean hasNext() {
 				if(curr == null)
@@ -107,10 +106,10 @@ public class NameSortList<T> implements SortList<Portfolio>{
 					return true;
 			}
 			@Override
-			public Portfolio next() {
-				Portfolio item = curr.getElement();
+			public T next() {
+				Portfolio item = (Portfolio) curr.getElement();
 				curr = curr.getNext();
-				return item;
+				return (T) item;
 			}
 
 			};
