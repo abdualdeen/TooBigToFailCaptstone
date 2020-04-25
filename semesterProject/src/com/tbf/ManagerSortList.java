@@ -22,7 +22,7 @@ public class ManagerSortList<T> implements SortList<T>{
 				String currName = ((Portfolio) curr.getElement()).getManagCode().getName().getLastName();
 				String newBroker = ((Portfolio) newNode.getElement()).getManagCode().getBrokerStatus();
 				String newName = ((Portfolio) newNode.getElement()).getManagCode().getName().getLastName();
-				if (currBroker.compareToIgnoreCase(newBroker) > 0) {
+				if (currBroker.compareToIgnoreCase(newBroker) == 0) {
 					if (currName.compareToIgnoreCase(newName) < 0) {
 						prev = curr;
 						curr = curr.getNext();
@@ -76,16 +76,25 @@ public class ManagerSortList<T> implements SortList<T>{
 					isInserted = true;
 					break;
 					
-				} else {
+				} else if(currBroker.compareToIgnoreCase(newBroker) < 0) {
 					prev = curr;
 					curr = curr.getNext();
-				}			
+				} else if(currBroker.compareToIgnoreCase(newBroker) > 0) {
+					if(prev == null) {
+						newNode.setNext(head);
+						head = newNode;
+					}
+					else {
+						prev.setNext(newNode);
+						newNode.setNext(curr);
+				}
 			}
 			if (isInserted == false) {
 				addAtTail(port);
 				isInserted = true;
 			}
-		}
+			}
+	}
 	}
 	
 	private void addAtHead(T element) {

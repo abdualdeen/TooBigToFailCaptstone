@@ -10,6 +10,8 @@ public class PortfolioReport {
 	public static void main(String args[]) {
 		// Setting a list variable equal to the method in DBReader that retrieves all portfolios
 		List<Portfolio> portList = DBReader.retrieveAllPortfolios();
+//		PortfolioPrint.printSummary(portList);
+//		PortfolioPrint.printDetail(portList);
 		NameSortList<Portfolio> nameList = new NameSortList<>();
 		ValueSortList<Portfolio> valueList = new ValueSortList<>();
 		ManagerSortList<Portfolio> managerList = new ManagerSortList<>();
@@ -18,8 +20,8 @@ public class PortfolioReport {
 			valueList.add(p);
 			managerList.add(p);
 		}
-		PortfolioPrint.printDetail(nameList);
-		PortfolioPrint.printDetail(valueList);
-		PortfolioPrint.printDetail(managerList);
+		PortfolioPrint.printSummary(nameList);
+		PortfolioPrint.printSummary(valueList);
+		PortfolioPrint.printSummary(managerList);
 	}
 }

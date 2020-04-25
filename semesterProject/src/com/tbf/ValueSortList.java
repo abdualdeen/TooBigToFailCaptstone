@@ -20,11 +20,11 @@ public class ValueSortList<T> implements SortList<T>{
 			while (curr.getNext() != null) {
 				double currValue = ((Portfolio) curr.getElement()).getTotal();
 				double newValue = ((Portfolio) newNode.getElement()).getTotal();
-				if (currValue < newValue) {
+				if (currValue > newValue) {
 					prev = curr;
 					curr = curr.getNext();
 
-				} else if (currValue > newValue) {
+				} else if (currValue < newValue) {
 					if(prev == null) {
 						newNode.setNext(head);
 						head = newNode;
