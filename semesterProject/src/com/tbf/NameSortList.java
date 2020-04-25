@@ -1,13 +1,13 @@
 package com.tbf;
 
 import java.util.Iterator;
-
 /**
  * NameSortList is a list that orders the Portfolios based on owner's last names
  * then first names.
  */
-public class NameSortList<T> implements SortList<T> {
 
+public class NameSortList<T> implements SortList<T> {
+	// Initiates the head and size
 	private Node<T> head;
 	private static int size;
 
@@ -36,8 +36,14 @@ public class NameSortList<T> implements SortList<T> {
 					curr = curr.getNext();
 
 				} else if (lName.compareToIgnoreCase(newName) > 0) {
-					prev = newNode;
-					newNode.setNext(curr);
+					if (prev == null) {
+						newNode.setNext(head);
+						head = newNode;
+
+					} else {
+						prev.setNext(newNode);
+						newNode.setNext(curr);
+					}
 					size++;
 					isInserted = true;
 					break;
@@ -49,7 +55,7 @@ public class NameSortList<T> implements SortList<T> {
 						prev = curr;
 						curr = curr.getNext();
 
-					} else if (fName1.compareToIgnoreCase(fName2) > 0) {
+					} else if (fName1.compareToIgnoreCase(fName2) >= 0) {
 						if (prev == null) {
 							newNode.setNext(head);
 							head = newNode;
@@ -61,9 +67,7 @@ public class NameSortList<T> implements SortList<T> {
 						isInserted = true;
 						break;
 
-					} else {
-
-					}
+					} 
 				}
 			}
 			if (isInserted == false) {
@@ -72,7 +76,7 @@ public class NameSortList<T> implements SortList<T> {
 			}
 		}
 	}
-
+	
 	// Adding an element at the head of the list.
 	private void addAtHead(T element) {
 		Node<T> newHead = new Node<T>(element);
@@ -80,7 +84,6 @@ public class NameSortList<T> implements SortList<T> {
 		head = newHead;
 		size++;
 	}
-
 	// Adding an element at the end or tail of the list.
 	private void addAtTail(T element) {
 		if (isEmpty()) {
@@ -95,7 +98,6 @@ public class NameSortList<T> implements SortList<T> {
 		curr.setNext(newTail);
 		size++;
 	}
-
 	// Removing the element at the head.
 	public T removeFromHead() {
 		if (isEmpty()) {
@@ -106,18 +108,17 @@ public class NameSortList<T> implements SortList<T> {
 		size--;
 		return item;
 	}
-
 	// Adding an element at a specific index on the list.
-	public void addAtIndex(T element, int index) {
+	public void addAtIndex(T item, int index) {
 		if (index < 0 || index > size) {
 			throw new IllegalArgumentException("Index given does not exist.");
 		}
 		if (index == 0) {
-			this.addAtHead(element);
+			this.addAtHead(item);
 		} else if (index == size) {
-			this.addAtTail(element);
+			this.addAtTail(item);
 		} else {
-			Node<T> newNode = new Node<T>(element);
+			Node<T> newNode = new Node<T>(item);
 			Node<T> prevNode = this.getNodeAtIndex(index - 1);
 			Node<T> currNode = prevNode.getNext();
 			newNode.setNext(currNode);
@@ -125,12 +126,10 @@ public class NameSortList<T> implements SortList<T> {
 			size++;
 		}
 	}
-
 	// Retrieving the element wanted for a given index.
 	public T getElementAtIndex(int index) {
 		return getNodeAtIndex(index).getElement();
 	}
-
 	// Retrieving the node wanted a given index.
 	private Node<T> getNodeAtIndex(int index) {
 		if (index < 0 || index >= size) {
@@ -143,17 +142,14 @@ public class NameSortList<T> implements SortList<T> {
 		}
 		return curr;
 	}
-
 	// returns the size of the size of the list.
 	public int getSize() {
 		return size;
 	}
-
 	// returns whether the list is empty or not.
 	public static boolean isEmpty() {
 		return (size == 0);
 	}
-
 	// The Iterator defines how the list is iterated through.
 	@Override
 	public Iterator<T> iterator() {
@@ -174,7 +170,7 @@ public class NameSortList<T> implements SortList<T> {
 				curr = curr.getNext();
 				return element;
 			}
-
 		};
 	}
+
 }

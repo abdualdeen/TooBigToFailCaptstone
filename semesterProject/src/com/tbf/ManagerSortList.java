@@ -1,7 +1,6 @@
 package com.tbf;
 
 import java.util.Iterator;
-
 /**
  * The ManagerSortList uses a LinkedList implementation with Nodes. Each list
  * has a defined "head" and size. The class aims to sort Managers by their
@@ -10,7 +9,6 @@ import java.util.Iterator;
 public class ManagerSortList<T> implements SortList<T> {
 	private Node<T> head;
 	private static int size;
-
 	/**
 	 * The @add method takes in a Type T (this will usually be a Portfolio). The
 	 * method first checks if the list is empty and if so it inserts the given item
@@ -35,7 +33,7 @@ public class ManagerSortList<T> implements SortList<T> {
 				String newName = ((Portfolio) newNode.getElement()).getManagCode().getName().getLastName();
 				// If the current broker status is greater than the new broker then we check for
 				// names of the two managers to determine which one goes where.
-				if (currBroker.compareToIgnoreCase(newBroker) > 0) {
+				if (currBroker.compareToIgnoreCase(newBroker) == 0) {
 					if (currName.compareToIgnoreCase(newName) < 0) {
 						prev = curr;
 						curr = curr.getNext();
@@ -86,14 +84,22 @@ public class ManagerSortList<T> implements SortList<T> {
 					isInserted = true;
 					break;
 
-				} else {
+				} else if (currBroker.compareToIgnoreCase(newBroker) < 0) {
 					prev = curr;
 					curr = curr.getNext();
+				} else if (currBroker.compareToIgnoreCase(newBroker) > 0) {
+					if (prev == null) {
+						newNode.setNext(head);
+						head = newNode;
+					} else {
+						prev.setNext(newNode);
+						newNode.setNext(curr);
+					}
 				}
-			}
-			if (isInserted == false) {
-				addAtTail(port);
-				isInserted = true;
+				if (isInserted == false) {
+					addAtTail(port);
+					isInserted = true;
+				}
 			}
 		}
 	}
@@ -133,16 +139,16 @@ public class ManagerSortList<T> implements SortList<T> {
 	}
 
 	// Adding an element at a specific index on the list.
-	public void addAtIndex(T element, int index) {
+	public void addAtIndex(T item, int index) {
 		if (index < 0 || index > size) {
 			throw new IllegalArgumentException("Index given does not exist.");
 		}
 		if (index == 0) {
-			this.addAtHead(element);
+			this.addAtHead(item);
 		} else if (index == size) {
-			this.addAtTail(element);
+			this.addAtTail(item);
 		} else {
-			Node<T> newNode = new Node<T>(element);
+			Node<T> newNode = new Node<T>(item);
 			Node<T> prevNode = this.getNodeAtIndex(index - 1);
 			Node<T> currNode = prevNode.getNext();
 			newNode.setNext(currNode);
@@ -199,7 +205,6 @@ public class ManagerSortList<T> implements SortList<T> {
 				curr = curr.getNext();
 				return element;
 			}
-
 		};
 	}
 

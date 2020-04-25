@@ -1,14 +1,12 @@
 package com.tbf;
 
 import java.util.Iterator;
-
 /**
  * The ValueSortList has the items ordered by their value.
  */
-public class ValueSortList<T> implements SortList<T> {
+public class ValueSortList<T> implements SortList<T>{
 	private Node<T> head;
 	private static int size;
-
 	/**
 	 * The @add method takes in a Type T (this will usually be a Portfolio). The
 	 * method first checks if the list is empty and if so it inserts the given item
@@ -29,16 +27,17 @@ public class ValueSortList<T> implements SortList<T> {
 			while (curr.getNext() != null) {
 				double currValue = ((Portfolio) curr.getElement()).getTotal();
 				double newValue = ((Portfolio) newNode.getElement()).getTotal();
-				if (currValue < newValue) {
+				if (currValue > newValue) {
 					prev = curr;
 					curr = curr.getNext();
 
-				} else if (currValue > newValue) {
-					if (prev == null) {
+				} else if (currValue < newValue) {
+					if(prev == null) {
 						newNode.setNext(head);
 						head = newNode;
-
-					} else {
+						
+					}
+					else {
 						prev.setNext(newNode);
 						newNode.setNext(curr);
 					}
@@ -63,7 +62,6 @@ public class ValueSortList<T> implements SortList<T> {
 		head = newHead;
 		size++;
 	}
-
 	// Adding an element at the end or tail of the list.
 	private void addAtTail(T element) {
 		if (isEmpty()) {
@@ -78,7 +76,6 @@ public class ValueSortList<T> implements SortList<T> {
 		curr.setNext(newTail);
 		size++;
 	}
-
 	// Removing the element at the head.
 	public T removeFromHead() {
 		if (isEmpty()) {
@@ -89,18 +86,17 @@ public class ValueSortList<T> implements SortList<T> {
 		size--;
 		return item;
 	}
-
 	// Adding an element at a specific index on the list.
-	public void addAtIndex(T element, int index) {
+	public void addAtIndex(T item, int index) {
 		if (index < 0 || index > size) {
 			throw new IllegalArgumentException("Index given does not exist.");
 		}
 		if (index == 0) {
-			this.addAtHead(element);
+			this.addAtHead(item);
 		} else if (index == size) {
-			this.addAtTail(element);
+			this.addAtTail(item);
 		} else {
-			Node<T> newNode = new Node<T>(element);
+			Node<T> newNode = new Node<T>(item);
 			Node<T> prevNode = this.getNodeAtIndex(index - 1);
 			Node<T> currNode = prevNode.getNext();
 			newNode.setNext(currNode);
@@ -108,12 +104,10 @@ public class ValueSortList<T> implements SortList<T> {
 			size++;
 		}
 	}
-
 	// Retrieving the element wanted for a given index.
 	public T getElementAtIndex(int index) {
 		return getNodeAtIndex(index).getElement();
 	}
-
 	// Retrieving the node wanted a given index.
 	private Node<T> getNodeAtIndex(int index) {
 		if (index < 0 || index >= size) {
@@ -126,17 +120,14 @@ public class ValueSortList<T> implements SortList<T> {
 		}
 		return curr;
 	}
-
 	// returns the size of the size of the list.
 	public int getSize() {
 		return size;
 	}
-
 	// returns whether the list is empty or not.
 	public static boolean isEmpty() {
 		return (size == 0);
 	}
-
 	// The Iterator defines how the list is iterated through.
 	@Override
 	public Iterator<T> iterator() {
@@ -157,7 +148,6 @@ public class ValueSortList<T> implements SortList<T> {
 				curr = curr.getNext();
 				return element;
 			}
-
 		};
 	}
 }

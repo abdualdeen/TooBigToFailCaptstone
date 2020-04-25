@@ -21,8 +21,8 @@ public class PortfolioReport {
 			valueList.add(p);
 			managerList.add(p);
 		}
-		PortfolioPrint.printDetail(nameList);
-		PortfolioPrint.printDetail(valueList);
-		PortfolioPrint.printDetail(managerList);
+		PortfolioPrint.printSummary(nameList);
+		PortfolioPrint.printSummary(valueList);
+		PortfolioPrint.printSummary(managerList);
 	}
 }
