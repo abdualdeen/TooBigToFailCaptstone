@@ -11,12 +11,12 @@ public class NameSortList<T> implements SortList<Portfolio>{
 	public void add(Portfolio port) {
 		boolean isInserted = false;
 		if (isEmpty()) {
-			Node<Portfolio> newHead = new Node(port);
+			Node<Portfolio> newHead = new Node<Portfolio>(port);
 			head = newHead;
 			size++;
 			
 		} else {
-			Node<Portfolio> newNode = new Node(port);
+			Node<Portfolio> newNode = new Node<Portfolio>(port);
 			Node<Portfolio> curr = head;
 			Node<Portfolio> prev = null;
 			while(curr.getNext() != null) {
@@ -42,9 +42,14 @@ public class NameSortList<T> implements SortList<Portfolio>{
 						curr = curr.getNext();
 						
 					} else if (fName1.compareToIgnoreCase(fName2) > 0) {
-						prev = newNode;
-//						prev.setNext(newNode);
-						newNode.setNext(curr);
+						if(prev == null) {
+							newNode.setNext(head);
+							head = newNode;
+						}
+						else {
+							prev.setNext(newNode);
+							newNode.setNext(curr);
+						}
 						size++;
 						isInserted = true;
 						break;
@@ -55,20 +60,20 @@ public class NameSortList<T> implements SortList<Portfolio>{
 				}				
 			}
 			if (isInserted == false) {
-				insertAtTail(newNode);
+				insertAtTail(port);
 				isInserted = true;
 			}
 		}
 	}
 	
-	public static void insertAtHead(Node<Portfolio> element) {
-		Node<Portfolio> newHead = new Node(element);
+	public static void insertAtHead(Portfolio element) {
+		Node<Portfolio> newHead = new Node<Portfolio>(element);
 		newHead.setNext(head);
 		head = newHead;
 		size++;
 	}
 	
-	public static void insertAtTail(Node<Portfolio> element) {
+	public static void insertAtTail(Portfolio element) {
 		if(isEmpty()) {
 			insertAtHead(element);
 			return;
@@ -77,7 +82,7 @@ public class NameSortList<T> implements SortList<Portfolio>{
 		while(curr.getNext() != null) {
 			curr = curr.getNext();
 		}
-		Node<Portfolio> newTail = new Node(element);
+		Node<Portfolio> newTail = new Node<Portfolio>(element);
 		curr.setNext(newTail);
 		size++;
 	}

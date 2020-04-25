@@ -2,31 +2,38 @@ package com.tbf;
 
 import java.util.Iterator;
 
-public class ValueSortList<T> implements SortList<Portfolio>{
-	private static Node<Portfolio> head;
+public class ValueSortList<T> implements SortList<T>{
+	private Node<T> head;
 	private static int size;
 
-	public void add(Portfolio port) {
-		Node<Portfolio> newNode = new Node(port);
+	public void add(T port) {
+		Node<T> newNode = new Node<T>(port);
 		boolean isInserted = false;
 		if (isEmpty()) {
-			Node<Portfolio> newHead = new Node(port);
+			Node<T> newHead = new Node<T>(port);
 			head = newHead;
 			size++;
 
 		} else {
-			Node<Portfolio> curr = head;
-			Node<Portfolio> prev = null;
+			Node<T> curr = head;
+			Node<T> prev = null;
 			while (curr.getNext() != null) {
-				double currValue = curr.getElement().getTotal();
-				double newValue = newNode.getElement().getTotal();
+				double currValue = ((Portfolio) curr.getElement()).getTotal();
+				double newValue = ((Portfolio) newNode.getElement()).getTotal();
 				if (currValue < newValue) {
 					prev = curr;
 					curr = curr.getNext();
 
 				} else if (currValue > newValue) {
-					prev.setNext(newNode);
-					newNode.setNext(curr);
+					if(prev == null) {
+						newNode.setNext(head);
+						head = newNode;
+						
+					}
+					else {
+						prev.setNext(newNode);
+						newNode.setNext(curr);
+					}
 					size++;
 					isInserted = true;
 					break;
@@ -36,29 +43,29 @@ public class ValueSortList<T> implements SortList<Portfolio>{
 
 		}
 		if (isInserted == false) {
-			insertAtTail(newNode);
+			insertAtTail(port);
 			isInserted = true;
 		}
 	}
 
 
-	public static void insertAtHead(Node<Portfolio> element) {
-		Node<Portfolio> newHead = new Node(element);
+	private void insertAtHead(T element) {
+		Node<T> newHead = new Node<T>(element);
 		newHead.setNext(head);
 		head = newHead;
 		size++;
 	}
 
-	public static void insertAtTail(Node<Portfolio> element) {
+	private void insertAtTail(T element) {
 		if (isEmpty()) {
 			insertAtHead(element);
 			return;
 		}
-		Node<Portfolio> curr = head;
+		Node<T> curr = head;
 		while (curr.getNext() != null) {
 			curr = curr.getNext();
 		}
-		Node<Portfolio> newTail = new Node(element);
+		Node<T> newTail = new Node<T>(element);
 		curr.setNext(newTail);
 		size++;
 	}
@@ -73,9 +80,9 @@ public class ValueSortList<T> implements SortList<Portfolio>{
 
 
 	@Override
-	public Iterator<Portfolio> iterator() {
-		return (Iterator<Portfolio>) new Iterator<Portfolio>() {
-			Node<Portfolio> curr = head;
+	public Iterator<T> iterator() {
+		return (Iterator<T>) new Iterator<T>() {
+			Node<T> curr = head;
 			@Override
 			public boolean hasNext() {
 				if(curr == null)
@@ -84,8 +91,8 @@ public class ValueSortList<T> implements SortList<Portfolio>{
 					return true;
 			}
 			@Override
-			public Portfolio next() {
-				Portfolio item = curr.getElement();
+			public T next() {
+				T item = curr.getElement();
 				curr = curr.getNext();
 				return item;
 			}
