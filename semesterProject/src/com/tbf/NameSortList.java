@@ -107,9 +107,9 @@ public class NameSortList<T> implements SortList<T>{
 			}
 			@Override
 			public T next() {
-				Portfolio item = (Portfolio) curr.getElement();
+				T item = curr.getElement();
 				curr = curr.getNext();
-				return (T) item;
+				return item;
 			}
 
 			};
