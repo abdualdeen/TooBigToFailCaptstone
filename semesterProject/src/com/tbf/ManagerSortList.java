@@ -82,26 +82,26 @@ public class ManagerSortList<T> implements SortList<T>{
 				}			
 			}
 			if (isInserted == false) {
-				insertAtTail(port);
+				addAtTail(port);
 				isInserted = true;
 			}
 		}
 	}
 	
-	public void insertAtHead(T element) {
+	private void addAtHead(T element) {
 		Node<T> newHead = new Node<T>(element);
 		newHead.setNext(head);
 		head = newHead;
 		size++;
 	}
-	
-	public void insertAtTail(T element) {
-		if(isEmpty()) {
-			insertAtHead(element);
+
+	private void addAtTail(T element) {
+		if (isEmpty()) {
+			addAtHead(element);
 			return;
 		}
 		Node<T> curr = head;
-		while(curr.getNext() != null) {
+		while (curr.getNext() != null) {
 			curr = curr.getNext();
 		}
 		Node<T> newTail = new Node<T>(element);
@@ -109,8 +109,52 @@ public class ManagerSortList<T> implements SortList<T>{
 		size++;
 	}
 	
+	public T removeFromHead() {
+		if(isEmpty()) {
+			throw new IllegalStateException("The list is empty. Action cannot be done.");
+		}
+		T item = this.head.getElement();
+		this.head = this.head.getNext();
+		size--;		
+		return item;
+	}
+	
+	public void addAtIndex(T element, int index) {
+		if(index < 0 || index > size) {
+			throw new IllegalArgumentException("Index given does not exist.");
+		}
+		if(index == 0) {
+			this.addAtHead(element);
+		} else if(index == size) {
+			this.addAtTail(element);
+		} else {
+			Node<T> newNode = new Node<T>(element);
+			Node<T> prevNode = this.getNodeAtIndex(index-1);
+			Node<T> currNode = prevNode.getNext();
+			newNode.setNext(currNode);
+			prevNode.setNext(newNode);
+			size++;
+		}
+	}
+	
+	public T getElementAtIndex(int index) {
+		return getNodeAtIndex(index).getElement();
+	}
+	
+	private Node<T> getNodeAtIndex(int index) {
+		if(index < 0 || index >= size) {
+			throw new IllegalArgumentException("Index given does not exist.");
+		}
+		
+		Node<T> curr = this.head;
+		for(int i=0; i<index; i++) {
+			curr = curr.getNext();
+		}
+		return curr;
+	}
+	
 	public int getSize() {
-		return this.size;
+		return size;
 	}
 
 	public static boolean isEmpty() {
@@ -130,9 +174,9 @@ public class ManagerSortList<T> implements SortList<T>{
 			}
 			@Override
 			public T next() {
-				T item = curr.getElement();
+				T element = curr.getElement();
 				curr = curr.getNext();
-				return item;
+				return element;
 			}
 
 			};
