@@ -22,14 +22,12 @@ public class DataConverter {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		for (Person i : list) {
-			XStream person = new XStream();
-			String toXML = person.toXML(i);
-			try {
-				writerXML.write(toXML);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		XStream person = new XStream();
+		String toXML = person.toXML(list);
+		try {
+			writerXML.write(toXML);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		/**
 		 * Closing the FileWriter method and the inputFile that opened Persons.dat.
@@ -48,14 +46,12 @@ public class DataConverter {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		for (Person i : list) {
-			Gson person = new GsonBuilder().setPrettyPrinting().create();
-			String toJson = person.toJson(i);
-			try {
-				writerJson.write(toJson);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		Gson person = new GsonBuilder().setPrettyPrinting().create();
+		String toJson = person.toJson(list);
+		try {
+			writerJson.write(toJson);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		try {
 			writerJson.close();
@@ -71,14 +67,12 @@ public class DataConverter {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		for (Object i : list) {
-			XStream asset = new XStream();
-			String toXML = asset.toXML(i);
-			try {
-				writerXML.write(toXML);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		XStream asset = new XStream();
+		String toXML = asset.toXML(list);
+		try {
+			writerXML.write(toXML);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		try {
 			writerXML.close();
@@ -94,14 +88,12 @@ public class DataConverter {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		for (Asset i : list) {
+		try {
 			Gson asset = new GsonBuilder().setPrettyPrinting().create();
-			String toJson = asset.toJson(i);
-			try {
-				writerJson.write(toJson);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			String toJson = asset.toJson(list);
+			writerJson.write(toJson);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		try {
 			writerJson.close();
